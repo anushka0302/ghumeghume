@@ -1,0 +1,136 @@
+/* =========================
+   MODERN FOOTER STYLES
+========================= */
+
+.footer {
+  padding-top: 60px;
+  padding-bottom: 20px;
+  background-color: #f8f9fa; /* Subtle, clean background */
+  font-family: 'Inter', sans-serif;
+}
+
+/* Logo Section */
+.footer .logo img {
+  height: 300px; 
+  width: auto;
+  margin-bottom: 1rem;
+}
+
+.footer .logo p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-color);
+  margin-bottom: 1.5rem;
+}
+
+/* Social Links */
+.social__links {
+  display: flex;
+  gap: 15px;
+}
+
+.social__links a {
+  text-decoration: none;
+  color: var(--heading-color);
+  font-size: 1.1rem;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  transition: 0.3s;
+}
+
+.social__links a:hover {
+  background: var(--secondary-color);
+  color: #fff;
+  transform: translateY(-3px);
+}
+
+/* Titles */
+.footer__link-title {
+  color: var(--heading-color);
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+}
+
+/* List Items */
+.footer__quick-links li {
+  padding: 5px 0;
+  background: transparent !important;
+}
+
+.footer__quick-links li a {
+  text-decoration: none;
+  color: var(--text-color);
+  font-size: 1rem;
+  transition: 0.3s;
+  display: inline-block;
+}
+
+.footer__quick-links li a:hover {
+  color: var(--secondary-color);
+  transform: translateX(5px); /* Modern slide effect */
+}
+
+/* Icons in list */
+.footer__quick-links h6 span i {
+  color: var(--secondary-color);
+  font-size: 1.1rem;
+}
+
+.footer__quick-links h6 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--heading-color);
+  min-width: 90px; /* Aligns the contact labels */
+}
+
+/* Contact Links (Email/Phone) */
+.contact-link {
+  color: var(--text-color) !important;
+  text-decoration: none;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.contact-link:hover {
+  color: var(--secondary-color) !important;
+}
+
+/* Copyright */
+.copyright {
+  color: var(--text-color);
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+.copyright strong {
+  color: var(--secondary-color);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .footer {
+    text-align: center;
+  }
+  
+  .social__links {
+    justify-content: center;
+  }
+  
+  .footer__quick-links li {
+    justify-content: center;
+  }
+
+  .footer__quick-links .d-flex {
+    justify-content: center;
+    flex-direction: column;
+    align-items: center !important;
+    gap: 5px !important;
+  }
+}

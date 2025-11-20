@@ -1,0 +1,241 @@
+/* =========================
+   EXPERIENCE PAGE STYLES
+========================= */
+
+/* Use modern fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@600;700;800&display=swap');
+
+.experience-page {
+  font-family: 'Inter', sans-serif;
+  color: #333;
+}
+
+/* Base styles for section titles */
+.exp-section-title {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 2.5rem;
+  color: var(--heading-color, #111);
+  margin-bottom: 2rem;
+}
+
+/* 1. VIDEO HERO */
+.exp-hero {
+  position: relative;
+  width: 100%;
+  height: 80vh; /* 80% of the viewport height */
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.exp-hero-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: 0;
+  object-fit: cover;
+}
+
+.exp-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5); /* Dark overlay for readability */
+  z-index: 1;
+}
+
+.exp-hero .container {
+  position: relative;
+  z-index: 2;
+}
+
+.exp-hero-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: 4rem;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  margin-bottom: 1rem;
+}
+
+.exp-hero-subtitle {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: #eee;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* 2. INTRO SECTION */
+.exp-intro {
+  padding: 5rem 0;
+  background: #fff;
+}
+
+.exp-lead {
+  font-size: 1.15rem;
+  color: #555;
+  line-height: 1.8;
+}
+
+/* 3. WHY UTTARAKHAND? SECTION */
+.exp-why-section {
+  padding: 5rem 0;
+  background: #f8fbff;
+}
+
+.exp-why-image img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.exp-why-content {
+  padding-left: 3rem;
+}
+
+.exp-why-content p {
+  font-size: 1rem;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+.exp-why-content ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.exp-why-content li {
+  font-size: 1rem;
+  position: relative;
+  padding-left: 2rem;
+  margin-bottom: 1rem;
+}
+
+.exp-why-content li::before {
+  content: '✔'; /* Checkmark */
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--secondary-color, #faa935);
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+/* 4. GALLERY */
+.exp-gallery {
+  padding: 5rem 0;
+}
+
+.gallery-row {
+  margin-top: 2rem;
+}
+
+.gallery-row img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.gallery-row img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* 5. CALL TO ACTION */
+.exp-cta {
+  position: relative;
+  padding: 8rem 0; /* Increased padding for more breathing room */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  text-align: center;
+  /* Ensure the text color is explicitly white */
+  color: #ffffff !important; 
+}
+
+/* This overlay is crucial for making white text readable on any image */
+.exp-cta .exp-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6); /* Slightly darker overlay (60% opacity) */
+  z-index: 1;
+}
+
+.exp-cta .container {
+  position: relative;
+  z-index: 2; /* Places content above the overlay */
+}
+
+.exp-cta h2 {
+  font-family: 'Manrope', sans-serif;
+  font-size: 3.5rem; /* Larger, more impactful heading */
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  color: #ffffff; /* Ensure white */
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Adds depth */
+}
+
+.exp-cta p {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: #e0e0e0; /* Slightly off-white for body text is easier to read */
+  max-width: 700px;
+  margin: 0 auto 2.5rem auto;
+  line-height: 1.6;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.exp-cta-btn {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 1rem 3rem;
+  background: var(--secondary-color, #faa935) !important;
+  color: #111 !important; /* Dark text on yellow button for contrast */
+  border: none !important;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.exp-cta-btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(250, 169, 53, 0.4);
+  background: #ffb74d !important; /* Lighter orange on hover */
+  color: #000 !important;
+}
+
+/* Responsive Fixes */
+@media (max-width: 768px) {
+  .exp-hero {
+    height: 70vh;
+  }
+  .exp-hero-title {
+    font-size: 2.5rem;
+  }
+  .exp-hero-subtitle {
+    font-size: 1.2rem;
+  }
+  .exp-section-title {
+    font-size: 2rem;
+  }
+  .exp-why-content {
+    padding-left: 0;
+    margin-top: 2rem;
+  }
+}

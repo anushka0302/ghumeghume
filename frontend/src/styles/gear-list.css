@@ -1,0 +1,64 @@
+.gear-section {
+  padding: 5rem 0;
+  margin-top: 7rem;
+  background: #fdfdfd;
+}
+
+.gear-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  height: 100%;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+  border-top: 4px solid #faa935; /* Orange accent top */
+  transition: transform 0.3s ease;
+}
+
+.gear-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.gear-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 1rem;
+}
+
+.gear-icon {
+  font-size: 2rem;
+  color: #faa935;
+}
+
+.gear-header h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--heading-color);
+}
+
+.gear-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.gear-items li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 0.8rem;
+  font-size: 0.95rem;
+  color: var(--text-color);
+  line-height: 1.5;
+}
+
+.check-icon {
+  color: green;
+  font-weight: bold;
+  font-size: 0.9rem;
+  margin-top: 2px; /* Align with text */
+}

@@ -1,0 +1,39 @@
+/* Import 'Kaushan Script' for a natural, adventurous handwritten feel */
+@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
+
+.section__subtitle {
+  /* Typography */
+  font-family: 'Kaushan Script', cursive;
+  font-size: 2.2rem; /* Large enough to be readable and decorative */
+  color: #faa935; /* Your Brand Orange */
+  
+  /* Layout */
+  display: block; /* Changed to block to take full width, easier to align left */
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+  text-align: left; /* Force left alignment */
+  
+  /* Effects */
+  /* No background color - keeps it clean and "editorial" */
+  background: transparent !important; 
+  padding: 0 !important;
+  box-shadow: none !important;
+  border: none !important;
+  
+  /* Subtle Text Shadow for depth */
+  text-shadow: 2px 2px 8px rgba(250, 169, 53, 0.25);
+  
+  /* Slight rotation for a natural "stamp" vibe (Optional, looks great) */
+  transform: rotate(-2deg);
+  transform-origin: left center; /* Rotate from left anchor */
+}
+
+/* Mobile Adjustment */
+@media (max-width: 768px) {
+  .section__subtitle {
+    font-size: 1.8rem;
+    margin-bottom: 0.2rem;
+    text-align: center; /* Often looks better centered on mobile, change to left if you prefer */
+    transform-origin: center; /* Rotate from center on mobile */
+  }
+}

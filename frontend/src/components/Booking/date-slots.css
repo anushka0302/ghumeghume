@@ -1,0 +1,116 @@
+.date-slots-container {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  margin-bottom: 1rem; /* Add spacing below the component */
+}
+
+.month-group {
+  border-bottom: 1px solid #eee;
+}
+.month-group:last-child {
+  border-bottom: none;
+}
+
+.month-header {
+  width: 100%;
+  padding: 1rem;
+  background: #f8f9fa;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--heading-color);
+  cursor: pointer;
+}
+
+.month-header .chevron {
+  transition: transform 0.3s ease;
+  font-size: 0.8rem;
+}
+.month-header .chevron.open {
+  transform: rotate(180deg);
+}
+
+.slots-list {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+.slots-list.open {
+  max-height: 500px; /* Animate open */
+}
+
+.slot-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border-top: 1px solid #f1f1f1;
+  cursor: pointer;
+  transition: background 0.2s;
+  gap: 10px; /* Add gap for spacing */
+  flex-wrap: wrap; /* Allow wrapping on small screens */
+}
+.slot-item:hover {
+  background: #fdfaf5;
+}
+
+.slot-date {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.slot-tag {
+  background: #fffbe6;
+  border: 1px solid #ffe58f;
+  color: #d46b08;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap; /* Prevent tag from breaking line */
+}
+
+.slot-status {
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap; /* Prevent from breaking line */
+}
+.slot-status.avbl {
+  color: #389e0d;
+}
+.slot-status.filling-fast {
+  color: #d48806;
+}
+.slot-status.sold-out {
+  color: #cf1322;
+}
+
+/* Selected State */
+.slot-item.selected {
+  background: var(--secondary-color);
+}
+.slot-item.selected .slot-date,
+.slot-item.selected .slot-status {
+  color: #fff;
+}
+.slot-item.selected .slot-tag {
+  background: #fff;
+  border-color: #d46b08;
+}
+
+/* Sold Out State */
+.slot-item.sold-out {
+  background: #f9f9f9;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+.slot-item.sold-out .slot-date {
+  text-decoration: line-through;
+}

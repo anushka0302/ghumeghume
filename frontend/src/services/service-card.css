@@ -1,0 +1,177 @@
+/* =========================
+   MODERN SERVICE CARD STYLES
+========================= */
+.service__item {
+  padding: 2rem 1.5rem;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0px 5px 25px rgba(0, 0, 0, 0.07);
+  border: 1px solid #eee;
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.service__item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.service__item[data-action="weather"] {
+  cursor: pointer;
+}
+
+.service__item[data-action="weather"]:hover {
+  background: #fffbf5;
+}
+
+.service__img {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--secondary-color);
+  padding: 0.8rem;
+  margin-bottom: 1.5rem;
+  line-height: 70px;
+}
+
+.service__img img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.service__item h5 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+}
+
+.service__item p {
+  font-size: 0.95rem;
+  color: var(--text-color);
+  line-height: 1.6;
+  flex-grow: 1;
+}
+
+.service__loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px; 
+  color: var(--text-color, #555);
+}
+
+.service__loader p {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+
+/* =========================
+   MODERN MODAL STYLES (v2)
+========================= */
+
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.2) !important;
+  backdrop-filter: blur(5px);
+}
+
+.weather-modal .modal-content {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(15px);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  color: #fff; /* Ensures all default text is white */
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.weather-modal-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #fff;
+  padding: 1.5rem;
+}
+
+.weather-modal-header .modal-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  /* === NEW FIX: Force title text to be white === */
+  color: #fff !important; 
+}
+
+.weather-modal-header .btn-close {
+  filter: invert(1) brightness(2) grayscale(1);
+  opacity: 0.8;
+}
+
+.weather-modal-body {
+  padding: 1rem 2rem 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.weather-icon {
+  width: 100px;
+  height: 100px;
+  margin-top: -1rem;
+  margin-bottom: -1rem; /* Pull temp up */
+}
+
+/* NEW: Wrapper for temp and desc */
+.weather-main-info {
+  text-align: center;
+}
+
+.weather-temp {
+  font-size: 4rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.weather-desc {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: #eee; /* Light white */
+  text-transform: capitalize;
+  margin-top: 0.5rem;
+  margin-bottom: 2rem; /* Space before grid */
+}
+
+/* NEW: Grid for all weather details */
+.weather-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns */
+  gap: 1.5rem;
+  width: 100%;
+  text-align: center;
+}
+
+.weather-detail-item {
+  background: rgba(255, 255, 255, 0.05); /* Faint highlight */
+  padding: 1rem;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.weather-detail-item span {
+  font-size: 0.9rem;
+  color: #ccc; /* Light white */
+  margin-bottom: 0.25rem;
+}
+
+.weather-detail-item strong {
+  font-size: 1.1rem;
+  color: #fff; /* White text */
+  font-weight: 600;
+}

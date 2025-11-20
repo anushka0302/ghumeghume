@@ -1,0 +1,292 @@
+/* =========================
+   MODERN TREK COMPARISON STYLES (Clean Light Theme)
+========================= */
+
+.comparison-section {
+  padding: 5rem 0;
+  background: linear-gradient(to bottom, #f8fbff, #fff);
+}
+
+.comparison-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--heading-color, #0b2727);
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.5px;
+}
+
+.comparison-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-color, #6e7074);
+  margin-bottom: 4rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.comparison-grid {
+  row-gap: 2rem;
+}
+
+/* Modern Card Style */
+.comp-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 2rem;
+  height: 100%;
+  border: 1px solid #f0f0f0;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.comp-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
+  border-color: transparent;
+}
+
+/* Highlight User Location Card */
+.user-location {
+  border: 2px solid var(--secondary-color, #faa935);
+  background: #fffbf2;
+  position: relative;
+}
+
+.user-location::before {
+  content: "YOU ARE HERE";
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--secondary-color, #faa935);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-bottom-left-radius: 12px;
+  letter-spacing: 0.5px;
+}
+
+/* Card Typography */
+.card-header {
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  padding-bottom: 1rem;
+}
+
+.card-header h4 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  color: var(--heading-color, #0b2727);
+  line-height: 1.3;
+}
+
+.card-sub-header {
+  display: inline-block;
+  font-size: 0.75rem;
+  color: #888;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: #f3f4f6;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+/* Data Sections */
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  flex-grow: 1;
+}
+
+.card-body h5 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+}
+
+.value-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.temp-value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--heading-color, #0b2727);
+  line-height: 1;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.temp-value span {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #6b7280;
+  text-transform: capitalize;
+}
+
+/* AQI Container & Styling */
+.aqi-container {
+  background: #f9fafb;
+  border-radius: 12px;
+  padding: 0.75rem;
+  margin-top: auto;
+}
+
+.aqi-index {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  font-weight: 800;
+  border-radius: 10px;
+  color: #fff !important;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.aqi-text {
+  font-size: 1rem;
+  font-weight: 700;
+  display: block;
+  line-height: 1.2;
+}
+
+.pm-text {
+  font-size: 0.8rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* AQI Colors */
+.aqi-bg-1 { background: linear-gradient(135deg, #22c55e, #16a34a); }
+.aqi-bg-2 { background: linear-gradient(135deg, #a3e635, #65a30d); }
+.aqi-bg-3 { background: linear-gradient(135deg, #facc15, #ca8a04); }
+.aqi-bg-4 { background: linear-gradient(135deg, #fb923c, #ea580c); }
+.aqi-bg-5 { background: linear-gradient(135deg, #f87171, #dc2626); }
+
+.text-green-600 { color: #15803d !important; }
+.text-lime-500 { color: #4d7c0f !important; }
+.text-yellow-500 { color: #b45309 !important; }
+.text-orange-500 { color: #c2410c !important; }
+.text-red-600 { color: #b91c1c !important; }
+
+/* Footer Note */
+.note {
+  font-size: 0.85rem;
+  color: #322f2f;
+  margin-top: 3rem;
+  text-align: center;
+  opacity: 0.9;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  background: rgba(252, 250, 250, 0.4);
+  padding: 12px 24px;
+  border-radius: 50px;
+  border: 1px solid rgba(198, 197, 197, 0.598);
+}
+
+/* Dropdown Button */
+.comparison-toggle-btn {
+  background: var(--secondary-color, #faa935);
+  color: #fff;
+  border: none;
+  padding: 12px 32px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  box-shadow: 0 4px 15px rgba(250, 169, 53, 0.4);
+  border: 2px solid transparent;
+  margin-bottom: 1rem;
+}
+
+.comparison-toggle-btn:hover {
+  transform: translateY(-3px);
+  background-color: #ff9f1c;
+}
+
+.comparison-toggle-btn.active {
+  background-color: #fff;
+  color: var(--secondary-color, #faa935);
+  border: 2px solid var(--secondary-color, #faa935);
+}
+
+.comparison-toggle-btn i {
+  transition: transform 0.3s ease;
+  font-size: 1.2rem;
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
+}
+
+.comparison-content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.8s ease-in-out, opacity 0.5s ease-in-out, margin-top 0.3s ease;
+}
+
+.comparison-content.open {
+  max-height: 5000px;
+  opacity: 1;
+  margin-top: 2rem;
+}
+
+/* =========================================
+   MOBILE RESPONSIVE FIXES
+========================================= */
+@media (max-width: 768px) {
+  .comparison-section {
+    padding: 3rem 1rem;
+  }
+
+  .comparison-title {
+    font-size: 1.75rem;
+    line-height: 1.3;
+  }
+
+  .comparison-subtitle {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  /* Ensure cards stack with space */
+  .mb-4 {
+    margin-bottom: 1.5rem !important;
+  }
+  
+  /* Allow cards to grow naturally on mobile */
+  .comp-card {
+    padding: 1.5rem;
+    height: auto;
+    min-height: 100%;
+  }
+  
+  .comparison-toggle-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,79 @@
+/* =========================
+   MODERN WHY-US STYLES
+========================= */
+
+/* Use the same fonts from your About/Team pages */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@600;700;800&display=swap');
+
+.why-us-section {
+  padding: 5rem 0;
+  margin-top: 7rem;
+  background: #fff; /* Clean white background */
+}
+
+/* Base styles for section titles (same as other components) */
+.section-title {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 2.5rem;
+  color: var(--heading-color, #111);
+  margin-bottom: 1rem;
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-color, #444);
+  max-width: 600px;
+  margin: 0 auto 3rem auto;
+}
+
+/* The Feature Card */
+.why-us-card {
+  background: #f8fbff; /* Light background for the card */
+  border-radius: 12px;
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.05);
+  border: 1px solid #eee;
+  padding: 2.5rem 2rem;
+  height: 100%; /* Makes all cards in a row the same height */
+  transition: all 0.3s ease;
+}
+
+.why-us-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  border-color: var(--secondary-color, #faa935);
+}
+
+.why-us-icon {
+  font-size: 2.5rem;
+  color: var(--secondary-color, #faa935);
+  margin-bottom: 1.5rem;
+  display: inline-block;
+}
+
+.why-us-card h3 {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: var(--heading-color, #111);
+}
+
+.why-us-card p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text-color, #444);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .why-us-card {
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 2rem;
+  }
+}

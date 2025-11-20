@@ -1,0 +1,313 @@
+/* --- BASE HEADER STYLES --- */
+.header {
+  width: 100%;
+  height: 100px;
+  line-height: 100px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  /* Dark transparent background */
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.7) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  transition: 0.3s;
+}
+
+/* Fixed logo size */
+.logo img {
+  height: 100px; 
+  width: auto;
+}
+
+.menu {
+  margin-bottom: 0;
+}
+
+.nav__item {
+  position: relative; /* Needed for dropdown positioning */
+}
+
+.nav__item a {
+  text-decoration: none;
+  color: #fff; /* White text */
+  font-weight: 500;
+  font-size: 1rem;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: 0.3s;
+}
+
+.nav__item a i {
+  font-size: 0.9rem;
+  margin-left: 2px;
+}
+
+.nav__item a:hover {
+  color: #faa935; /* Gold/yellow color */
+}
+
+.nav__item a.active__link {
+  color: #fff;
+  background: #faa935; /* Gold background for active link */
+}
+
+/* --- SEARCH & AUTH BUTTONS --- */
+.nav__search-icon i {
+  font-size: 1.2rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+.username {
+  color: #fff;
+  font-size: 1rem;
+}
+
+.nav_btns .btn {
+  font-size: 0.9rem;
+  padding: 0.4rem 1rem;
+  border-radius: 4px;
+}
+
+.nav_btns .secondary__btn {
+  background: transparent;
+  border: 1px solid #fff;
+}
+.nav_btns .secondary__btn a {
+  color: #fff;
+  text-decoration: none;
+}
+.nav_btns .secondary__btn:hover {
+  background: #fff;
+}
+.nav_btns .secondary__btn:hover a {
+  color: #faa935;
+}
+
+.nav_btns .primary__btn {
+  background: #faa935;
+  border: 1px solid #faa935;
+}
+.nav_btns .primary__btn a {
+  color: #222;
+  text-decoration: none;
+}
+.nav_btns .primary__btn:hover {
+  background: #f7b048;
+  border-color: #f7b048;
+}
+
+/* --- DROPDOWN MENU STYLES --- */
+.dropdown__menu {
+  position: absolute;
+  top: 90%; /* Position below the parent link */
+  left: 0;
+  background: #fff;
+  min-width: 220px;
+  padding: 0.8rem;
+  border-radius: 5px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  list-style: none;
+  margin: 0;
+  line-height: 1.5rem; /* Reset line-height for items */
+
+  /* Hide by default */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: 0.3s ease;
+  z-index: 100;
+}
+
+/* This is for DESKTOP hover */
+.nav__item:hover .dropdown__menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown__item a {
+  color: var(--heading-color); /* Dark text on white dropdown */
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-transform: none; /* Dropdown items are usually not uppercase */
+  padding: 5px 10px;
+  display: block; /* Make links fill the li */
+}
+
+.dropdown__item a:hover {
+  color: #faa935;
+  background: #f7f7f7;
+}
+
+/* --- STICKY HEADER (GLASSMORPHISM) --- */
+.sticky__header {
+  width: 100%;
+  height: 80px;
+  line-height: 80px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  background: rgba(30, 30, 30, 0.75); 
+  backdrop-filter: blur(15px); 
+  -webkit-backdrop-filter: blur(15px); 
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+  box-shadow: 0px 3px 10px -3px rgba(0, 0, 0, 0.4);
+}
+
+/* --- MOBILE MENU --- */
+.mobile__menu {
+  font-size: 1.3rem;
+  color: #fff; /* White hamburger icon */
+  display: none; /* HIDDEN BY DEFAULT on desktop */
+  cursor: pointer;
+  /* Add z-index to make sure it's above the overlay */
+  position: relative;
+  z-index: 10000; 
+}
+
+/* ==================================================
+  MEDIA QUERIES (NEW FULL-SCREEN GLASS MENU)
+================================================== 
+*/
+@media only screen and (max-width: 992px) {
+  /* Logo size for tablet */
+  .logo img {
+    height: 60px;
+    width: auto;
+  }
+
+  /* --- UPDATED: This is the full-screen overlay ---
+  */
+  .header .navigation {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    
+    /* New glass background */
+ 
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    z-index: 9999;
+    display: none !important; /* FORCE HIDE */
+
+    /* New: Center the menu links */
+   align-items: flex-start;       /* move menu downward */
+  justify-content: flex-start;   /* stop centering */
+  padding-top: 60px; 
+  }
+
+  /* --- UPDATED: This is the menu link container ---
+  */
+  .menu {
+    /* Remove old panel styles */
+    position: static;
+    width: 100%;
+    height: 100vh;
+ /* No white panel */
+ 
+    background: rgba(10, 10, 10, 0.7);
+   backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    /* Keep these styles */
+    flex-direction: column;
+    line-height: 0.5rem;
+    justify-content: flex-start;
+    align-items: center;
+    z-index: 9999;
+    padding: 5;
+    margin-top: 20px;
+  }
+
+  .nav__item {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* --- UPDATED: Mobile menu links ---
+  */
+
+  .menu .nav__item a {
+    color: #fff !important; /* White text on dark glass */
+    font-size: 1.5rem; /* Make links bigger */
+    font-weight: 500;
+    line-height: 3.5rem; /* Add more space */
+   padding: 8px 0; 
+    display: block;
+    width: 100%;
+    
+  }
+  .menu .nav__item a.active__link {
+    color: #faa935; /* Gold for active link */
+    background: none;
+  }
+  .menu .nav__item a:hover {
+    color: #faa935; /* Gold on hover */
+  }
+
+  /* --- UPDATED: Mobile dropdown menu ---
+  */
+  .menu .dropdown__menu {
+    position: static;
+    display: none; 
+    box-shadow: none;
+    background: transparent; /* No background */
+    width: 100%;
+    padding: 0;
+    transform: none;
+    opacity: 1;
+    visibility: visible;
+
+  }
+  
+  .menu .nav__item.mobile-dropdown-open .dropdown__menu {
+    display: block;
+  }
+  
+  /* --- UPDATED: Mobile dropdown links --- */
+  .menu .dropdown__item a {
+    line-height: 2.5rem;
+    padding: 6px 0;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #faa935; /* Gold for dropdown links */
+  }
+  .menu .dropdown__item a:hover {
+    color: #fff; /* White on hover */
+    background: none;
+  }
+
+  /* --- NO CHANGE: These rules are all correct ---
+  */
+  .header .navigation.show__menu {
+    display: flex !important; /* Use flex to center */
+  }
+
+  .header .mobile__menu {
+    display: block !important; /* FORCE SHOW */
+  }
+
+  .header .nav_btns,
+  .header .nav__search-icon {
+    display: none !important; /* FORCE HIDE */
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  /* Logo size for mobile */
+  .logo img {
+    height: 50px;
+    width: auto;
+  }
+  .menu {
+    width: 90%; /* Keep it wide */
+  }
+}

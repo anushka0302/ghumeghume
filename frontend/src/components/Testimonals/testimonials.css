@@ -1,0 +1,78 @@
+/* Container adjustment for slider spacing */
+.testimonial-slider {
+  padding-bottom: 30px; /* Space for dots */
+}
+
+/* Wrapper for each slide item to add spacing between cards */
+.testimonial-item {
+  padding: 0 15px; /* Creates the gap between slides */
+}
+
+/* The modern card itself */
+.testimonial-card {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid #eee;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  min-height: 300px; /* Ensures cards are roughly same height */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border-color: var(--secondary-color, #faa935);
+}
+
+/* Testimonial Text */
+.testimonial-text {
+  font-size: 0.95rem;
+  color: var(--text-color, #6e7074);
+  line-height: 1.6;
+  font-style: italic;
+  margin-bottom: 1.5rem;
+}
+
+/* Customer Info Section */
+.customer-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: auto; /* Pushes this section to the bottom */
+}
+
+.customer-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%; /* Perfect circle */
+  object-fit: cover;
+  border: 2px solid #f0f0f0;
+}
+
+.customer-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--heading-color, #0b2727);
+  margin-bottom: 2px;
+}
+
+.customer-role {
+  font-size: 0.85rem;
+  color: var(--text-color, #888);
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Customizing Slick Dots (Optional) */
+.slick-dots li button:before {
+  font-size: 10px;
+  color: #ccc;
+}
+
+.slick-dots li.slick-active button:before {
+  color: var(--secondary-color, #faa935) !important;
+}
