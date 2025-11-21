@@ -1,22 +1,29 @@
-/* ✅ PARALLAX HERO */
+/* =========================================
+   ✅ PARALLAX HERO SECTION
+   ========================================= */
 .parallax-bg {
   background: url("../assets/images/dayara-hero.jpg") center/cover no-repeat;
   background-attachment: fixed; /* Parallax effect for desktop */
-  height: 88vh;
+  
+  /* Changed from fixed height to min-height for responsiveness */
+  min-height: 90vh; 
+  width: 100%;
+  
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  padding-top: 80px; /* Clear fixed header */
 }
 
 .tour-hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.25), rgba(0,0,0,0.65));
+  background: linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.75));
+  z-index: 1;
 }
 
 .tour-hero-content {
-  margin-top: 90px;
   position: relative;
   z-index: 3;
   text-align: center;
@@ -27,18 +34,18 @@
 }
 
 .tour-hero-content h1 {
-  font-size: clamp(2.2rem, 5vw, 4rem); /* Slightly adjusted min size for mobile */
+  font-size: clamp(2.2rem, 5vw, 4.2rem); 
   font-weight: 800;
   color: #ffffff;
   text-shadow: 0 3px 14px rgba(0,0,0,0.6);
-  line-height: 1.2;
+  line-height: 1.15;
   margin-bottom: 10px;
 }
 
 .tour-hero-content p {
   font-size: 1.1rem;
   margin-top: 6px;
-  padding: 0 10px; /* Prevent text hitting edges on mobile */
+  padding: 0 10px;
 }
 
 .hero-action-wrap {
@@ -51,23 +58,23 @@
 
 /* ✅ PRICE BOX */
 .price-box {
-  background: rgba(0, 0, 0, 0.65); /* Slightly darker for better contrast on mobile */
+  background: rgba(0, 0, 0, 0.65);
   backdrop-filter: blur(8px);
   border: 1px solid rgba(255,255,255,0.25);
-  padding: 16px 38px;
+  padding: 16px 30px;
   display: inline-block;
   border-radius: 18px;
   margin: 20px 0;
   color: white;
   text-align: center;
   box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-  width: 100%; /* Full width on mobile container */
-  max-width: 350px; /* Cap width */
+  width: 100%;
+  max-width: 380px; /* Cap width */
 }
 
 .price-box h3 {
   font-weight: 800;
-  font-size: 2.2rem; /* Slightly smaller on mobile to prevent overflow */
+  font-size: 2.2rem;
   margin: 0;
   color: #fff;
   letter-spacing: 1px;
@@ -94,7 +101,7 @@
   box-shadow: 0 8px 22px rgba(0,0,0,0.35);
   transition: .3s ease;
   width: 100%;
-  max-width: 300px; /* Button max width */
+  max-width: 300px;
 }
 
 .book-btn-hero:hover {
@@ -106,17 +113,21 @@
 .stats-row {
   display: flex;
   justify-content: center;
-  gap: 40px; /* Reduced gap */
+  gap: 30px;
   margin-top: 25px;
+  background: rgba(255, 255, 255, 0.15); /* Glass effect */
+  padding: 10px 20px;
+  border-radius: 50px;
+  border: 1px solid rgba(255,255,255,0.2);
   font-size: 0.95rem;
   font-weight: 500;
   color: #ececec;
-  flex-wrap: wrap; /* Allow wrapping on very small screens */
+  flex-wrap: wrap;
 }
 
 .stats-row div {
   text-align: center;
-  min-width: 80px; /* Minimum width for each stat item */
+  min-width: 80px;
 }
 
 .stats-row strong {
@@ -126,21 +137,16 @@
   margin-bottom: 4px;
 }
 
-/* ✅ SECTIONS GENERAL */
-.section-light {
-  padding: 50px 0; /* Reduced padding for mobile */
-  background: #ffffff;
-}
-
-.section-dark {
-  padding: 50px 0;
-  background: #f7f9fc;
-}
+/* =========================================
+   ✅ SECTIONS & LAYOUT
+   ========================================= */
+.section-light { padding: 60px 0; background: #ffffff; }
+.section-dark { padding: 60px 0; background: #f7f9fc; }
 
 .section-title {
-  font-size: 1.8rem; /* Slightly smaller on mobile */
+  font-size: 2rem;
   font-weight: 700;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   line-height: 1.3;
 }
 
@@ -154,305 +160,249 @@
   width: 100%;
   border-radius: 14px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-  margin-bottom: 20px; /* Space below image on mobile stack */
+  margin-bottom: 20px;
 }
 
 /* ✅ CHECKLIST */
-.checklist {
-  list-style: none;
-  padding: 0;
-  margin: 15px 0;
-}
-
+.checklist { list-style: none; padding: 0; margin: 15px 0; }
 .checklist li {
   margin-bottom: 10px;
   font-size: 1rem;
   display: flex;
-  align-items: flex-start; /* Align icon to top of text */
+  align-items: flex-start;
   gap: 10px;
   line-height: 1.5;
 }
-
 .checklist li::before {
   content: "✔";
   color: #ff8b00;
   font-weight: 700;
-  flex-shrink: 0; /* Prevent icon from shrinking */
+  flex-shrink: 0;
   margin-top: 2px;
 }
 
 /* ✅ ITINERARY TIMELINE */
 .itinerary .timeline {
   border-left: 3px solid #ff8b00;
-  padding-left: 25px; /* Reduced padding */
+  padding-left: 25px;
   margin-top: 25px;
-  margin-left: 5px; /* Ensure visible on left edge */
+  margin-left: 5px;
 }
 
-.timeline-item {
-  margin-bottom: 30px;
-  position: relative;
-}
-
+.timeline-item { margin-bottom: 30px; position: relative; }
 .timeline-item::before {
   content: "";
   position: absolute;
-  left: -28.5px; /* Adjusted for new padding */
+  left: -28.5px;
   top: 5px;
   width: 14px;
   height: 14px;
   background: #ff8b00;
   border-radius: 50%;
-  border: 2px solid #fff; /* Added border for visibility */
-  box-shadow: 0 0 0 2px #ff8b00; /* Outer ring effect */
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 2px #ff8b00;
 }
 
-.timeline-item h4 {
-  font-weight: 700;
-  margin-bottom: 8px;
-  font-size: 1.1rem;
-  color: #333;
-}
+.timeline-item h4 { font-weight: 700; margin-bottom: 8px; font-size: 1.1rem; color: #333; }
+.timeline-item p { color: #666; font-size: 0.95rem; line-height: 1.6; margin: 0; }
 
-.timeline-item p {
-  color: #666;
-  font-size: 0.95rem;
-  line-height: 1.6;
-  margin: 0;
-}
-
-/* ✅ AGODA-STYLE GALLERY */
-.section-gallery {
-  padding: 40px 0;
-}
-
-.gallery-tagline {
-  text-align: center;
-  margin-bottom: 15px;
-  color: #555;
-  font-size: 0.9rem;
-}
-
+/* ✅ GALLERY */
+.section-gallery { padding: 50px 0; }
+.gallery-tagline { text-align: center; margin-bottom: 15px; color: #555; font-size: 0.9rem; }
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 Columns on mobile */
+  grid-template-columns: repeat(4, 1fr); /* Desktop: 4 columns */
   gap: 10px;
   margin-top: 20px;
 }
-
 .gallery-item img {
   width: 100%;
-  height: 150px; /* Smaller height for mobile grid */
+  height: 200px;
   border-radius: 8px;
   object-fit: cover;
   cursor: zoom-in;
   transition: 0.3s;
 }
 
-/* ✅ CTA SECTION */
+/* ✅ CTA FOOTER */
 .cta-section {
   background: linear-gradient(135deg, #ff8b00, #ff6000);
-  padding: 60px 20px; /* Adjusted padding */
+  padding: 70px 20px;
   text-align: center;
-  border-top-left-radius: 30px; /* Smaller radius on mobile */
-  border-top-right-radius: 30px;
-  margin-top: 30px;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  margin-top: 40px;
   box-shadow: 0 -8px 30px rgba(0,0,0,0.25);
 }
-
-.cta-section h2 {
-  font-size: 1.8rem;
-  margin-bottom: 10px;
-  line-height: 1.3;
-}
-
-.cta-section p {
-  opacity: 0.95;
-  margin-bottom: 25px;
-  font-size: 1rem;
-}
-
+.cta-section h2 { font-size: 2.2rem; margin-bottom: 10px; color: #fff; }
+.cta-section p { opacity: 0.95; margin-bottom: 30px; font-size: 1.1rem; color: #fff; }
 .cta-book-btn {
   background: #222;
   color: #fff !important;
-  padding: 14px 30px;
-  border-radius: 50px; /* Pill shape */
+  padding: 14px 40px;
+  border-radius: 50px;
   font-size: 1rem;
   font-weight: 600;
   box-shadow: 0 10px 25px rgba(0,0,0,0.3);
   transition: 0.3s ease;
   display: inline-block;
-  width: 100%;
-  max-width: 280px;
   border: none;
 }
 
-/* ✅ ANIMATIONS */
+/* Animation Keyframes */
 @keyframes fadeUp {
   from { transform: translateY(20px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
 
+
 /* =========================================
-   ✅ MOBILE MEDIA QUERIES (Max Width 768px)
+   📱 RESPONSIVE MOBILE MEDIA QUERIES 
    ========================================= */
 @media (max-width: 768px) {
-  /* Hero Adjustments */
+  /* 1. FLUID HERO HEIGHT */
   .parallax-bg {
-    height: 85vh; /* Slightly taller for mobile browsers with address bars */
-    background-attachment: scroll; /* Disable fixed bg on mobile for performance */
+    height: auto !important;       /* Allow growth */
+    min-height: 100vh;             /* Full screen minimum */
+    background-attachment: scroll; /* Better mobile performance */
     background-position: center top;
+    align-items: flex-start;       /* Push content to top */
+    padding-top: 110px;            /* Space for Navbar */
+    padding-bottom: 60px;
   }
 
+  /* 2. HERO CONTENT WIDTH */
   .tour-hero-content {
-    margin-top: 60px;
-    width: 90%;
+    margin-top: 0; 
+    width: 92%;
   }
 
   .tour-hero-content h1 {
-    font-size: 2.4rem;
-  }
-
-  /* Stats Row Vertical Stack or Grid */
-  .stats-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 columns in one row if space permits */
-    gap: 15px;
-    background: rgba(0,0,0,0.4); /* Add backing for readability */
-    padding: 15px;
-    border-radius: 12px;
-    margin-top: 20px;
-  }
-  
-  .stats-row div {
-      font-size: 0.85rem;
-  }
-  
-  .stats-row strong {
-      font-size: 1rem;
-  }
-
-  /* Booking Form Order - Move to bottom or keep side? 
-     Usually Reactstrap handles stacking columns. 
-     Ensure margin if stacked. */
-  #booking-form {
-    margin-top: 40px;
-  }
-
-  /* Gallery Mobile Grid */
-  .gallery-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2 columns is standard for mobile gallery */
-    gap: 8px;
-  }
-  
-  .gallery-item img {
-      height: 120px; /* Square-ish aspect ratio */
-  }
-
-  /* Timeline Fixes */
-  .itinerary .timeline {
-     margin-left: 0;
-     padding-left: 20px;
-  }
-  
-  .timeline-item::before {
-      left: -26px;
-  }
-}
-
-/* =========================================
-   ✅ SMALL MOBILE (Max Width 480px)
-   ========================================= */
-@media (max-width: 480px) {
-    .tour-hero-content h1 {
-        font-size: 2rem;
-    }
-    
-    .price-box h3 {
-        font-size: 1.8rem;
-    }
-    
-    /* Stack stats vertically on very small screens if needed, 
-       or keep 3-col grid but smaller text */
-    .stats-row {
-       gap: 10px; 
-       padding: 10px;
-    }
-    
-    .gallery-grid {
-        grid-template-columns: 1fr; /* Single column gallery for tiny screens? Or keep 2 */
-        /* grid-template-columns: repeat(2, 1fr); -- usually 2 is still okay */
-    }
-    
-    .gallery-item img {
-        height: 200px; /* Taller images if single column */
-    }
-}
-
-/* =========================================
-   ✅ FIX FOR IPHONE SE / SMALL SCREENS
-   ========================================= */
-@media (max-width: 576px) {
-
-  /* 1. ALLOW HERO TO GROW (Fixes the overlap at the bottom) */
-  .parallax-bg {
-    height: auto !important;       /* Disable fixed height */
-    min-height: 100vh;             /* Ensure it fills at least full screen */
-    padding-top: 0px;
-    padding-bottom: 60px;          /* Add breathing room at the bottom */
-    background-position: center;
-    align-items: flex-start;       /* Align content to top to prevent centering issues */
-  }
-
-  /* 2. PUSH CONTENT DOWN (Fixes header cut-off) */
-  .tour-hero-content {
-    margin-top: 120px;             /* Push down further to clear the Navbar/Logo */
-    width: 90%;
-    margin-bottom: 20px;
-  }
-
-  /* 3. ADJUST TITLE SIZE (Prevents wrapping madness) */
-  .tour-hero-content h1 {
-    font-size: 1.8rem;             /* Smaller font for iPhone SE */
-    line-height: 1.3;
-    margin-bottom: 15px;
-  }
-
-  /* 4. FIX TOGGLE BUTTONS (Prevent text squishing) */
-  .pricing-toggle-container {
-    gap: 10px;
-    margin: 15px 0 25px;
-  }
-  
-  .pricing-toggle-btn {
-    padding: 8px 15px;
-    font-size: 0.85rem;
-    min-width: auto;               /* Allow button to shrink slightly */
-    white-space: normal;           /* Allow text to wrap nicely if needed */
-    text-align: center;
+    font-size: 2.1rem;
     line-height: 1.2;
   }
 
-  /* 5. STATS ROW (Clean up the grey box area) */
+  /* 3. STACKED STATS GRID (Fixes the overflow) */
   .stats-row {
-    margin-top: 25px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 Columns nicely spaced */
-    gap: 10px;
-    background: rgba(0, 0, 0, 0.6); /* Dark background for contrast */
-    padding: 15px 10px;
-    border-radius: 12px;
-    backdrop-filter: blur(4px);
+    display: grid;                 
+    grid-template-columns: 1fr 1fr 1fr; /* 3 columns */
+    gap: 8px;
+    padding: 12px;
+    border-radius: 16px;
+    background: rgba(0, 0, 0, 0.5); /* Darker BG for readability */
   }
 
   .stats-row div {
-    font-size: 0.75rem;            /* Smaller text for stats */
-    line-height: 1.4;
+    font-size: 0.75rem;
   }
   
   .stats-row strong {
     font-size: 0.9rem;
-    display: block;
-    margin-bottom: 3px;
+  }
+
+  /* 4. GALLERY ADJUSTMENT */
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
+    gap: 8px;
+  }
+
+  .gallery-item img {
+    height: 140px;
+  }
+
+  /* 5. TIMELINE ALIGNMENT */
+  .itinerary .timeline {
+     margin-left: 0;
+     padding-left: 20px;
+  }
+  .timeline-item::before {
+     left: -26px;
+  }
+}
+
+/* SMALL MOBILE */
+@media (max-width: 480px) {
+  .tour-hero-content h1 { font-size: 1.9rem; }
+  .price-box h3 { font-size: 1.8rem; }
+  .gallery-grid { grid-template-columns: 1fr; } /* Single column gallery */
+  .gallery-item img { height: 220px; }
+}
+
+/* =========================================
+   ✅ NEW STATS PILL DESIGN (Dark Glass)
+   ========================================= */
+.stats-pill {
+  background: rgba(0, 0, 0, 0.6); /* Dark transparent background */
+  backdrop-filter: blur(10px);     /* Blurs the image behind it */
+  border: 1px solid rgba(255, 255, 255, 0.15); /* Subtle white border */
+  border-radius: 100px;            /* Extreme rounding for Pill shape */
+  
+  padding: 20px 50px;              /* Spacious padding */
+  margin: 35px auto 0;             /* Spacing from the orange button */
+  
+  display: flex;
+  justify-content: space-between;  /* Spread columns evenly */
+  align-items: flex-start;         /* Align text to top */
+  
+  width: 100%;
+  max-width: 850px;                /* Make it wide like the image */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3); /* Soft shadow for depth */
+}
+
+.stat-item {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Space between Label and Value */
+  flex: 1;  /* Ensure equal width for columns */
+}
+
+.stat-label {
+  font-size: 1.3rem;
+  font-weight: 800; /* Bold, thick font */
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.stat-value {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #e0e0e0; /* Slightly softer white */
+  white-space: nowrap; /* Prevents date ranges from wrapping awkwardly */
+}
+
+/* =========================================
+   📱 MOBILE ADJUSTMENTS (Keep it readable)
+   ========================================= */
+@media (max-width: 768px) {
+  .stats-pill {
+    border-radius: 20px; /* Switch to rounded rectangle on mobile */
+    padding: 20px;
+    flex-direction: column; /* Stack them vertically */
+    gap: 20px;
+    background: rgba(0, 0, 0, 0.75); /* Darker for readability on small screens */
+    max-width: 90%;
+  }
+
+  .stat-item {
+    flex-direction: row; /* Put Label and Value side-by-side on mobile */
+    justify-content: space-between;
+    width: 100%;
+    border-bottom: 1px solid rgba(255,255,255,0.1); /* Divider lines */
+    padding-bottom: 10px;
+  }
+
+  .stat-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .stat-label {
+    font-size: 1rem;
+  }
+
+  .stat-value {
+    font-size: 1rem;
   }
 }

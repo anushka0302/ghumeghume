@@ -5,34 +5,29 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../../context/AuthContext';
 import { BASE_URL } from '../../utils/config';
 
-// 1. Import BOTH Date components
 import DateSlots from './DateSlots';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-// ✅ Import your local logo
-import logo from "../../assets/images/logo.png";
+import logo from "../../assets/images/logo.png"; // Ensure this path is correct
 
-// 2. Import Data
 import { allTourDates } from '../../assets/data/tourDates';
 
 const RAZORPAY_KEY = process.env.REACT_APP_RAZORPAY_API_KEY;
-
 
 const Booking = ({ tour, avgRating, tourId }) => {
   const { price, reviews, title, priceGroup } = tour;
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
 
-  // Pricing Mode Logic
+  // --- Pricing Logic ---
   const isGroupMode = Number(price) === Number(priceGroup);
-  const minGuestSize = isGroupMode ? 5 : 1;
+  const minGuestSize = isGroupMode ? 6 : 1;
 
-  // Get Fixed Dates for this specific tour
+  // --- Dates ---
   const currentTourDates = allTourDates[tourId] || [];
 
-  // ✅ STATE: Toggle between 'fixed' (batches) and 'custom' (calendar)
+  // --- State ---
   const [dateMode, setDateMode] = useState('fixed'); // 'fixed' or 'custom'
-
   const [booking, setBooking] = useState({
     userId: user && user._id,
     userEmail: user && user.email,
@@ -40,43 +35,72 @@ const Booking = ({ tour, avgRating, tourId }) => {
     fullName: '',
     phone: '',
     guestSize: minGuestSize,
-    bookAt: '' // Can hold a String (Fixed) or Date Object (Custom)
+    bookAt: '' 
   });
 
-  // Effect: Enforce Guest Size
+  // --- Effect: Switch Guest Size when Toggle Changes ---
   useEffect(() => {
     setBooking(prev => {
-      if (Number(prev.guestSize) < minGuestSize) {
+      const currentVal = Number(prev.guestSize) || 0;
+      // Only force update if the current value is valid but too small for the new mode
+      if (currentVal < minGuestSize && currentVal !== 0) {
         return { ...prev, guestSize: minGuestSize };
       }
       return prev;
     });
   }, [minGuestSize]);
 
-  const handleChange = e => {
-    setBooking(prev => ({ ...prev, [e.target.id]: e.target.value }));
+  // --- Handler: Input Changes (The Fix) ---
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+
+    if (id === "guestSize") {
+      // 1. Allow user to clear the input (empty string)
+      if (value === "") {
+        setBooking((prev) => ({ ...prev, guestSize: "" }));
+        return;
+      }
+      
+      const num = Number(value);
+      // 2. Only block negative numbers. Allow smaller numbers temporarily while typing.
+      if (num < 0) return; 
+
+      setBooking((prev) => ({ ...prev, guestSize: num }));
+      return;
+    }
+
+    setBooking((prev) => ({ ...prev, [id]: value }));
   };
 
-  // ✅ Handle Fixed Batch Selection
+  // --- Handler: Auto-Correct on Blur (Leaving the box) ---
+  const handleBlur = () => {
+    const currentNum = Number(booking.guestSize);
+    // If they left it empty or too small, reset to minimum
+    if (currentNum < minGuestSize) {
+      setBooking(prev => ({ ...prev, guestSize: minGuestSize }));
+    }
+  };
+
+  // --- Date Handlers ---
   const handleSlotSelect = (dateString) => {
     setBooking(prev => ({ ...prev, bookAt: dateString }));
   };
 
-  // ✅ Handle Custom Calendar Selection
   const handleCalendarChange = (date) => {
     setBooking(prev => ({ ...prev, bookAt: date }));
   };
 
-  // Payment Math
+  // --- Payment Calculations ---
+  const guestCount = Number(booking.guestSize) || minGuestSize; 
   const serviceFee = 10;
-  const baseAmount = Number(price) * Number(booking.guestSize);
+  const baseAmount = Number(price) * guestCount;
   const subTotal = baseAmount + serviceFee;
   const gstAmount = Math.round(subTotal * 0.05);
   const totalAmount = subTotal + gstAmount;
   const advanceAmount = Math.round(totalAmount * 0.35);
   const dueAmount = totalAmount - advanceAmount;
 
-  // Payment Handler
+  // --- Payment Submission ---
   const handlePayment = async (e) => {
     e.preventDefault();
 
@@ -86,14 +110,13 @@ const Booking = ({ tour, avgRating, tourId }) => {
       return alert('Please fill in all information and select a date.');
     }
 
+    // Strict Check before Payment
     if (Number(booking.guestSize) < minGuestSize) {
       return alert(`For this package, the minimum group size is ${minGuestSize}.`);
     }
 
-    // ✅ Format Date before sending (Handle Object vs String)
     let finalDateString = booking.bookAt;
     if (typeof booking.bookAt === 'object') {
-        // Converts Date Object to "Wed Dec 10 2025" format
         finalDateString = booking.bookAt.toDateString(); 
     }
 
@@ -113,7 +136,7 @@ const Booking = ({ tour, avgRating, tourId }) => {
         currency: "INR",
         name: "Ghume Ghume",
         description: `Advance for ${title}`, 
-        image: logo, // ✅ Use your local logo 
+        image: logo, 
         order_id: orderData.order.id, 
         handler: async function (response) {
           const verifyRes = await fetch(`${BASE_URL}/payment/paymentverification`, {
@@ -125,7 +148,7 @@ const Booking = ({ tour, avgRating, tourId }) => {
               razorpay_signature: response.razorpay_signature,
               bookingDetails: {
                 ...booking,
-                bookAt: finalDateString, // ✅ Send the formatted string
+                bookAt: finalDateString, 
                 totalAmount,
                 paidAmount: advanceAmount,
                 dueAmount,
@@ -160,152 +183,100 @@ const Booking = ({ tour, avgRating, tourId }) => {
       </div>
 
       <div className='booking__form'>
-        <h5>Information</h5>
+        <h5>Book Your Adventure</h5>
         <Form className='booking__info-form' onSubmit={handlePayment}>
           <FormGroup>
-            <input type='text' placeholder='Full name' id='fullName' required onChange={handleChange} />
+            <input type='text' placeholder='Full name' id='fullName' required onChange={handleChange} className="custom-input"/>
           </FormGroup>
           <FormGroup>
-            <input type='number' placeholder='Phone' id='phone' required onChange={handleChange} />
+            <input type='number' placeholder='Phone' id='phone' required onChange={handleChange} className="custom-input"/>
           </FormGroup>
           <FormGroup>
-            <input type='number' placeholder='Total Members' id='guestSize' required onChange={handleChange} min={minGuestSize} value={booking.guestSize} />
+            <label className="input-label">Group Size (Min: {minGuestSize})</label>
+            <input 
+                type='number' 
+                placeholder='Total Members' 
+                id='guestSize' 
+                required 
+                onChange={handleChange} 
+                onBlur={handleBlur} 
+                min={minGuestSize} 
+                value={booking.guestSize} 
+                className="custom-input"
+            />
           </FormGroup>
 
+          {/* Date Mode Pill Toggle */}
+          <div className="date-toggle-container">
+            <label className={`toggle-option ${dateMode === 'fixed' ? 'active' : ''}`}>
+                <input type="radio" name="dateMode" value="fixed" checked={dateMode === 'fixed'} onChange={() => setDateMode('fixed')} />
+                Fixed Batches
+            </label>
+            <label className={`toggle-option ${dateMode === 'custom' ? 'active' : ''}`}>
+                <input type="radio" name="dateMode" value="custom" checked={dateMode === 'custom'} onChange={() => setDateMode('custom')} />
+                Custom Date
+            </label>
+          </div>
 
-          {/* ✅ DATE SELECTION TOGGLE (Modern Pill Style) */}
-<div className="d-flex gap-2 mb-3" style={{ background: '#f3f4f6', padding: '5px', borderRadius: '50px' }}>
-  
-  {/* Option 1: Fixed Batches */}
-  <label 
-    style={{ 
-      flex: 1, 
-      textAlign: 'center', 
-      padding: '8px 0', 
-      borderRadius: '50px', 
-      cursor: 'pointer',
-      fontSize: '0.9rem',
-      fontWeight: '600',
-      transition: '0.3s',
-      background: dateMode === 'fixed' ? '#faa935' : 'transparent',
-      color: dateMode === 'fixed' ? '#fff' : '#555',
-      boxShadow: dateMode === 'fixed' ? '0 2px 5px rgba(0,0,0,0.1)' : 'none'
-    }}
-  >
-    <input 
-      type="radio" 
-      name="dateMode" 
-      value="fixed" 
-      checked={dateMode === 'fixed'} 
-      onChange={() => setDateMode('fixed')}
-      style={{ display: 'none' }} 
-    />
-    Fixed Batches
-  </label>
-
-  {/* Option 2: Custom Date */}
-  <label 
-    style={{ 
-      flex: 1, 
-      textAlign: 'center', 
-      padding: '8px 0', 
-      borderRadius: '50px', 
-      cursor: 'pointer',
-      fontSize: '0.9rem',
-      fontWeight: '600',
-      transition: '0.3s',
-      background: dateMode === 'custom' ? '#faa935' : 'transparent',
-      color: dateMode === 'custom' ? '#fff' : '#555',
-      boxShadow: dateMode === 'custom' ? '0 2px 5px rgba(0,0,0,0.1)' : 'none'
-    }}
-  >
-    <input 
-      type="radio" 
-      name="dateMode" 
-      value="custom" 
-      checked={dateMode === 'custom'} 
-      onChange={() => setDateMode('custom')}
-      style={{ display: 'none' }} 
-    />
-    Custom Date
-  </label>
-
-</div>
-
-          {/* ✅ CONDITIONAL RENDERING */}
           {dateMode === 'fixed' ? (
-             <>
-                <h6 style={{fontSize: '0.9rem', color: '#777', marginBottom: '8px'}}>Select a Batch:</h6>
+             <div className="date-section">
+                <h6>Select a Batch:</h6>
                 <DateSlots onDateSelect={handleSlotSelect} slotsData={currentTourDates} />
-             </>
+             </div>
           ) : (
-             <FormGroup className="d-flex flex-column">
-                <h6 style={{fontSize: '0.9rem', color: '#777', marginBottom: '8px'}}>Pick your own date:</h6>
+             <FormGroup className="d-flex flex-column date-section">
+                <h6>Pick your own date:</h6>
                 <DatePicker 
                     selected={typeof booking.bookAt === 'object' ? booking.bookAt : null} 
                     onChange={handleCalendarChange}
                     minDate={new Date()} 
                     dateFormat="dd/MM/yyyy"
-                    placeholderText="Click to select date"
-                    className="form-control"
+                    placeholderText="Select a date"
+                    className="custom-input"
                     wrapperClassName="w-100"
                     onKeyDown={(e) => e.preventDefault()} 
                 />
              </FormGroup>
           )}
-
         </Form>      
       </div>
       
+      {/* Summary */}
       <div className='booking__bottom'>
         <ListGroup>
-          <ListGroupItem className='border-0 px-0'>
-            <h5 className='d-flex align-items-center justify-content-between'>
-              ₹{price} <i className="ri-close-line"></i> {booking.guestSize} person
-              <span>₹{baseAmount}</span>
-            </h5>
+          <ListGroupItem className='border-0 px-0 summary-item'>
+            <h5>₹{price} <i className="ri-close-line"></i> {guestCount} person</h5>
+            <span>₹{baseAmount}</span>
           </ListGroupItem>
-          <ListGroupItem className='border-0 px-0'>
-            <h5 className='d-flex align-items-center justify-content-between'>
-              Service charge <span>₹{serviceFee}</span>
-            </h5>
+          <ListGroupItem className='border-0 px-0 summary-item'>
+            <h5>Service charge</h5>
+            <span>₹{serviceFee}</span>
           </ListGroupItem>
-          <ListGroupItem className='border-0 px-0'>
-            <h5 className='d-flex align-items-center justify-content-between'>
-              GST (5%) <span>₹{gstAmount}</span>
-            </h5>
+          <ListGroupItem className='border-0 px-0 summary-item'>
+            <h5>GST (5%)</h5>
+            <span>₹{gstAmount}</span>
           </ListGroupItem>
-          <ListGroupItem className='border-0 px-0 total'>
-            <h5 className='d-flex align-items-center justify-content-between'>
-              Total Trip Cost <span>₹{totalAmount}</span>
-            </h5>
+          <ListGroupItem className='border-0 px-0 summary-item total-cost'>
+            <h5>Total Trip Cost</h5>
+            <span>₹{totalAmount}</span>
           </ListGroupItem>
-
-          <div style={{ background: '#fff8e1', padding: '15px', borderRadius: '8px', marginTop: '10px' }}>
-            <ListGroupItem className='border-0 px-0 py-1 bg-transparent'>
-              <h6 className='d-flex align-items-center justify-content-between m-0' style={{ color: '#d48806' }}>
-                Pay Now (35% Advance) <span style={{ fontSize: '1.1rem', fontWeight: '700' }}>₹{advanceAmount}</span>
-              </h6>
-            </ListGroupItem>
-            <ListGroupItem className='border-0 px-0 py-1 bg-transparent'>
-              <div className='d-flex flex-column w-100'>
-                 <h6 className='d-flex align-items-center justify-content-between m-0 text-muted' style={{ fontSize: '0.9rem' }}>
-                  Pay Later (Balance) <span>₹{dueAmount}</span>
-                </h6>
-                <small className='text-muted mt-1' style={{fontSize: '0.75rem', fontStyle: 'italic'}}>
-                   (50% on Day 1, 50% on Last Day)
-                </small>
-              </div>
-            </ListGroupItem>
-          </div>
         </ListGroup>
+
+        <div className="payment-split">
+            <div className="split-row highlight">
+                <span>Pay Now (35%)</span>
+                <span className="amount">₹{advanceAmount}</span>
+            </div>
+            <div className="split-row text-muted">
+                <span>Pay Later</span>
+                <span>₹{dueAmount}</span>
+            </div>
+            <small>(50% on Day 1, 50% on Last Day)</small>
+        </div>
         
-        <Button className='btn primary__btn w-100 mt-4' onClick={handlePayment}>
+        <Button className='btn primary__btn w-100 mt-4 book-btn' onClick={handlePayment}>
           Book for ₹{advanceAmount}
         </Button>
-        <p className="text-center mt-2 text-muted" style={{fontSize: '0.8rem'}}>
-          Remaining ₹{dueAmount} payable at base camp.
-        </p>
       </div>
     </div>
   );

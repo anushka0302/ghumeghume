@@ -98,35 +98,54 @@ const ComparisonFeature = ({ imageSrc }) => {
         </div>
 
         {/* Main Button */}
-        <button 
-          onClick={() => setModalOpen(true)}
-          style={{
-            position: "relative",
-            zIndex: 10,
-            // ✅ UPDATED: Orange Gradient as requested
-            background: "linear-gradient(to right, #ff4000ff, #faa935ff)", 
-            color: "white",
-            padding: "12px 24px",
-            borderRadius: "9999px",
-            fontWeight: "bold",
-            fontSize: "14px",
-            textTransform: "uppercase",
-            letterSpacing: "0.5px",
-            border: "1px solid rgba(255,255,255,0.3)",
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            gap: "8px",
-            animation: "pulse-custom 2s infinite",
-            transition: "transform 0.2s",
-            // ✅ UPDATED: Orange Shadow
-            boxShadow: "0 4px 15px rgba(250, 169, 53, 0.4)"
-          }}
-          onMouseDown={(e) => e.currentTarget.style.transform = "scale(0.95)"}
-          onMouseUp={(e) => e.currentTarget.style.transform = "scale(1)"}
-        >
-           🎁 What's Included?
-        </button>
+            <button 
+              onClick={() => setModalOpen(true)}
+              style={{
+                position: "relative",
+                zIndex: 10,
+                background: "linear-gradient(to right, #ff4000ff, #faa935ff)", 
+                color: "white",
+                // ✅ Adjusted padding to fit two lines nicely
+                padding: "8px 30px", 
+                borderRadius: "50px",
+                border: "1px solid rgba(255,255,255,0.3)",
+                cursor: "pointer",
+                // ✅ FLEX COLUMN: Stacks text vertically
+                display: "flex",
+                flexDirection: "column", 
+                alignItems: "center",
+                justifyContent: "center",
+                animation: "pulse-custom 2s infinite",
+                transition: "transform 0.2s",
+                boxShadow: "0 4px 15px rgba(250, 169, 53, 0.4)",
+                lineHeight: "1.2" // Keeps lines close together
+              }}
+              onMouseDown={(e) => e.currentTarget.style.transform = "scale(0.95)"}
+              onMouseUp={(e) => e.currentTarget.style.transform = "scale(1)"}
+            >
+                {/* Top Line: Main Text */}
+                <span style={{ 
+                  fontWeight: "bold", 
+                  fontSize: "14px", 
+                  textTransform: "uppercase", 
+                  letterSpacing: "0.5px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px"
+                }}>
+                  🎁 What's Included?
+                </span>
+
+                {/* Bottom Line: Small Text */}
+                <span style={{ 
+                  fontSize: "10px", 
+                  fontWeight: "400", 
+                  opacity: 0.9, 
+                  marginTop: "2px" 
+                }}>
+                  (Click here)
+                </span>
+            </button>
       </div>
 
       {/* Modal Popup (Unchanged logic, keeps existing style) */}

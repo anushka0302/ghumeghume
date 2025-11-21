@@ -101,7 +101,7 @@ const TourDayaraBugyal = () => {
                   onChange={() => setIsGroupPricing(true)}
                   style={{ accentColor: "#fff", width: "16px", height: "16px" }}
                 />
-                Group (5+)
+                Group (6+)
                 <span style={{ fontSize: "0.7em", background: "#ef4444", color: "white", padding: "2px 6px", borderRadius: "4px", marginLeft: "6px", textTransform: "uppercase", letterSpacing: "0.5px"}}>Sale</span>
               </label>
 
@@ -156,11 +156,20 @@ const TourDayaraBugyal = () => {
             </button>
           </div>
 
-          <div className="stats-row">
-            <div><strong>Altitude</strong><br />12,000 ft</div>
-            <div><strong>Best Season</strong><br />Dec – May</div>
-            <div><strong>Difficulty</strong><br />Easy–Moderate</div>
-          </div>
+          <div className="stats-pill">
+                <div className="stat-item">
+                  <span className="stat-label">Altitude</span>
+                  <span className="stat-value">13,450 ft</span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-label">Best Season</span>
+                  <span className="stat-value">Nov – Mar & Apr – Jun</span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-label">Difficulty</span>
+                  <span className="stat-value">Easy–Moderate</span>
+                </div>
+              </div>
         </div>
       </section>
 

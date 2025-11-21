@@ -108,7 +108,7 @@ const HaruntaBugyalandNachiketaTal = () => {
                   onChange={() => setIsGroupPricing(true)}
                   style={{ accentColor: "#fff", width: "16px", height: "16px" }}
                 />
-                Group (5+)
+                Group (6+)
                 <span
                   style={{
                     fontSize: "0.7em",
@@ -205,20 +205,21 @@ const HaruntaBugyalandNachiketaTal = () => {
             </button>
           </div>
 
-          <div className="stats-row">
-            <div>
-              <strong>Altitude</strong>
-              <br />≈ 3,100 m
-            </div>
-            <div>
-              <strong>Best Season</strong>
-              <br />Oct – Jun
-            </div>
-            <div>
-              <strong>Difficulty</strong>
-              <br />Easy–Moderate
-            </div>
-          </div>
+          {/* ✅ NEW STATS PILL (Matches your image) */}
+              <div className="stats-pill">
+                <div className="stat-item">
+                  <span className="stat-label">Altitude</span>
+                  <span className="stat-value">13,450 ft</span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-label">Best Season</span>
+                  <span className="stat-value">Nov – Mar & Apr – Jun</span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-label">Difficulty</span>
+                  <span className="stat-value">Easy–Moderate</span>
+                </div>
+              </div>
         </div>
       </section>
 

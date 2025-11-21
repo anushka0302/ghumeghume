@@ -97,7 +97,7 @@ const Home = () => {
                               onChange={() => setPricingMode("group")}
                               style={{ display: 'none' }} // Hide the default radio circle
                             />
-                            Group (5+ Pax)
+                            Group (6+ Pax)
                             <span className="sale-badge">SALE</span>
                           </label>
 

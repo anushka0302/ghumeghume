@@ -8,8 +8,8 @@ const trek = [
     id: 1,
     title: "DAYARA BUGYAL",
     city: "Uttarkashi, Uttarakhand",
-    priceSolo: 15500,
-    priceGroup: 10500,
+    priceSolo: 10500,
+    priceGroup: 6499,
     days: "4 days / 3 nights",
     desc: "Dayara Bugyal is one of India’s most beautiful alpine meadows. In winter, these large grasslands turn into huge snow fields with 180° views.",
     included: [
@@ -27,8 +27,8 @@ const trek = [
     id: 2,
     title: "HARUNTA BUGYAL AND NACHIKETA TAL",
     city: "Uttarkashi, Uttarakhand",
-    priceSolo: 15500,
-    priceGroup: 10500,
+    priceSolo: 10500,
+    priceGroup: 6499,
     days: "4 days / 3 nights",
     desc: "A hidden gem offering peace, snow-capped peaks, and the serene Nachiketa Tal lake.",
     included: [
@@ -46,8 +46,8 @@ const trek = [
     id: 3,
     title: "DODITAL AND DARWA TOP",
     city: "Uttarkashi, Uttarakhand",
-    priceSolo: 17500,
-    priceGroup: 12500,
+    priceSolo: 12500,
+    priceGroup: 8499,
     days: "5 days / 4 nights",
     desc: "Trek to the emerald Ganesha-lake (Dodital) and climb Darwa Top for spectacular Himalayan views.",
     included: [
