@@ -1,5 +1,5 @@
 /* =========================
-    HERO SECTION
+   HERO SECTION
 ========================= */
 .home-hero {
   position: relative;
@@ -43,8 +43,7 @@
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
 }
 
-/* NEW: Makes "Popular Packages" title white and readable
-*/
+/* NEW: Makes "Popular Packages" title white and readable */
 .home-hero .featured__tour-title {
   color: #ffffff;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
@@ -86,7 +85,7 @@
 }
 
 /* =========================
-    VIDEO CAROUSEL
+   VIDEO CAROUSEL
 ========================= */
 .hero__video-wrapper {
   width: 100%;
@@ -96,6 +95,9 @@
   overflow: hidden;
   position: relative;
   box-shadow: 0px 18px 40px rgba(0, 0, 0, 0.25);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
 }
 
 /* Make slides bigger and center content */
@@ -104,6 +106,7 @@
   width: 100%;
   height: 480px;
   object-fit: cover;
+  display: block;
 }
 
 /* Dark overlay for readability */
@@ -166,11 +169,17 @@
 /* Fix hidden arrow issue */
 .video-carousel,
 .carousel {
-  overflow: visible !important;
+  position: relative;
+  z-index: 1;
+}
+.carousel-inner {
+  border-radius: 28px;
+  overflow: hidden;
+  -webkit-transform: translateZ(0); /* iPhone fix */
 }
 
 /* =========================
-    SEARCH BAR
+   SEARCH BAR
 ========================= */
 .hero .search-bar,
 .search__wrapper {
@@ -218,7 +227,7 @@
 }
 
 /* =========================
-    SERVICES
+   SERVICES
 ========================= */
 .services {
   padding: 3rem 0;
@@ -251,7 +260,7 @@
 }
 
 /* =========================
-    FEATURED TOURS
+   FEATURED TOURS
 ========================= */
 .featured__tour-title {
   font-size: clamp(1.6rem, 3vw, 2.25rem);
@@ -264,7 +273,7 @@
 }
 
 /* =========================
-    EXPERIENCE
+   EXPERIENCE
 ========================= */
 .experience {
   background: #f8fbff;
@@ -312,7 +321,7 @@
 }
 
 /* =========================
-    GALLERY
+   GALLERY
 ========================= */
 .masonry__img {
   border-radius: 18px;
@@ -324,47 +333,15 @@
 }
 
 /* =========================
-    RESPONSIVE FIXES
+   TOUR CARD STYLES
 ========================= */
-@media (max-width: 768px) {
-  .search__wrapper {
-    border-radius: 25px;
-    padding: 1.1rem;
-  }
-
-  .hero__video-wrapper video,
-  .hero__video-wrapper img {
-    height: 360px;
-  }
-}
-
-@media (max-width: 576px) {
-  .hero {
-    padding: 3rem 0 1rem;
-  }
-
-  .hero__video-wrapper video,
-  .hero__video-wrapper img {
-    height: 260px;
-  }
-
-  .search__wrapper {
-    flex-direction: column;
-    gap: 0.8rem;
-    padding: 0.9rem;
-  }
-
-  .carousel-control-prev,
-  .carousel-control-next {
-    width: 12%;
-  }
-}
-
-/* ====== 
-  MODIFIED: TOUR CARD STYLES 
-====== */
 .tour-card-row {
   margin-top: 2rem;
+  row-gap: 30px; 
+  display: flex; 
+  flex-wrap: wrap;
+  margin-right: -15px; 
+  margin-left: -15px;
 }
 
 .tour-card {
@@ -379,109 +356,94 @@
 }
 
 .tour-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0px 12px 32px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
 }
 
-/* NEW/MODIFIED: Wrapper for image and title overlay */
+/* Wrapper for image and title overlay */
 .tour-card-image-wrapper {
   position: relative;
-  height: 240px;
-  display: flex; /* For logo and badge positioning */
-  align-items: center; /* Vertically center title by default */
-  justify-content: center; /* Horizontally center title by default */
+  width: 100%;
+  height: 250px; /* Fixed height for images */
+  overflow: hidden;
 }
 
 .tour-card-image-wrapper img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 0; /* Background image */
+  transition: 0.3s;
 }
 
-/* REMOVED: .tour-card-logo rule was here */
-
-/* MODIFIED: "TREK" badge style */
+/* "TREK" badge style */
 .tour-trek-badge {
   position: absolute;
-  bottom: 20px;
-  right: 20px;
-  background: #faa935; /* Yellow background */
-  color: #000; /* Black text */
-  padding: 6px 12px; /* **FIX: Reduced padding** */
+  bottom: 15px;
+  right: 15px;
+  background: #faa935;
+  color: #fff;
+  padding: 5px 12px;
   border-radius: 5px;
-  font-weight: 700;
-  font-size: 0.9rem; /* **FIX: Reduced font size** */
-  z-index: 3;
+  font-weight: 600;
+  font-size: 0.9rem;
+  z-index: 2;
 }
 
-/* MODIFIED: Gradient overlay for text readability */
+/* Gradient overlay for text readability */
 .tour-card-image-wrapper::after {
   content: "";
   position: absolute;
-  inset: 0; /* Cover the whole image wrapper */
+  inset: 0; 
   background: linear-gradient(
     to top,
     rgba(0, 0, 0, 0.7) 0%,
     transparent 50%
-  ); /* Stronger gradient from bottom */
+  );
   z-index: 1;
 }
 
-/* MODIFIED: Title is now an overlay, with specific styling to match competitor */
+/* Title is now an overlay */
 .tour-title {
   position: absolute;
-  /* MODIFIED: Re-centered to 50% */
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); /* Center it precisely */
-  width: 95%; /* Take up most of the width */
-  text-align: center; /* Center text */
-
-  /* USER REQUEST: White and Bold (and larger) */
-  color: #ffffff;
-  font-weight: 900; /* Extra bold */
-  /* **FIX: Significantly reduced font size to make long titles fit** */
-  font-size: clamp(1.1rem, 3.5vw, 1.75rem);
-  line-height: 1.15; /* Tighter line height for multi-line titles */
-  text-transform: uppercase; /* Match competitor's style */
-  font-style: italic; /* Match competitor's style */
-
-  margin-bottom: 0;
-  z-index: 2; /* Above the gradient */
-  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.7); /* Stronger shadow for impact */
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-weight: 800;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  font-size: 1.4rem;
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  z-index: 2;
+  pointer-events: none;
 }
 
-/* MODIFIED: Content area (no title) */
+/* Content area (no title) */
 .tour-info {
-  /* MODIFIED: Reduced padding to save vertical space */
-  padding: 1.25rem;
-  text-align: left;
+  padding: 25px 20px;
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
-  padding-top: 1rem; /* Reduced top padding */
+  gap: 10px;
 }
 
-/* MODIFIED: Price styling */
+/* Price styling */
 .tour-price {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #ff8400;
-  margin-bottom: 4px;
+  margin-top: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-/* NEW: Duration styling */
+/* Duration styling */
 .tour-duration {
-  font-size: 0.95rem;
-  color: #555;
-  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: #777;
+  margin-bottom: 5px;
 }
 
-/* NEW: Wrapper for "Included" list */
+/* Wrapper for "Included" list */
 .tour-includes-wrapper {
   margin-bottom: 1.5rem;
   flex-grow: 1; /* Pushes button to the bottom */
@@ -489,79 +451,152 @@
 
 .tour-includes-wrapper h6 {
   font-size: 1rem;
-  font-weight: 600;
-  color: #000;
-  margin-bottom: 0.5rem;
+  font-weight: 700;
+  margin-bottom: 5px;
 }
 
-/* NEW: List styling */
+/* List styling */
 .tour-includes-list {
-  list-style-type: none;
-  padding-left: 0;
-  margin-bottom: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-/* MODIFIED: List items (tighter spacing) */
 .tour-includes-list li {
-  font-size: 0.85rem; /* Reduced font size */
-  color: #333;
-  margin-bottom: 4px; /* Reduced margin */
-  position: relative;
-  padding-left: 20px; /* Space for checkmark */
-  line-height: 1.4;
-}
-
-/* NEW: Checkmark icon */
-.tour-includes-list li::before {
-  content: "✔";
-  position: absolute;
-  left: 0;
-  top: 1px;
-  color: #00a700; /* Green */
-  font-weight: 600;
   font-size: 0.9rem;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
-/* MODIFIED: Button styling (full-width) */
+/* Add checkmark icon before list items */
+.tour-includes-list li::before {
+  content: "✔"; 
+  color: #5d3eff;
+  font-weight: bold;
+}
+
 .book-btn {
-  background: #ff8400;
-  border: none;
+  width: 100%;
+  background: #faa935;
   color: #fff;
-  padding: 10px 20px;
-  border-radius: 25px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: 0.25s;
-  width: 100%; /* Full width */
-  margin-top: auto; /* Pushes to bottom */
+  border: none;
+  padding: 10px 0;
+  border-radius: 50px;
+  font-weight: 600;
+  margin-top: 15px;
+  transition: 0.3s;
 }
 
 .book-btn:hover {
-  background: #ff6f00;
+  background: #e09220;
 }
 
 /* =========================
-  MOBILE / IPHONE FIXES
-========================= */
-@media screen and (max-width: 576px) {
-  /* 1) Remove the right-side overflow */
-  body,
-  html {
-    overflow-x: hidden !important;
-  }
+   1. TOGGLE BUTTONS
+   ========================= */
+.pricing-toggle-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  align-items: center;
+  margin: 20px 0 40px;
+  flex-wrap: wrap; /* Allows buttons to stack on very small screens */
+}
 
-  /* 2) Prevent hero causing horizontal scroll */
+.pricing-toggle-btn {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 50px;
+  border: 2px solid #faa935;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  font-size: 0.95rem; 
+  white-space: nowrap; /* Prevents text from breaking into two lines */
+  min-width: 140px; /* Ensures buttons don't get too tiny */
+}
+
+/* Active State */
+.pricing-toggle-btn.active {
+  background: #faa935;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(250, 169, 53, 0.3);
+}
+
+/* Inactive State */
+.pricing-toggle-btn.inactive {
+  background: #fff;
+  color: #333;
+}
+
+.sale-badge {
+  font-size: 0.7em;
+  background: #ef4444;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 4px;
+  text-transform: uppercase;
+}
+
+
+/* =========================================
+   ✅ FIX FOR IPHONE SE / SMALL SCREENS
+   ========================================= */
+@media (max-width: 576px) {
+
+  /* 1. ALLOW HERO TO GROW (Fixes overlap) */
   .home-hero {
-    overflow: hidden !important;
+    height: auto !important;
+    min-height: 100vh;       /* Ensure it fills screen */
+    padding-top: 90px;       /* Space for Navbar */
+    padding-bottom: 60px;    /* Space at bottom */
+    overflow: hidden !important; /* Prevent side scroll */
+    display: flex;
+    align-items: flex-start; /* Align top */
+    justify-content: center;
   }
 
-  /* 3) Fix spacing between tour cards */
+  /* 2. PUSH CONTENT DOWN */
+  .hero__content {
+    margin-top: 40px; 
+    width: 100%;
+    padding: 0 15px;
+  }
+
+  /* 3. ADJUST TITLE SIZE */
+  .hero__content h1 {
+    font-size: 2rem !important;
+    line-height: 1.3;
+    margin-bottom: 15px;
+  }
+
+  .hero__content p {
+    font-size: 1rem !important;
+  }
+
+  /* 4. FIX TOGGLE BUTTONS */
+  .pricing-toggle-container {
+    gap: 10px;
+  }
+  
+  .pricing-toggle-btn {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    flex: 1; /* Equal width on mobile */
+  }
+
+  /* 5. FIX CARD & IMAGE OVERFLOW */
   .tour-card {
-    margin-bottom: 16px !important;
+    margin-bottom: 30px;
+    border-radius: 15px;
   }
-
-  /* 4) Fix only oversized MEDIA — NOT icons */
+  
   .home-hero img,
   .tour-card img,
   .hero__video-wrapper img,
@@ -569,5 +604,12 @@
     max-width: 100% !important;
     height: auto !important;
     display: block !important;
+  }
+
+  /* 6. SEARCH BAR STACKING */
+  .search__wrapper {
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 0.9rem;
   }
 }

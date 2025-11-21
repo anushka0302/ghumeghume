@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { Container, Row, Col, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import '../styles/experience-page.css'; // We will create this new CSS file
@@ -16,6 +16,9 @@ import galleryImg3 from '../assets/images/gallery-03.jpg';
 import galleryImg4 from '../assets/images/gallery-04.jpg';
 
 const Meditation = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="experience-page">
 

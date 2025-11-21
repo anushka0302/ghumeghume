@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import { faqData } from '../assets/data/faqData';
 import '../styles/faq.css';
@@ -14,9 +14,12 @@ const FAQ = () => {
       setOpenIndex(index); // Open new one
     }
   };
-
+useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
-    <section className="faq-section">
+
+<section className="faq-section">
       <Container>
         <Row>
           <Col lg="12" className="text-center mb-5">

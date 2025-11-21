@@ -1,9 +1,12 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import { gearCategories } from '../assets/data/gearData';
 import '../styles/gear-list.css';
 
 const GearList = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <section className="gear-section">
       <Container>

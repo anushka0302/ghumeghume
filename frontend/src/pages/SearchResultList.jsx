@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import CommomSection from './../shared/CommomSection';
 import { Container,Row,Col } from 'reactstrap';
 import { useLocation } from 'react-router-dom';
@@ -8,7 +8,9 @@ import Newsletter from './../shared/Newsletter';
 const SearchResultList = () => {
   const location=useLocation();
   const [data]=useState(location.state);
-
+useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
 <CommomSection title={'Tour Search Result'}/>

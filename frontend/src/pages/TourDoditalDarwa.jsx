@@ -1,10 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "reactstrap";
 import PhotoSwipeLightbox from "photoswipe/lightbox";
 import "photoswipe/style.css";
 import "../styles/tourDayaraBugyal.css"; 
 import "../styles/tour-details.css";
 import Booking from "../components/Booking/Booking";
+// ✅ Import ComparisonFeature
+import ComparisonFeature from "../components/ComparisonFeature/ComparisonFeature";
+
+// ✅ Import centralized data
+import trek from "../assets/data/trek";
 
 import dodital_1 from "../assets/images/dodital_1.jpg";
 import dodital_2 from "../assets/images/dodital_2.jpg";
@@ -16,27 +21,33 @@ import dodital_7 from "../assets/images/dodital_7.jpg";
 import dodital_8 from "../assets/images/dodital_8.jpg";
 
 const TourDoditalDarwa = () => {
-  const tour = {
-    title: "Dodital – Darwa Pass Trek",
-    price: 12500,
-    reviews: [], 
-  };
+  // ✅ STATE: Pricing Toggle (Default: Group)
+  const [isGroupPricing, setIsGroupPricing] = useState(true);
+
+  // ✅ GET DATA: Find Dodital (Assuming ID 3 - Update if different in your trek.js)
+  const tourData = trek.find((t) => t.id === 3) || trek[2] || trek[0];
+
+  // ✅ CALCULATION: Determine active price based on toggle
+  const currentPrice = isGroupPricing ? tourData.priceGroup : tourData.priceSolo;
+  const discountAmount = tourData.priceSolo - tourData.priceGroup;
+
   const avgRating = 0; 
 
   const handleBookScroll = () => {
-    document.getElementById("booking-form").scrollIntoView({ behavior: "smooth" });
+    const bookingSection = document.getElementById("booking-form");
+    if (bookingSection) {
+      bookingSection.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   const galleryImages = [
-    dodital_1,
-    dodital_2,
-    dodital_3,
-    dodital_4,
-    dodital_5,
-    dodital_6,
-    dodital_7,
-    dodital_8,
+    dodital_1, dodital_2, dodital_3, dodital_4,
+    dodital_5, dodital_6, dodital_7, dodital_8,
   ];
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     let lightbox = new PhotoSwipeLightbox({
@@ -60,21 +71,157 @@ const TourDoditalDarwa = () => {
       >
         <div className="tour-hero-overlay"></div>
         <div className="tour-hero-content">
-          <h1>Dodital – Darwa Pass Trek</h1>
-          <p>5 Days • Easy–Moderate • Uttarkashi, Uttarakhand</p>
+          <h1>{tourData.title}</h1>
+          <p>{tourData.days} • Easy–Moderate • {tourData.city}</p>
+
           <div className="hero-action-wrap">
-            <div className="price-box">
-              <h3>₹{tour.price}</h3>
-              <span>Per Person • Limited Batch Size</span>
+            {/* ✅ PRICING TOGGLE BUTTONS */}
+            <div
+              style={{
+                marginBottom: "20px",
+                display: "flex",
+                justifyContent: "center",
+                gap: "15px",
+                alignItems: "center",
+              }}
+            >
+              {/* Group Option */}
+              <label
+                style={{
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  background: isGroupPricing ? "#faa935" : "rgba(255,255,255,0.2)",
+                  color: "white",
+                  padding: "10px 20px",
+                  borderRadius: "50px",
+                  border: "2px solid #faa935",
+                  fontWeight: "bold",
+                  transition: "all 0.3s",
+                  fontSize: "0.95rem",
+                  boxShadow: isGroupPricing
+                    ? "0 0 15px rgba(250, 169, 53, 0.5)"
+                    : "none",
+                }}
+              >
+                <input
+                  type="radio"
+                  name="pricing_hero"
+                  checked={isGroupPricing}
+                  onChange={() => setIsGroupPricing(true)}
+                  style={{ accentColor: "#fff", width: "16px", height: "16px" }}
+                />
+                Group (5+)
+                <span
+                  style={{
+                    fontSize: "0.7em",
+                    background: "#ef4444",
+                    color: "white",
+                    padding: "2px 6px",
+                    borderRadius: "4px",
+                    marginLeft: "6px",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.5px",
+                  }}
+                >
+                  Sale
+                </span>
+              </label>
+
+              {/* Solo Option */}
+              <label
+                style={{
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  background: !isGroupPricing ? "#faa935" : "rgba(255,255,255,0.2)",
+                  color: "white",
+                  padding: "10px 20px",
+                  borderRadius: "50px",
+                  border: "2px solid #faa935",
+                  fontWeight: "bold",
+                  transition: "all 0.3s",
+                  fontSize: "0.95rem",
+                }}
+              >
+                <input
+                  type="radio"
+                  name="pricing_hero"
+                  checked={!isGroupPricing}
+                  onChange={() => setIsGroupPricing(false)}
+                  style={{ accentColor: "#fff", width: "16px", height: "16px" }}
+                />
+                Solo / Duo
+              </label>
             </div>
+
+            {/* ✅ DYNAMIC PRICE DISPLAY */}
+            <div className="price-box" style={{ marginBottom: "20px" }}>
+              {isGroupPricing ? (
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                  <span
+                    style={{
+                      textDecoration: "line-through",
+                      color: "rgba(255,255,255,0.6)",
+                      fontSize: "1.1rem",
+                      marginBottom: "-5px",
+                    }}
+                  >
+                    ₹{tourData.priceSolo}
+                  </span>
+                  <h3
+                    style={{
+                      fontSize: "2.5rem",
+                      margin: "0",
+                      color: "#fff",
+                      textShadow: "0 2px 4px rgba(0,0,0,0.3)",
+                    }}
+                  >
+                    ₹{tourData.priceGroup}
+                  </h3>
+                  <span
+                    style={{
+                      background: "rgba(34, 197, 94, 0.2)",
+                      border: "1px solid rgba(34, 197, 94, 0.5)",
+                      color: "#4ade80",
+                      padding: "4px 10px",
+                      borderRadius: "20px",
+                      fontSize: "0.85rem",
+                      marginTop: "8px",
+                      fontWeight: "600",
+                    }}
+                  >
+                    You Save ₹{discountAmount} per person
+                  </span>
+                </div>
+              ) : (
+                <h3 style={{ fontSize: "2.5rem", margin: "0" }}>₹{tourData.priceSolo}</h3>
+              )}
+              <span style={{ marginTop: "10px", display: "block", fontSize: "0.9rem", opacity: 0.9 }}>
+                Per Person • Limited Batch Size
+              </span>
+            </div>
+
             <button className="book-btn-hero" onClick={handleBookScroll}>
               Book & Pay Now
             </button>
           </div>
+
           <div className="stats-row">
-            <div><strong>Altitude</strong><br />13,450 ft</div>
-            <div><strong>Best Season</strong><br />Nov – Mar & Apr – Jun</div>
-            <div><strong>Difficulty</strong><br />Easy–Moderate</div>
+            <div>
+              <strong>Altitude</strong>
+              <br />13,450 ft
+            </div>
+            <div>
+              <strong>Best Season</strong>
+              <br />Nov – Mar & Apr – Jun
+            </div>
+            <div>
+              <strong>Difficulty</strong>
+              <br />Easy–Moderate
+            </div>
           </div>
         </div>
       </section>
@@ -88,13 +235,14 @@ const TourDoditalDarwa = () => {
               {/* ✅ WHY THIS TREK */}
               <div className="tour-content"> 
                 <h2 className="section-title">Why Dodital – Darwa Pass?</h2>
+                
+                {/* ✅ COMPARISON FEATURE */}
+                <div style={{ marginBottom: "25px" }}>
+                  <ComparisonFeature imageSrc={dodital_1} />
+                </div>
+
                 <p className="section-desc">
-                  A calm Himalayan lake tucked deep inside cedar and pine forests,
-                  Dodital is considered the birthplace of Lord Ganesha. As you trek
-                  further to Darwa Pass, the forest trail opens into high snow fields
-                  with grand 360° views of Bandarpoonch, Kala Nag, and the Swargarohini
-                  range. It’s a perfect mix of peaceful camping, frozen lake views, and
-                  a proper winter summit push.
+                  {tourData.desc}
                 </p>
                 <ul className="checklist">
                   <li>Frozen Dodital Lake in winter</li>
@@ -128,8 +276,12 @@ const TourDoditalDarwa = () => {
             {/* === Booking Form Column === */}
             <Col lg="4">
               <div id="booking-form"> 
-                {/* Pass the correct tourId */}
-                <Booking tour={tour} avgRating={avgRating} tourId="dodital-darwa" />
+                {/* Pass updated data with CURRENT effective price to booking */}
+                <Booking 
+                  tour={{ ...tourData, price: currentPrice }} 
+                  avgRating={avgRating} 
+                  tourId="dodital-darwa" 
+                />
               </div>
             </Col>
           </Row>
@@ -210,7 +362,7 @@ const TourDoditalDarwa = () => {
           <h2>Ready to book your trek?</h2>
           <p>Snow views • Peaceful camping • Beginner friendly</p>
           <button className="book-btn-hero" onClick={handleBookScroll}>
-            Pay Now ₹{tour.price}
+            Pay Now ₹{currentPrice}
           </button>
         </Container>
       </section>

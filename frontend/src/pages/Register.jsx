@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext,useEffect } from "react";
 import { Container, Row, Col, Form, FormGroup, Button, Spinner } from "reactstrap";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/login.css"; // Uses the same CSS as the login page
@@ -51,7 +51,9 @@ const Register = () => {
     }
     setLoading(false);
   };
-
+useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <section className="auth-section">
       <Container>

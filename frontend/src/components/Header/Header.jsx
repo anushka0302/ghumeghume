@@ -28,15 +28,15 @@ const navLinks = [
       { path: '/expeditions/remote-workplace', display: 'Remote Workplace' },
     ],
   },
-  {
-    path: '#',
-    display: 'Trekking',
-    children: [
-      { path: '/tours', display: 'All Treks' }, // Kept your 'tours' link
-      { path: '/trekking/ebc', display: 'Everest Base Camp' },
-      { path: '/trekking/annapurna', display: 'Annapurna Circuit' },
-    ],
-  },
+  // {
+  //   path: '#',
+  //   display: 'Trekking',
+  //   children: [
+  //     { path: '/tours', display: 'All Treks' }, // Kept your 'tours' link
+  //     //{ path: '/trekking/ebc', display: 'Everest Base Camp' },
+  //     //{ path: '/trekking/annapurna', display: 'Annapurna Circuit' },
+  //   ],
+  // },
   {
     path: '#',
     display: 'Useful Info',
@@ -146,7 +146,10 @@ useEffect(() => {
                         isActive ? 'active__link' : ''
                       }
                       // NEW: Added click listener for mobile dropdowns
-                      onClick={handleMobileDropdown}
+                     onClick={(e) => {
+  handleMobileDropdown(e); // Keep existing dropdown logic
+  if (!item.children) toggleMenu(); // Close menu ONLY if it's a direct link (no dropdown)
+}}
                     >
                       {item.display}
                       {item.children && <i className='ri-arrow-down-s-line'></i>}
@@ -157,7 +160,7 @@ useEffect(() => {
                       <ul className='dropdown__menu'>
                         {item.children.map((child, childIndex) => (
                           <li className='dropdown__item' key={childIndex}>
-                            <NavLink to={child.path}>{child.display}</NavLink>
+                            <NavLink to={child.path} onClick={toggleMenu}>{child.display}</NavLink>
                           </li>
                         ))}
                       </ul>

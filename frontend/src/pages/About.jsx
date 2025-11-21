@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { Container, Row, Col, ListGroup, ListGroupItem } from 'reactstrap';
 import '../styles/about.css';
 
@@ -30,6 +30,9 @@ const cancellationPolicy = [
 ];
 
 const About = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="about-page">
       

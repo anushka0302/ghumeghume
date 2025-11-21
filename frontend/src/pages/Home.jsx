@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/home.css";
 import { Container, Row, Col } from "reactstrap";
-
-import SearchBar from "../shared/SearchBar";
+import { Link } from "react-router-dom";
 import ServiceList from "../services/ServiceList";
 import experinceImg from "../assets/images/experience.png";
 import MasonryImagesGallery from "../components/Image-gallery/MasonryImagesGallery";
@@ -12,60 +11,49 @@ import Subtitle from "../shared/Subtitle";
 import VideoCarousel from "../components/Carousel/VideoCarousel";
 import TrekComparison from '../components/Weather/TrekComparison';
 
-import { Link } from "react-router-dom";
-// REMOVED: import ghumeLogo from "../assets/images/logo.png";
+// ✅ Import Centralized Data
+import trek from "../assets/data/trek";
 
-const sampleTours = [
-  {
-    id: 1,
-    title: "DAYARA BUGYAL", // ALL CAPS for style
-    price: "₹ 10500 Per Person",
-    days: "4 days / 3 nights",
-    included: [
-      "Boating",
-      "Water sport",
-      "Stay",
-      "Campsite",
-      "Breakfast, Lunch & Dinner",
-    ],
-    img: "https://trekthehimalayas.com/images/DayaraBugyalTrek/GalleryDesktop/Winter/fa0b8d9c-5950-4e8d-855e-3a1e888ef6ba_Dayara-Bugyal-6.webp",
-    link: "/tour/dayara-bugyal",
-  },
-  {
-    id: 2,
-    title: "HARUNTA BUGYAL AND NACHIKETA TAL", // ALL CAPS for style
-    price: "₹ 10500 Per Person",
-    days: "4 days / 3 nights",
-    included: [
-      "Boating",
-      "Water sport",
-      "Stay",
-      "Campsite",
-      "Breakfast, Lunch & Dinner",
-    ],
-    img: "https://www.greatadventure.in/wp-content/uploads/2022/06/Harunta-Bugyal-4.jpeg.webp",
-    link: "/tour/harunta-bugyal-nachiketa-tal",
-  },
-  {
-    id: 3,
-    title: "DODITAL AND DARWA TOP", // ALL CAPS for style
-    price: "₹ 12500 Per Person",
-    days: "5 days / 4 nights",
-    included: [
-      "Boating",
-      "Water sport",
-      "Stay",
-      "Campsite",
-      "Breakfast, Lunch & Dinner",
-    ],
-    img: "https://www.tataneu.com/pages/travel/_next/image?url=https%3A%2F%2Fd1msew97rp2nin.cloudfront.net%2Fprodin%2Ftntravel%2Fblogimages%2FTawang-de665488-97bf-4e3d-8d06-7ba8c5f367a4.webp&w=3840&q=75",
-    link: "/tour/dodital-darwa-pass",
-  },
-];
-
-
+// ✅ Import Local Images for Tours
+// import dayaraImg from "../assets/images/dayara_g1.jpg";
+// import haruntaImg from "../assets/images/harunta_1.jpg";
+// import doditalImg from "../assets/images/dodital_1.jpg";
 
 const Home = () => {
+  // ✅ STATE: Toggle between 'group' and 'solo' pricing
+  const [pricingMode, setPricingMode] = useState('group'); // Default is group (discounted)
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  // ✅ CONFIGURATION: Map IDs to specific Home Page Images & Links
+  const featuredToursConfig = [
+    {
+      id: 1, // Dayara Bugyal
+      link: "/tour/dayara-bugyal",
+      included: ["Boating", "Water sport", "Stay", "Campsite", "Meals"],
+    },
+    {
+      id: 2, // Harunta Bugyal
+      link: "/tour/harunta-bugyal-nachiketa-tal",
+      included: ["Boating", "Water sport", "Stay", "Campsite", "Meals"],
+    },
+    {
+      id: 3, // Dodital
+      link: "/tour/dodital-darwa-pass",
+      included: ["Boating", "Water sport", "Stay", "Campsite", "Meals"],
+    },
+  ];
+
+  // ✅ MERGE: Combine config with centralized data
+  const featuredTours = featuredToursConfig.map((config) => {
+    const data = trek.find((t) => t.id === config.id) || {};
+    // 'data' contains the 'img' from trek.js. 
+    // We spread 'data' first, then 'config' to allow config to override if needed.
+    return { ...data, ...config }; 
+  });
+
   return (
     <>
       {/* HERO SECTION */}
@@ -94,25 +82,126 @@ const Home = () => {
                         <h2 className="featured__tour-title">
                           Popular Packages
                         </h2>
+
+                        {/* ✅ UPDATED RESPONSIVE TOGGLE BUTTONS */}
+                        <div className="pricing-toggle-container">
+                          
+                          {/* Group Option */}
+                          <label 
+                            className={`pricing-toggle-btn ${pricingMode === 'group' ? 'active' : 'inactive'}`}
+                          >
+                            <input
+                              type="radio"
+                              name="pricing"
+                              checked={pricingMode === "group"}
+                              onChange={() => setPricingMode("group")}
+                              style={{ display: 'none' }} // Hide the default radio circle
+                            />
+                            Group (5+ Pax)
+                            <span className="sale-badge">SALE</span>
+                          </label>
+
+                          {/* Solo Option */}
+                          <label 
+                            className={`pricing-toggle-btn ${pricingMode === 'solo' ? 'active' : 'inactive'}`}
+                          >
+                            <input
+                              type="radio"
+                              name="pricing"
+                              checked={pricingMode === "solo"}
+                              onChange={() => setPricingMode("solo")}
+                              style={{ display: 'none' }} // Hide the default radio circle
+                            />
+                            Solo / Duo
+                          </label>
+
+                        </div>
                       </Col>
                     </Row>
 
                     <Row className="tour-card-row">
-                      {sampleTours.map((tour) => (
+                      {featuredTours.map((tour) => (
                         <Col lg="4" md="6" sm="12" key={tour.id}>
                           <div className="tour-card">
                             <div className="tour-card-image-wrapper">
                               <img src={tour.img} alt={tour.title} />
-                              
-                              {/* REMOVED the logo <img> tag that was here */}
-                              
                               <h5 className="tour-title">{tour.title}</h5>
-                              {/* NEW: "TREK" badge */}
                               <span className="tour-trek-badge">TREK</span>
                             </div>
 
                             <div className="tour-info">
-                              <p className="tour-price">{tour.price}</p>
+                              {/* ✅ DYNAMIC PRICE DISPLAY */}
+                              <div
+                                className="tour-price"
+                                style={{
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  alignItems: "flex-start",
+                                }}
+                              >
+                                {pricingMode === "group" ? (
+                                  <>
+                                    {/* Cut Price */}
+                                    <span
+                                      style={{
+                                        textDecoration: "line-through",
+                                        color: "#999",
+                                        fontSize: "0.9rem",
+                                      }}
+                                    >
+                                      ₹ {tour.priceSolo}
+                                    </span>
+                                    {/* Discounted Price */}
+                                    <span
+                                      style={{
+                                        fontSize: "1.2rem",
+                                        fontWeight: "bold",
+                                        color: "#faa935",
+                                      }}
+                                    >
+                                      ₹ {tour.priceGroup}{" "}
+                                      <span
+                                        style={{
+                                          fontSize: "0.8rem",
+                                          color: "#555",
+                                          fontWeight: "normal",
+                                        }}
+                                      >
+                                        / Person
+                                      </span>
+                                    </span>
+                                    <span
+                                      style={{
+                                        fontSize: "0.8rem",
+                                        color: "green",
+                                      }}
+                                    >
+                                      (Save ₹{tour.priceSolo - tour.priceGroup})
+                                    </span>
+                                  </>
+                                ) : (
+                                  // Standard Price
+                                  <span
+                                    style={{
+                                      fontSize: "1.2rem",
+                                      fontWeight: "bold",
+                                      color: "#faa935",
+                                    }}
+                                  >
+                                    ₹ {tour.priceSolo}{" "}
+                                    <span
+                                      style={{
+                                        fontSize: "0.8rem",
+                                        color: "#555",
+                                        fontWeight: "normal",
+                                      }}
+                                    >
+                                      / Person
+                                    </span>
+                                  </span>
+                                )}
+                              </div>
+
                               <p className="tour-duration">{tour.days}</p>
 
                               <div className="tour-includes-wrapper">
@@ -154,8 +243,6 @@ const Home = () => {
           </Row>
         </Container>
       </section>
-
-      
 
       {/* EXPERIENCE SECTION */}
       <section className="experience">
@@ -227,12 +314,10 @@ const Home = () => {
           </Row>
         </Container>
       </section>
-     
-     
 
-    <Newsletter />
+      <Newsletter />
     </>
-    );
+  );
 };
 
 export default Home;

@@ -1,10 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "reactstrap";
 import PhotoSwipeLightbox from "photoswipe/lightbox";
 import "photoswipe/style.css";
 import "../styles/tourDayaraBugyal.css";
 import "../styles/tour-details.css"; 
 import Booking from "../components/Booking/Booking";
+// ✅ Correct import path based on your folder structure
+import ComparisonFeature from "../components/ComparisonFeature/ComparisonFeature";
+
+// ✅ Import centralized data
+import trek from "../assets/data/trek";
 
 import dayara_g1 from "../assets/images/dayara_g1.jpg";
 import dayara_g2 from "../assets/images/dayara_g2.jpg";
@@ -18,11 +23,17 @@ import dayara_g9 from "../assets/images/dayara_g9.jpg";
 import dayara_g10 from "../assets/images/dayara_g10.jpg";
 
 const TourDayaraBugyal = () => {
-  const tour = {
-    title: "Dayara Bugyal Trek",
-    price: 10500,
-    reviews: [], 
-  };
+  // ✅ STATE: Pricing Toggle (Default: Group)
+  const [isGroupPricing, setIsGroupPricing] = useState(true);
+
+  // ✅ GET DATA: Find Dayara Bugyal (ID 1) from the centralized file
+  // If ID 1 isn't found, fallback to the first item to prevent crash
+  const tourData = trek.find(t => t.id === 1) || trek[0];
+
+  // ✅ CALCULATION: Determine active price based on toggle
+  const currentPrice = isGroupPricing ? tourData.priceGroup : tourData.priceSolo;
+  const discountAmount = tourData.priceSolo - tourData.priceGroup;
+
   const avgRating = 0; 
 
   const handleBookScroll = () => {
@@ -33,6 +44,10 @@ const TourDayaraBugyal = () => {
     dayara_g1, dayara_g2, dayara_g3, dayara_g4, dayara_g5,
     dayara_g6, dayara_g7, dayara_g8, dayara_g9, dayara_g10,
   ];
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     let lightbox = new PhotoSwipeLightbox({
@@ -50,17 +65,97 @@ const TourDayaraBugyal = () => {
       <section className="tour-hero parallax-bg">
         <div className="tour-hero-overlay"></div>
         <div className="tour-hero-content">
-          <h1>Dayara Bugyal Trek</h1>
-          <p>4 Days • Easy–Moderate • Uttarkashi, Uttarakhand</p>
+          <h1>{tourData.title}</h1>
+          <p>{tourData.days} • Easy–Moderate • {tourData.city}</p>
+          
           <div className="hero-action-wrap">
-            <div className="price-box">
-              <h3>₹{tour.price}</h3>
-              <span>Per Person • Limited Batch Size</span>
+            
+            {/* ✅ PRICING TOGGLE BUTTONS */}
+            <div style={{ 
+              marginBottom: "20px", 
+              display: "flex", 
+              justifyContent: "center", 
+              gap: "15px",
+              alignItems: "center"
+            }}>
+              {/* Group Option */}
+              <label style={{ 
+                cursor: "pointer", 
+                display: "flex", 
+                alignItems: "center", 
+                gap: "8px",
+                background: isGroupPricing ? "#faa935" : "rgba(255,255,255,0.2)",
+                color: "white",
+                padding: "10px 20px",
+                borderRadius: "50px",
+                border: "2px solid #faa935",
+                fontWeight: "bold",
+                transition: "all 0.3s",
+                fontSize: "0.95rem",
+                boxShadow: isGroupPricing ? "0 0 15px rgba(250, 169, 53, 0.5)" : "none"
+              }}>
+                <input 
+                  type="radio" 
+                  name="pricing_hero" 
+                  checked={isGroupPricing} 
+                  onChange={() => setIsGroupPricing(true)}
+                  style={{ accentColor: "#fff", width: "16px", height: "16px" }}
+                />
+                Group (5+)
+                <span style={{ fontSize: "0.7em", background: "#ef4444", color: "white", padding: "2px 6px", borderRadius: "4px", marginLeft: "6px", textTransform: "uppercase", letterSpacing: "0.5px"}}>Sale</span>
+              </label>
+
+              {/* Solo Option */}
+              <label style={{ 
+                cursor: "pointer", 
+                display: "flex", 
+                alignItems: "center", 
+                gap: "8px",
+                background: !isGroupPricing ? "#faa935" : "rgba(255,255,255,0.2)",
+                color: "white",
+                padding: "10px 20px",
+                borderRadius: "50px",
+                border: "2px solid #faa935",
+                fontWeight: "bold",
+                transition: "all 0.3s",
+                fontSize: "0.95rem"
+              }}>
+                <input 
+                  type="radio" 
+                  name="pricing_hero" 
+                  checked={!isGroupPricing} 
+                  onChange={() => setIsGroupPricing(false)}
+                  style={{ accentColor: "#fff", width: "16px", height: "16px" }}
+                />
+                Solo / Duo
+              </label>
             </div>
+
+            {/* ✅ DYNAMIC PRICE DISPLAY */}
+            <div className="price-box" style={{ marginBottom: "20px" }}>
+              {isGroupPricing ? (
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <span style={{ textDecoration: "line-through", color: "rgba(255,255,255,0.6)", fontSize: "1.1rem", marginBottom: "-5px" }}>
+                    ₹{tourData.priceSolo}
+                  </span>
+                  <h3 style={{ fontSize: "2.5rem", margin: "0", color: "#fff", textShadow: "0 2px 4px rgba(0,0,0,0.3)" }}>
+                    ₹{tourData.priceGroup}
+                  </h3>
+                  <span style={{ background: "rgba(34, 197, 94, 0.2)", border: "1px solid rgba(34, 197, 94, 0.5)", color: "#4ade80", padding: "4px 10px", borderRadius: "20px", fontSize: "0.85rem", marginTop: "8px", fontWeight: "600" }}>
+                    You Save ₹{discountAmount} per person
+                  </span>
+                </div>
+              ) : (
+                <h3 style={{ fontSize: "2.5rem", margin: "0" }}>₹{tourData.priceSolo}</h3>
+              )}
+              <span style={{ marginTop: "10px", display: "block", fontSize: "0.9rem", opacity: 0.9 }}>Per Person • Limited Batch Size</span>
+            </div>
+
             <button className="book-btn-hero" onClick={handleBookScroll}>
               Book & Pay Now
             </button>
           </div>
+
           <div className="stats-row">
             <div><strong>Altitude</strong><br />12,000 ft</div>
             <div><strong>Best Season</strong><br />Dec – May</div>
@@ -78,11 +173,14 @@ const TourDayaraBugyal = () => {
               {/* ✅ WHY THIS TREK */}
               <div className="tour-content"> 
                 <h2 className="section-title">Why Dayara Bugyal?</h2>
+                
+                {/* ✅ COMPARISON FEATURE */}
+                <div style={{ marginBottom: "25px" }}>
+                  <ComparisonFeature imageSrc={dayara_g1} />
+                </div>
+
                 <p className="section-desc">
-                  Dayara Bugyal is one of India’s most beautiful alpine meadows. In winter,
-                  these large grasslands turn into huge snow fields with 180° views of
-                  Bandarpoonch, Srikanth, Black Peak and Gangotri range. The trek is short,
-                  scenic, and perfect for beginners as well as families.
+                  {tourData.desc}
                 </p>
                 <ul className="checklist">
                   <li>One of the most scenic meadows of Uttarakhand</li>
@@ -116,7 +214,12 @@ const TourDayaraBugyal = () => {
             {/* === Booking Form Column === */}
             <Col lg="4">
               <div id="booking-form"> 
-                <Booking tour={tour} avgRating={avgRating} tourId="dayara-bugyal" />
+                {/* Pass updated data with CURRENT effective price to booking */}
+                <Booking 
+                  tour={{ ...tourData, price: currentPrice }} 
+                  avgRating={avgRating} 
+                  tourId="dayara-bugyal" 
+                />
               </div>
             </Col>
           </Row>
@@ -181,11 +284,6 @@ const TourDayaraBugyal = () => {
             <li><strong>Uttarkashi:</strong> Water sports + spiritual & mountaineering spots</li>
             <li>Perfect beginner-friendly Himalayan trek</li>
           </ul>
-          {/* <div className="text-center mt-4">
-            <button className="book-btn-hero" onClick={handleBookScroll}>
-              Book Now ₹{tour.price}
-            </button>
-          </div> */}
         </Container>
       </section>
       
@@ -195,7 +293,7 @@ const TourDayaraBugyal = () => {
           <h2>Ready to book your trek?</h2>
           <p>Snowy meadows • Beginner friendly • Easy travel access</p>
           <button className="book-btn-hero" onClick={handleBookScroll}>
-            Pay Now ₹{tour.price}
+            Pay Now ₹{currentPrice}
           </button>
         </Container>
       </section>

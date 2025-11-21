@@ -1,10 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "reactstrap";
 import PhotoSwipeLightbox from "photoswipe/lightbox";
 import "photoswipe/style.css";
-import "../styles/tourDayaraBugyal.css"; 
-import "../styles/tour-details.css"; 
+import "../styles/tourDayaraBugyal.css";
+import "../styles/tour-details.css";
 import Booking from "../components/Booking/Booking";
+// ✅ Import ComparisonFeature only once
+import ComparisonFeature from "../components/ComparisonFeature/ComparisonFeature";
+
+// ✅ Import centralized data
+import trek from "../assets/data/trek";
 
 import h1 from "../assets/images/harunta_1.jpg";
 import h2 from "../assets/images/harunta_2.jpg";
@@ -14,18 +19,31 @@ import h5 from "../assets/images/harunta_5.jpg";
 import h6 from "../assets/images/harunta_6.jpg";
 
 const HaruntaBugyalandNachiketaTal = () => {
-  const tour = {
-    title: "Harunta Bugyal & Nachiketa Tal Trek",
-    price: 10500,
-    reviews: [], 
-  };
-  const avgRating = 0; 
+  // ✅ STATE: Pricing Toggle (Default: Group)
+  const [isGroupPricing, setIsGroupPricing] = useState(true);
+
+  // ✅ GET DATA: Find Harunta Bugyal (ID 2) from the centralized file
+  // Note: If your trek.js uses a different ID for this trek, update the '2' below
+  const tourData = trek.find((t) => t.id === 2) || trek[1] || trek[0];
+
+  // ✅ CALCULATION: Determine active price based on toggle
+  const currentPrice = isGroupPricing ? tourData.priceGroup : tourData.priceSolo;
+  const discountAmount = tourData.priceSolo - tourData.priceGroup;
+
+  const avgRating = 0;
 
   const handleBookScroll = () => {
-    document.getElementById("booking-form").scrollIntoView({ behavior: "smooth" });
+    const bookingSection = document.getElementById("booking-form");
+    if (bookingSection) {
+      bookingSection.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   const galleryImages = [h1, h2, h3, h4, h5, h6];
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     let lightbox = new PhotoSwipeLightbox({
@@ -49,21 +67,157 @@ const HaruntaBugyalandNachiketaTal = () => {
       >
         <div className="tour-hero-overlay"></div>
         <div className="tour-hero-content">
-          <h1>Harunta Bugyal & Nachiketa Tal Trek</h1>
-          <p>5 Days • Easy–Moderate • Uttarkashi, Uttarakhand</p>
+          <h1>{tourData.title}</h1>
+          <p>{tourData.days} • Easy–Moderate • {tourData.city}</p>
+
           <div className="hero-action-wrap">
-            <div className="price-box">
-              <h3>₹{tour.price}</h3>
-              <span>Per Person • Limited Batch Size</span>
+            {/* ✅ PRICING TOGGLE BUTTONS */}
+            <div
+              style={{
+                marginBottom: "20px",
+                display: "flex",
+                justifyContent: "center",
+                gap: "15px",
+                alignItems: "center",
+              }}
+            >
+              {/* Group Option */}
+              <label
+                style={{
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  background: isGroupPricing ? "#faa935" : "rgba(255,255,255,0.2)",
+                  color: "white",
+                  padding: "10px 20px",
+                  borderRadius: "50px",
+                  border: "2px solid #faa935",
+                  fontWeight: "bold",
+                  transition: "all 0.3s",
+                  fontSize: "0.95rem",
+                  boxShadow: isGroupPricing
+                    ? "0 0 15px rgba(250, 169, 53, 0.5)"
+                    : "none",
+                }}
+              >
+                <input
+                  type="radio"
+                  name="pricing_hero"
+                  checked={isGroupPricing}
+                  onChange={() => setIsGroupPricing(true)}
+                  style={{ accentColor: "#fff", width: "16px", height: "16px" }}
+                />
+                Group (5+)
+                <span
+                  style={{
+                    fontSize: "0.7em",
+                    background: "#ef4444",
+                    color: "white",
+                    padding: "2px 6px",
+                    borderRadius: "4px",
+                    marginLeft: "6px",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.5px",
+                  }}
+                >
+                  Sale
+                </span>
+              </label>
+
+              {/* Solo Option */}
+              <label
+                style={{
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  background: !isGroupPricing ? "#faa935" : "rgba(255,255,255,0.2)",
+                  color: "white",
+                  padding: "10px 20px",
+                  borderRadius: "50px",
+                  border: "2px solid #faa935",
+                  fontWeight: "bold",
+                  transition: "all 0.3s",
+                  fontSize: "0.95rem",
+                }}
+              >
+                <input
+                  type="radio"
+                  name="pricing_hero"
+                  checked={!isGroupPricing}
+                  onChange={() => setIsGroupPricing(false)}
+                  style={{ accentColor: "#fff", width: "16px", height: "16px" }}
+                />
+                Solo / Duo
+              </label>
             </div>
+
+            {/* ✅ DYNAMIC PRICE DISPLAY */}
+            <div className="price-box" style={{ marginBottom: "20px" }}>
+              {isGroupPricing ? (
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                  <span
+                    style={{
+                      textDecoration: "line-through",
+                      color: "rgba(255,255,255,0.6)",
+                      fontSize: "1.1rem",
+                      marginBottom: "-5px",
+                    }}
+                  >
+                    ₹{tourData.priceSolo}
+                  </span>
+                  <h3
+                    style={{
+                      fontSize: "2.5rem",
+                      margin: "0",
+                      color: "#fff",
+                      textShadow: "0 2px 4px rgba(0,0,0,0.3)",
+                    }}
+                  >
+                    ₹{tourData.priceGroup}
+                  </h3>
+                  <span
+                    style={{
+                      background: "rgba(34, 197, 94, 0.2)",
+                      border: "1px solid rgba(34, 197, 94, 0.5)",
+                      color: "#4ade80",
+                      padding: "4px 10px",
+                      borderRadius: "20px",
+                      fontSize: "0.85rem",
+                      marginTop: "8px",
+                      fontWeight: "600",
+                    }}
+                  >
+                    You Save ₹{discountAmount} per person
+                  </span>
+                </div>
+              ) : (
+                <h3 style={{ fontSize: "2.5rem", margin: "0" }}>₹{tourData.priceSolo}</h3>
+              )}
+              <span style={{ marginTop: "10px", display: "block", fontSize: "0.9rem", opacity: 0.9 }}>
+                Per Person • Limited Batch Size
+              </span>
+            </div>
+
             <button className="book-btn-hero" onClick={handleBookScroll}>
               Book & Pay Now
             </button>
           </div>
+
           <div className="stats-row">
-            <div><strong>Altitude</strong><br />≈ 3,100 m</div>
-            <div><strong>Best Season</strong><br />Oct – Jun</div>
-            <div><strong>Difficulty</strong><br />Easy–Moderate</div>
+            <div>
+              <strong>Altitude</strong>
+              <br />≈ 3,100 m
+            </div>
+            <div>
+              <strong>Best Season</strong>
+              <br />Oct – Jun
+            </div>
+            <div>
+              <strong>Difficulty</strong>
+              <br />Easy–Moderate
+            </div>
           </div>
         </div>
       </section>
@@ -75,13 +229,16 @@ const HaruntaBugyalandNachiketaTal = () => {
             {/* === Main Content Column === */}
             <Col lg="8">
               {/* ✅ WHY THIS TREK */}
-              <div className="tour-content"> 
+              <div className="tour-content">
                 <h2 className="section-title">Why Harunta Bugyal & Nachiketa Tal?</h2>
+
+                {/* ✅ COMPARISON FEATURE - Used exactly once here */}
+                <div style={{ marginBottom: "25px" }}>
+                  <ComparisonFeature imageSrc={h1} />
+                </div>
+
                 <p className="section-desc">
-                  A peaceful Himalayan trek featuring forest trails, alpine meadows,
-                  a sacred lake, and Uttarkashi adventure activities. Perfect for
-                  beginners, families and nature lovers who want both trekking and
-                  sightseeing without high altitude difficulty.
+                  {tourData.desc}
                 </p>
                 <ul className="checklist">
                   <li>Velvet alpine meadows with snow peaks</li>
@@ -93,7 +250,7 @@ const HaruntaBugyalandNachiketaTal = () => {
               </div>
 
               {/* ✅ PHOTO GALLERY */}
-              <div className="tour-content"> 
+              <div className="tour-content">
                 <h2 className="section-title text-center">Photo Gallery</h2>
                 <p className="gallery-tagline">Click to view fullscreen • Zoom enabled</p>
                 <div id="harunta-gallery" className="gallery-grid">
@@ -114,8 +271,13 @@ const HaruntaBugyalandNachiketaTal = () => {
 
             {/* === Booking Form Column === */}
             <Col lg="4">
-              <div id="booking-form"> 
-                <Booking tour={tour} avgRating={avgRating} tourId="harunta-bugyal" />
+              <div id="booking-form">
+                {/* Pass updated data with CURRENT effective price to booking */}
+                <Booking
+                  tour={{ ...tourData, price: currentPrice }}
+                  avgRating={avgRating}
+                  tourId="harunta-bugyal"
+                />
               </div>
             </Col>
           </Row>
@@ -132,17 +294,16 @@ const HaruntaBugyalandNachiketaTal = () => {
               <p>
                 Drive from Dehradun to Uttarkashi (6–8 hrs). Scenic valleys and
                 river views. Check-in at hotel/guesthouse. Optional visit to
-                Kashi Vishwanath Temple and evening riverside walk.
-                Overnight in Uttarkashi.
+                Kashi Vishwanath Temple and evening riverside walk. Overnight in
+                Uttarkashi.
               </p>
             </div>
             <div className="timeline-item">
               <h4>Day 2: Uttarkashi → Harunta Bugyal</h4>
               <p>
-                After breakfast, drive to trek starting point. Trek 7–8 km
-                (3–4 hrs) through Banj, Buransh & Oak forests. Wide meadows
-                with Himalayan peaks. Camping/homestay near Bugyal.
-                Overnight stay.
+                After breakfast, drive to trek starting point. Trek 7–8 km (3–4
+                hrs) through Banj, Buransh & Oak forests. Wide meadows with
+                Himalayan peaks. Camping/homestay near Bugyal. Overnight stay.
               </p>
             </div>
             <div className="timeline-item">
@@ -150,16 +311,16 @@ const HaruntaBugyalandNachiketaTal = () => {
               <p>
                 Breakfast at camp. Descend to Chaurangi Khal and continue to
                 Nachiketa Tal (3–6 km; 2–4 hrs). Visit the serene lake and Nag
-                Devta temple. Packed lunch at lakeside. Drive back to
-                Uttarkashi by evening. Overnight stay.
+                Devta temple. Packed lunch at lakeside. Drive back to Uttarkashi
+                by evening. Overnight stay.
               </p>
             </div>
             <div className="timeline-item">
               <h4>Day 4: Uttarkashi • Rafting & Sightseeing</h4>
               <p>
-                Whitewater rafting on Bhagirathi/Assi Ganga (grade 2–4).
-                Optional angling, cycling or local sightseeing: NIM,
-                temples and markets. Overnight in Uttarkashi.
+                Whitewater rafting on Bhagirathi/Assi Ganga (grade 2–4). Optional
+                angling, cycling or local sightseeing: NIM, temples and markets.
+                Overnight in Uttarkashi.
               </p>
             </div>
             <div className="timeline-item">
@@ -192,7 +353,7 @@ const HaruntaBugyalandNachiketaTal = () => {
           <h2>Ready to explore Harunta Bugyal & Nachiketa Tal?</h2>
           <p>Nature • Peaceful forest trails • Perfect beginner trek</p>
           <button className="book-btn-hero" onClick={handleBookScroll}>
-            Pay Now ₹{tour.price}
+            Pay Now ₹{currentPrice}
           </button>
         </Container>
       </section>

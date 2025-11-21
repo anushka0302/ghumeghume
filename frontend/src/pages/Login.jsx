@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext,useEffect } from "react";
 import { Container, Row, Col, Form, FormGroup, Button, Spinner } from "reactstrap";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/login.css"; // We will replace this CSS
@@ -52,7 +52,9 @@ const Login = () => {
     }
     setLoading(false);
   };
-
+useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     // The section now covers the whole page
     <section className="auth-section">
