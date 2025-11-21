@@ -1,6 +1,6 @@
 import React, { useState, useContext,useEffect } from "react";
 import { Container, Row, Col, Form, FormGroup, Button, Spinner } from "reactstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate,useLocation } from "react-router-dom";
 import "../styles/login.css"; // Uses the same CSS as the login page
 import { AuthContext } from "../context/AuthContext";
 import { BASE_URL } from "../utils/config";
@@ -19,7 +19,7 @@ const Register = () => {
 
   const { dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
-
+const location = useLocation();
   const handleChange = (e) => {
     setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
@@ -45,7 +45,9 @@ const Register = () => {
       }
 
       dispatch({ type: "REGISTER_SUCCESS" });
-      navigate("/login");
+      //navigate("/login");
+      const from = location.state?.from || "/";
+      navigate("/login", { state: { from: from } });
     } catch (err) {
       alert("Registration failed");
     }

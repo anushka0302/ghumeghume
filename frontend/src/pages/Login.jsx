@@ -1,6 +1,6 @@
 import React, { useState, useContext,useEffect } from "react";
 import { Container, Row, Col, Form, FormGroup, Button, Spinner } from "reactstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "../styles/login.css"; // We will replace this CSS
 import { AuthContext } from "../context/AuthContext";
 import { BASE_URL } from "../utils/config";
@@ -18,7 +18,7 @@ const Login = () => {
 
   const { dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
-
+const location = useLocation();
   const handleChange = (e) => {
     setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
@@ -46,7 +46,9 @@ const Login = () => {
       }
 
       dispatch({ type: "LOGIN_SUCCESS", payload: result.data });
-      navigate("/");
+      //navigate("/");
+      const redirectPath = location.state?.from || "/";
+      navigate(redirectPath);
     } catch (err) {
       dispatch({ type: "LOGIN_FAILURE", payload: err.message });
     }

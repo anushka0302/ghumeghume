@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import './booking.css';
 import { Form, FormGroup, ListGroup, ListGroupItem, Button } from 'reactstrap';
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import { AuthContext } from '../../context/AuthContext';
 import { BASE_URL } from '../../utils/config';
 
@@ -15,8 +15,10 @@ import { allTourDates } from '../../assets/data/tourDates';
 const RAZORPAY_KEY = process.env.REACT_APP_RAZORPAY_API_KEY;
 
 const Booking = ({ tour, avgRating, tourId }) => {
+  
   const { price, reviews, title, priceGroup } = tour;
   const navigate = useNavigate();
+  const location = useLocation();
   const { user } = useContext(AuthContext);
 
   // --- Pricing Logic ---
@@ -100,12 +102,85 @@ const Booking = ({ tour, avgRating, tourId }) => {
   const advanceAmount = Math.round(totalAmount * 0.35);
   const dueAmount = totalAmount - advanceAmount;
 
+// useEffect(() => {
+//     const savedData = sessionStorage.getItem('tempBookingData');
+    
+//     if (savedData) {
+//       const parsedData = JSON.parse(savedData);
+
+//       // Only autofill if it matches the current tour (prevents wrong data on wrong tour)
+//       if (parsedData.tourName === title) {
+//         setBooking((prev) => ({
+//           ...prev,
+//           guestSize: parsedData.guestSize,
+//           phone: parsedData.phone || '',
+//           fullName: parsedData.fullName || '',
+//           // Restore date if it exists
+//           bookAt: parsedData.bookAt ? new Date(parsedData.bookAt) : '',
+//         }));
+
+//         if (parsedData.dateMode) {
+//           setDateMode(parsedData.dateMode);
+//         }
+//       }
+      
+//       // Optional: Clear storage so it doesn't persist forever
+//       // sessionStorage.removeItem('tempBookingData'); 
+//     }
+//   }, [title]);
+useEffect(() => {
+    const savedData = sessionStorage.getItem('tempBookingData');
+    
+    if (savedData) {
+      const parsedData = JSON.parse(savedData);
+
+      // Only autofill if it matches the current tour
+      if (parsedData.tourName === title) {
+        setBooking((prev) => ({
+          ...prev,
+          // If the user typed a name before login, use it. 
+          // If not, keep the existing state (which might be empty or from user context)
+          fullName: parsedData.fullName || prev.fullName, 
+          phone: parsedData.phone || prev.phone,
+          guestSize: parsedData.guestSize,
+          
+          // Restore date if it exists
+          bookAt: parsedData.bookAt ? new Date(parsedData.bookAt) : '',
+        }));
+
+        if (parsedData.dateMode) {
+          setDateMode(parsedData.dateMode);
+        }
+      }
+      
+      // CRITICAL CHANGE: Uncomment this to handle "new user/updating" logic
+      sessionStorage.removeItem('tempBookingData'); 
+    }
+}, [title, user]); // Added 'user' dependency so it re-runs when login completes
+
+
   // --- Payment Submission ---
   const handlePayment = async (e) => {
     e.preventDefault();
 
-    if (!user) return navigate("/register");
+    // if (!user) return navigate("/register");
+if (!user) {
+      alert("Please sign in to confirm your booking details.");
 
+      // 1. Save current form details to Session Storage
+      const tempBookingData = {
+        tourName: title,
+        guestSize: booking.guestSize,
+        phone: booking.phone,
+        fullName: booking.fullName,
+        dateMode: dateMode,
+        bookAt: booking.bookAt, // Note: Dates turn to strings in JSON
+      };
+      sessionStorage.setItem('tempBookingData', JSON.stringify(tempBookingData));
+
+      // 2. Navigate to Register, passing the current location to return to
+      return navigate("/register", { state: { from: location.pathname } });
+    }
     if (!booking.fullName || !booking.phone || !booking.bookAt || !booking.guestSize) {
       return alert('Please fill in all information and select a date.');
     }
@@ -186,10 +261,10 @@ const Booking = ({ tour, avgRating, tourId }) => {
         <h5>Book Your Adventure</h5>
         <Form className='booking__info-form' onSubmit={handlePayment}>
           <FormGroup>
-            <input type='text' placeholder='Full name' id='fullName' required onChange={handleChange} className="custom-input"/>
+            <input type='text' placeholder='Full name' id='fullName' required onChange={handleChange} className="custom-input" value={booking.fullName}/>
           </FormGroup>
           <FormGroup>
-            <input type='number' placeholder='Phone' id='phone' required onChange={handleChange} className="custom-input"/>
+            <input type='number' placeholder='Phone' id='phone' required onChange={handleChange} className="custom-input" value={booking.phone}/>
           </FormGroup>
           <FormGroup>
             <label className="input-label">Group Size (Min: {minGuestSize})</label>
