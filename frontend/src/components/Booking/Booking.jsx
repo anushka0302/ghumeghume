@@ -99,7 +99,7 @@ const Booking = ({ tour, avgRating, tourId }) => {
   const subTotal = baseAmount + serviceFee;
   const gstAmount = Math.round(subTotal * 0.05);
   const totalAmount = subTotal + gstAmount;
-  const advanceAmount = Math.round(totalAmount * 0.35);
+  const advanceAmount = Math.round(totalAmount * 0.25);
   const dueAmount = totalAmount - advanceAmount;
 
 // useEffect(() => {
@@ -339,7 +339,7 @@ if (!user) {
 
         <div className="payment-split">
             <div className="split-row highlight">
-                <span>Pay Now (35%)</span>
+                <span>Pay Now (25%)</span>
                 <span className="amount">₹{advanceAmount}</span>
             </div>
             <div className="split-row text-muted">
