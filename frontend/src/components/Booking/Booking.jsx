@@ -54,25 +54,21 @@ const Booking = ({ tour, avgRating, tourId }) => {
 
   // --- Handler: Input Changes (The Fix) ---
   const handleChange = (e) => {
-    const { id, value } = e.target;
+  const { id, value } = e.target;
 
-    if (id === "guestSize") {
-      // 1. Allow user to clear the input (empty string)
-      if (value === "") {
-        setBooking((prev) => ({ ...prev, guestSize: "" }));
-        return;
-      }
-      
-      const num = Number(value);
-      // 2. Only block negative numbers. Allow smaller numbers temporarily while typing.
-      if (num < 0) return; 
+  if (id === "guestSize") {
+    const num = Number(value);
 
-      setBooking((prev) => ({ ...prev, guestSize: num }));
-      return;
-    }
+    // BLOCK values smaller than minGuestSize
+    if (num < minGuestSize || value === "") return;
 
-    setBooking((prev) => ({ ...prev, [id]: value }));
-  };
+    setBooking((prev) => ({ ...prev, guestSize: num }));
+    return;
+  }
+
+  setBooking((prev) => ({ ...prev, [id]: value }));
+};
+
 
   // --- Handler: Auto-Correct on Blur (Leaving the box) ---
   const handleBlur = () => {
