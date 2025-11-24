@@ -19,7 +19,8 @@ const port = process.env.PORT || 8000;
 // CORS Configuration
 const allowedOrigins = [
   'http://localhost:3000',
-  'https://www.ghumeghume.com', 
+  'https://www.ghumeghume.com',
+  'https://www.ghumeghume.in' 
 ];
 
 const corsOptions = {
