@@ -48,9 +48,10 @@ const location = useLocation();
       //navigate("/login");
       const from = location.state?.from || "/";
       navigate("/login", { state: { from: from } });
-    } catch (err) {
-      alert("Registration failed");
-    }
+    } catch (error) {
+  alert("Error: " + error.message + " | " + JSON.stringify(error));
+  console.error(error);
+}
     setLoading(false);
   };
 useEffect(() => {
