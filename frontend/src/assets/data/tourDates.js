@@ -8,7 +8,7 @@ export const allTourDates = {
         { id: "DB_DEC13", date: "Dec 13 (Sat) - Dec 17 (Wed)", tag: "Peak Snow", status: "AVBL" },
         { id: "DB_DEC20", date: "Dec 20 (Sat) - Dec 24 (Wed)", tag: "Christmas Eve", status: "Filling Fast" },
         { id: "DB_DEC24", date: "Dec 24 (Wed) - Dec 28 (Sun)", tag: "Christmas Special", status: "Filling Fast" },
-        { id: "DB_DEC27", date: "Dec 27 (Sat) - Dec 31 (Wed)", tag: "NYE Celebration", status: "Sold Out" },
+        { id: "DB_DEC27", date: "Dec 27 (Sat) - Dec 31 (Wed)", tag: "NYE Celebration", status: "Filling Fast" },
         { id: "DB_DEC30", date: "Dec 30 (Tue) - Jan 03 (Sat)", tag: "New Year Special", status: "Filling Fast" },
       ]
     },

@@ -1,1 +1,0 @@
-{"version":3,"file":"static/css/412.14c9c820.chunk.css","mappings":"AAAA,mBAEA,WAAY,CADZ,cAGA,CACA,eAEG,qCAAsC,CADtC,gBAEH","sources":["styles/thank-you.css"],"sourcesContent":[".thank__you span i{\nfont-size: 4rem;\ncolor: green;\n\n}\n.thank__you h1{\n   font-size: 3.6rem;\n   font-family: var(--subtitle-font-name);\n}"],"names":[],"sourceRoot":""}

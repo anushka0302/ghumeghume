@@ -8,6 +8,7 @@ import { AuthProvider } from '../auth/AuthContext';
 const Home = React.lazy(() => import('../pages/Home'));
 const Tours = React.lazy(() => import('../pages/Tours'));
 const TourDetails = React.lazy(() => import('../pages/TourDetails'));
+const Trend2026 = React.lazy(() => import('../pages/Trend2026'));
 const SearchResultList = React.lazy(() => import('../pages/SearchResultList'));
 const About = React.lazy(() => import('../pages/About'));
 const WhyUs = React.lazy(() => import('../components/WhyUs/WhyUs'));
@@ -60,7 +61,7 @@ const Routers = () => {
           <Route path="/tour/harunta-bugyal-nachiketa-tal" element={<HaruntaBugyalandNachiketaTal />} />
           <Route path="/tour/dodital-darwa-pass" element={<TourDoditalDarwa />} />
           <Route path="/tour/:id" element={<TourDetails />} />
-
+          <Route path='/himalayas-2026' element={<Trend2026 />} />
           <Route path="/tours" element={<Tours />} />
           <Route path="/about" element={<About />} />
           

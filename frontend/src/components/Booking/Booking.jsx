@@ -8,7 +8,7 @@ import { BASE_URL } from '../../utils/config';
 import DateSlots from './DateSlots';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import logo from "../../assets/images/logo.png"; 
+//import logo from "../../assets/images/logo.png"; 
 
 import { allTourDates } from '../../assets/data/tourDates';
 
@@ -26,7 +26,9 @@ const Booking = ({ tour, avgRating, tourId }) => {
   const minGuestSize = isGroupMode ? 6 : 1;
 
   // --- Generate Options ---
-  const maxGuestSize = 50; 
+  // ✅ UPDATED: If Group mode, max is 50. If Solo mode, max is 5.
+  const maxGuestSize = isGroupMode ? 50 : 5; 
+
   const guestOptions = Array.from(
     { length: maxGuestSize - minGuestSize + 1 }, 
     (_, i) => minGuestSize + i
@@ -67,12 +69,20 @@ const Booking = ({ tour, avgRating, tourId }) => {
   useEffect(() => {
     setBooking(prev => {
       const currentVal = Number(prev.guestSize) || 0;
+      
+      // Fix if below minimum
       if (currentVal < minGuestSize && currentVal !== 0) {
         return { ...prev, guestSize: minGuestSize };
       }
+
+      // ✅ NEW: Fix if above maximum (e.g. forces 6 down to 5 in solo mode)
+      if (currentVal > maxGuestSize) {
+        return { ...prev, guestSize: maxGuestSize };
+      }
+
       return prev;
     });
-  }, [minGuestSize]);
+  }, [minGuestSize, maxGuestSize]); // ✅ Add maxGuestSize to dependencies
 
   // --- Handler: Input Changes ---
   const handleChange = (e) => {

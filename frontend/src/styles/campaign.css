@@ -1,0 +1,302 @@
+/* frontend/src/styles/campaign.css */
+
+/* --- GLOBAL VARIABLES --- */
+:root {
+  --primary-blue: #0f172a; /* Deep Mountain Night */
+  --accent-gold: #f59e0b;  /* Temple Gold */
+  --text-dark: #1f2937;
+  --text-light: #f3f4f6;
+  --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* --- HERO SECTION --- */
+.hero-container {
+  position: relative;
+  width: 100%;
+  height: 90vh; /* Taller for more impact */
+  margin-top: 0px; /* Reset, handled by header spacing */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: var(--primary-blue); /* Fallback color */
+}
+
+.hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* Parallax Effect (Desktop) */
+  z-index: 1;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Modern Gradient: Dark at bottom, transparent at top */
+  background: linear-gradient(to bottom, rgba(15, 23, 42, 0.3), rgba(15, 23, 42, 0.9));
+  z-index: 2;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+  padding: 20px;
+  max-width: 900px;
+  animation: fadeInUp 1s ease-out;
+}
+
+/* Animation for entrance */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.trend-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(245, 158, 11, 0.2); /* Glassy Gold */
+  border: 1px solid var(--accent-gold);
+  color: #fbbf24; 
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif; /* Elegant font */
+  font-size: 4rem; /* Big impact */
+  font-weight: 800;
+  line-height: 1.1;
+  color: white;
+  margin-bottom: 24px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.hero-title span {
+  /* Gradient Text for "Devbhoomi" */
+  background: linear-gradient(to right, #60a5fa, #34d399);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  color: #cbd5e1;
+  margin-bottom: 40px;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.cta-button {
+  background: var(--accent-gold);
+  color: #fff;
+  padding: 16px 32px;
+  border-radius: 50px; /* Pill shape */
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4); /* Glow effect */
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cta-button:hover {
+  background: #d97706;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(245, 158, 11, 0.6);
+  color: white;
+}
+
+/* --- COLLECTION SECTION --- */
+.collection-section {
+  padding: 100px 20px;
+  background-color: #f8fafc; /* Very light blue-grey */
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--primary-blue);
+  margin-bottom: 15px;
+}
+
+.section-desc {
+  font-size: 1.1rem;
+  color: #64748b;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* --- PREMIUM CARDS --- */
+.trek-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.trek-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+  transition: all 0.4s ease;
+  position: relative;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+.trek-card:hover {
+  transform: translateY(-10px); /* Lift effect */
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.card-image-wrapper {
+  position: relative;
+  height: 240px;
+  overflow: hidden;
+}
+
+.card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s ease;
+}
+
+.trek-card:hover .card-img {
+  transform: scale(1.1); /* Zoom effect on hover */
+}
+
+.district-badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--primary-blue);
+  padding: 6px 14px;
+  border-radius: 30px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card-content {
+  padding: 24px;
+}
+
+.trek-tag {
+  color: var(--accent-gold);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.trek-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--primary-blue);
+  line-height: 1.3;
+}
+
+.trek-desc {
+  font-size: 0.95rem;
+  color: #64748b;
+  margin-bottom: 24px;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.trek-meta-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  color: #475569;
+  font-weight: 500;
+}
+
+.trek-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price-label {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.price-value {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--primary-blue);
+}
+
+.arrow-btn {
+  background: var(--primary-blue);
+  color: white;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.arrow-btn:hover {
+  background: var(--accent-gold);
+  transform: rotate(-45deg); /* Playful interaction */
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .hero-title { font-size: 2.5rem; }
+  .hero-container { height: 80vh; }
+  .collection-section { padding: 60px 20px; }
+}

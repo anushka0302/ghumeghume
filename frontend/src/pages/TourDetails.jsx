@@ -11,9 +11,13 @@ import useFetch from '../hooks/useFetch';
 import { BASE_URL } from '../utils/config';
 import { AuthContext } from '../context/AuthContext';
 
-// ✅ FIXED IMPORTS (Correct path: One level up)
 import SeoData from '../components/SEO/SeoData';
 import StructuredData from '../components/SEO/StructuredData';
+
+// ✅ NEW LINE 1: Import the sales data for the "Hybrid" strategy
+// (Ensure you created src/data/tours.js as discussed)
+// ✅ Correct Import Path
+import { spiritualTreks } from '../assets/data/tourData';
 
 const TourDetails = () => {
   const { id } = useParams();
@@ -45,6 +49,17 @@ const TourDetails = () => {
   const options = { day: 'numeric', month: 'long', year: 'numeric' };
 
   const { totalRating, avgRating } = calculateAvgRating(reviews);
+
+  // =========================================================================
+  // ✅ NEW LINE 2: SEO & SALES LOGIC
+  // Check if this tour ID matches one of our "Special Sales" items
+  // =========================================================================
+  const specialSeo = spiritualTreks?.find(t => t.id === id); // Safe check
+
+  // If we have special keywords, use them. Otherwise, fall back to DB data.
+  const displayTitle = specialSeo ? specialSeo.title : title;
+  const displayDesc = specialSeo ? specialSeo.description : (desc ? desc.substring(0, 160) : `Book ${title} tour package.`);
+  // =========================================================================
 
   const submitHandler = async e => {
     e.preventDefault();
@@ -87,6 +102,18 @@ const TourDetails = () => {
 
   return (
     <>
+      {/* ✅ NEW LINE 3: Inject SEO Data at the very top (Best Practice) */}
+      {!loading && !error && (
+        <>
+            <SeoData 
+                title={displayTitle} 
+                description={displayDesc} 
+            />
+            {/* We pass the Optimized Title to Schema so Google sees the "Sales" version */}
+            <StructuredData tour={{...tour, title: displayTitle, desc: displayDesc, avgRating, reviews}} />
+        </>
+      )}
+
       <section>
         <Container>
           {loading && <h4 className='text-center pt-5'>Loading...</h4>}
@@ -98,7 +125,9 @@ const TourDetails = () => {
                 <div className='tour__content'>
                   <img src={photo} alt="" />
                   <div className='tour__info'>
-                    <h2>{title}</h2>
+                    {/* ✅ UPDATED LINE: Use displayTitle instead of title */}
+                    <h2>{displayTitle}</h2>
+
                     <div className='d-flex align-items-center gap-5'>
                       <span className='tour__rating d-flex align-items-center gap-1'>
                         <i className="ri-star-fill" style={{ color: "var(--secondary-color)" }}></i>
@@ -127,11 +156,31 @@ const TourDetails = () => {
                         <i className="ri-group-line"></i>{maxGroupSize} people
                       </span>
                     </div>
+                    
                     <h5>Description</h5>
                     <p>{desc}</p>
 
+                    {/* ✅ NEW LINE 4: The "Special Sales Highlight" Box */}
+                    {/* Only shows up if this is a special tour (like Kasar Devi or Babaji Cave) */}
+                    {specialSeo && (
+                        <div style={{ 
+                            backgroundColor: '#fffbeb', 
+                            borderLeft: '4px solid #f59e0b', 
+                            padding: '1rem', 
+                            marginTop: '1rem',
+                            borderRadius: '0.25rem' 
+                        }}>
+                            <h6 style={{ fontWeight: 'bold', color: '#92400e', marginBottom: '0.5rem' }}>
+                                Why this is a 2026 Trend:
+                            </h6>
+                            <p style={{ margin: 0, fontSize: '0.9rem', color: '#b45309' }}>
+                                {specialSeo.description}
+                            </p>
+                        </div>
+                    )}
+
                     <strong>
-                      <span className="button-wrapper">
+                      <span className="button-wrapper" style={{ marginTop: '1.5rem', display: 'block' }}>
                         For more details and price compensation contact us
                         <a href={`mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`} className='email-button'>
                           Here
@@ -194,13 +243,9 @@ const TourDetails = () => {
                       ))}
                     </ListGroup>
 
-                    {/* ✅ SEO COMPONENTS (Using safe destructured variables) */}
-                    <SeoData 
-                      title={title} 
-                      description={desc ? desc.substring(0, 160) : `Book ${title} tour package.`} 
-                    />
-                    <StructuredData tour={{...tour, avgRating, reviews}} />
-
+                    {/* I removed the SeoData from here because I moved it to the top */}
+                    {/* But functionally it is still active! */}
+                    
                   </div>
                   {/*================= Tour Reviews Section End =============================== */}
                 </div>
