@@ -8,11 +8,12 @@ import { BASE_URL } from '../../utils/config';
 import DateSlots from './DateSlots';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-//import logo from "../../assets/images/logo.png"; 
-
 import { allTourDates } from '../../assets/data/tourDates';
 
 const RAZORPAY_KEY = process.env.REACT_APP_RAZORPAY_API_KEY;
+
+// ✅ NEW: Define Exchange Rate (You can fetch this from an API ideally, but static works too)
+const EXCHANGE_RATE = 86; // 1 USD = 86 INR
 
 const Booking = ({ tour, avgRating, tourId }) => {
   
@@ -21,12 +22,18 @@ const Booking = ({ tour, avgRating, tourId }) => {
   const location = useLocation();
   const { user } = useContext(AuthContext);
 
+  // --- State ---
+  const [dateMode, setDateMode] = useState('fixed'); 
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  
+  // ✅ NEW: Currency State
+  const [currency, setCurrency] = useState('INR'); 
+
+  const dropdownRef = useRef(null);
+
   // --- Pricing Logic ---
   const isGroupMode = Number(price) === Number(priceGroup);
   const minGuestSize = isGroupMode ? 6 : 1;
-
-  // --- Generate Options ---
-  // ✅ UPDATED: If Group mode, max is 50. If Solo mode, max is 5.
   const maxGuestSize = isGroupMode ? 50 : 5; 
 
   const guestOptions = Array.from(
@@ -35,14 +42,6 @@ const Booking = ({ tour, avgRating, tourId }) => {
   );
 
   const currentTourDates = allTourDates[tourId] || [];
-
-  // --- State ---
-  const [dateMode, setDateMode] = useState('fixed'); 
-  // ✅ NEW: State for Custom Dropdown visibility
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  
-  // ✅ NEW: Ref to close dropdown when clicking outside
-  const dropdownRef = useRef(null);
 
   const [booking, setBooking] = useState({
     userId: user && user._id,
@@ -53,6 +52,24 @@ const Booking = ({ tour, avgRating, tourId }) => {
     guestSize: minGuestSize,
     bookAt: '' 
   });
+
+  // --- Helper: Currency Formatter ---
+  // ✅ NEW: Converts and formats price based on state
+  const formatPrice = (amountInINR) => {
+    if (currency === 'USD') {
+      const val = amountInINR / EXCHANGE_RATE;
+      return `$${val.toFixed(2)}`; // e.g. $120.50
+    }
+    return `₹${amountInINR}`;
+  };
+
+  // --- Helper: Get Raw Value for calculations ---
+  const getConvertedValue = (amountInINR) => {
+    if (currency === 'USD') {
+      return Number((amountInINR / EXCHANGE_RATE).toFixed(2));
+    }
+    return amountInINR;
+  };
 
   // --- Effect: Close dropdown if clicked outside ---
   useEffect(() => {
@@ -65,38 +82,29 @@ const Booking = ({ tour, avgRating, tourId }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [dropdownRef]);
 
-  // --- Effect: Switch Guest Size when Toggle Changes ---
   useEffect(() => {
     setBooking(prev => {
       const currentVal = Number(prev.guestSize) || 0;
-      
-      // Fix if below minimum
       if (currentVal < minGuestSize && currentVal !== 0) {
         return { ...prev, guestSize: minGuestSize };
       }
-
-      // ✅ NEW: Fix if above maximum (e.g. forces 6 down to 5 in solo mode)
       if (currentVal > maxGuestSize) {
         return { ...prev, guestSize: maxGuestSize };
       }
-
       return prev;
     });
-  }, [minGuestSize, maxGuestSize]); // ✅ Add maxGuestSize to dependencies
+  }, [minGuestSize, maxGuestSize]);
 
-  // --- Handler: Input Changes ---
   const handleChange = (e) => {
     const { id, value } = e.target;
     setBooking((prev) => ({ ...prev, [id]: value }));
   };
 
-  // ✅ NEW: Handler for Custom Dropdown Selection
   const handleGuestSelect = (num) => {
     setBooking((prev) => ({ ...prev, guestSize: num }));
-    setDropdownOpen(false); // Close menu after selection
+    setDropdownOpen(false);
   };
 
-  // --- Date Handlers ---
   const handleSlotSelect = (dateString) => {
     setBooking(prev => ({ ...prev, bookAt: dateString }));
   };
@@ -105,15 +113,22 @@ const Booking = ({ tour, avgRating, tourId }) => {
     setBooking(prev => ({ ...prev, bookAt: date }));
   };
 
-  // --- Payment Calculations ---
+  // --- Payment Calculations (INR Base) ---
   const guestCount = Number(booking.guestSize) || minGuestSize; 
-  const serviceFee = 10;
-  const baseAmount = Number(price) * guestCount;
-  const subTotal = baseAmount + serviceFee;
-  const gstAmount = Math.round(subTotal * 0.05);
-  const totalAmount = subTotal + gstAmount;
-  const advanceAmount = Math.round(totalAmount * 0.25); 
-  const dueAmount = totalAmount - advanceAmount;
+  const serviceFeeINR = 10; // Base INR
+  const baseAmountINR = Number(price) * guestCount;
+  const subTotalINR = baseAmountINR + serviceFeeINR;
+  const gstAmountINR = Math.round(subTotalINR * 0.05);
+  const totalAmountINR = subTotalINR + gstAmountINR;
+  
+  // Calculate Advance (25%) and Due
+  const advanceAmountINR = Math.round(totalAmountINR * 0.25); 
+  const dueAmountINR = totalAmountINR - advanceAmountINR;
+
+  // ✅ NEW: Dynamic Calculation Variables for Display/Payment
+  const totalAmountDisplay = getConvertedValue(totalAmountINR);
+  const advanceAmountDisplay = getConvertedValue(advanceAmountINR);
+  const dueAmountDisplay = getConvertedValue(dueAmountINR);
 
   // --- Session Storage ---
   useEffect(() => {
@@ -165,10 +180,14 @@ const Booking = ({ tour, avgRating, tourId }) => {
     }
 
     try {
+      // ✅ UPDATED: Send Amount AND Currency to backend
       const orderRes = await fetch(`${BASE_URL}/payment/checkout`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: advanceAmount }), 
+        body: JSON.stringify({ 
+            amount: advanceAmountDisplay, // Send the converted amount
+            currency: currency // Send 'INR' or 'USD'
+        }), 
       });
       
       const orderData = await orderRes.json();
@@ -176,14 +195,11 @@ const Booking = ({ tour, avgRating, tourId }) => {
 
       const options = {
         key: RAZORPAY_KEY,
-        amount: orderData.order.amount, 
-        currency: "INR",
+        amount: orderData.order.amount, // This comes from backend (ensure backend calculates correctly)
+        currency: currency, // ✅ UPDATED: 'INR' or 'USD'
         name: "Ghume Ghume",
         description: `Advance for ${title}`, 
-        
-        // ✅ UPDATED: Use the public string URL to fix CORS error
         image: "https://www.ghumeghume.com/static/media/logo.2dd53824f641f46a2885.png", 
-        
         order_id: orderData.order.id, 
         handler: async function (response) {
           const verifyRes = await fetch(`${BASE_URL}/payment/paymentverification`, {
@@ -196,9 +212,10 @@ const Booking = ({ tour, avgRating, tourId }) => {
               bookingDetails: {
                 ...booking,
                 bookAt: finalDateString, 
-                totalAmount,
-                paidAmount: advanceAmount,
-                dueAmount,
+                totalAmount: totalAmountDisplay, // Save the converted total
+                paidAmount: advanceAmountDisplay, // Save the converted advance
+                dueAmount: dueAmountDisplay,
+                currency: currency, // Save which currency was used
                 paymentStatus: 'Partial', 
               }
             }),
@@ -221,14 +238,46 @@ const Booking = ({ tour, avgRating, tourId }) => {
   return (
     <div className='booking'>
       <div className='booking__top d-flex align-items-center justify-content-between'>
-        <h3>₹{price} <span>/per person</span></h3>
+        {/* ✅ UPDATED: Display dynamic price */}
+        <h3>{formatPrice(price)} <span>/per person</span></h3>
         <span className='tour__rating d-flex align-items-center gap-1'>
           <i className="ri-star-s-fill"></i> {avgRating === 0 ? null : avgRating}({reviews?.length})
         </span>
       </div>
 
       <div className='booking__form'>
-        <h5>Book Your Adventure</h5>
+        
+        {/* ✅ NEW: Currency Toggle Switch */}
+        <div className="d-flex justify-content-between align-items-center mb-3">
+            <h5>Book Your Adventure</h5>
+            <div className="currency-switch" style={{ background: '#eee', padding: '4px', borderRadius: '20px', display:'flex' }}>
+                <button 
+                    onClick={() => setCurrency('INR')}
+                    style={{ 
+                        border: 'none', 
+                        background: currency === 'INR' ? '#faa935' : 'transparent', 
+                        color: currency === 'INR' ? '#fff' : '#333',
+                        borderRadius: '15px',
+                        padding: '2px 10px',
+                        fontSize: '0.8rem',
+                        cursor: 'pointer',
+                        fontWeight: '600'
+                    }}>INR (₹)</button>
+                <button 
+                    onClick={() => setCurrency('USD')}
+                    style={{ 
+                        border: 'none', 
+                        background: currency === 'USD' ? '#faa935' : 'transparent', 
+                        color: currency === 'USD' ? '#fff' : '#333',
+                        borderRadius: '15px',
+                        padding: '2px 10px',
+                        fontSize: '0.8rem',
+                        cursor: 'pointer',
+                        fontWeight: '600'
+                    }}>USD ($)</button>
+            </div>
+        </div>
+
         <Form className='booking__info-form' onSubmit={handlePayment}>
           <FormGroup>
             <input type='text' placeholder='Full name' id='fullName' required onChange={handleChange} className="custom-input" value={booking.fullName}/>
@@ -237,12 +286,9 @@ const Booking = ({ tour, avgRating, tourId }) => {
             <input type='number' placeholder='Phone' id='phone' required onChange={handleChange} className="custom-input" value={booking.phone}/>
           </FormGroup>
           
-          {/* ✅ CUSTOM MODERN DROPDOWN UI */}
           <FormGroup>
             <label className="input-label">Group Size (Min: {minGuestSize})</label>
-            
             <div className="custom-dropdown" ref={dropdownRef}>
-              {/* The Box you Click */}
               <div 
                 className={`dropdown-selected ${dropdownOpen ? 'open' : ''}`} 
                 onClick={() => setDropdownOpen(!dropdownOpen)}
@@ -251,7 +297,6 @@ const Booking = ({ tour, avgRating, tourId }) => {
                 <i className={`ri-arrow-down-s-line arrow-icon ${dropdownOpen ? 'rotate' : ''}`}></i>
               </div>
 
-              {/* The List that Appears */}
               <div className={`dropdown-menu ${dropdownOpen ? 'show' : ''}`}>
                 {guestOptions.map((num) => (
                   <div 
@@ -266,7 +311,6 @@ const Booking = ({ tour, avgRating, tourId }) => {
             </div>
           </FormGroup>
 
-          {/* Date Mode Pill Toggle */}
           <div className="date-toggle-container">
             <label className={`toggle-option ${dateMode === 'fixed' ? 'active' : ''}`}>
                 <input type="radio" name="dateMode" value="fixed" checked={dateMode === 'fixed'} onChange={() => setDateMode('fixed')} />
@@ -301,41 +345,41 @@ const Booking = ({ tour, avgRating, tourId }) => {
         </Form>      
       </div>
       
-      {/* Summary Section */}
+      {/* Summary Section - Updated to use formatPrice helper */}
       <div className='booking__bottom'>
         <ListGroup>
           <ListGroupItem className='border-0 px-0 summary-item'>
-            <h5>₹{price} <i className="ri-close-line"></i> {guestCount} person</h5>
-            <span>₹{baseAmount}</span>
+            <h5>{formatPrice(price)} <i className="ri-close-line"></i> {guestCount} person</h5>
+            <span>{formatPrice(baseAmountINR)}</span>
           </ListGroupItem>
           <ListGroupItem className='border-0 px-0 summary-item'>
             <h5>Service charge</h5>
-            <span>₹{serviceFee}</span>
+            <span>{formatPrice(serviceFeeINR)}</span>
           </ListGroupItem>
           <ListGroupItem className='border-0 px-0 summary-item'>
             <h5>GST (5%)</h5>
-            <span>₹{gstAmount}</span>
+            <span>{formatPrice(gstAmountINR)}</span>
           </ListGroupItem>
           <ListGroupItem className='border-0 px-0 summary-item total-cost'>
             <h5>Total Trip Cost</h5>
-            <span>₹{totalAmount}</span>
+            <span>{formatPrice(totalAmountINR)}</span>
           </ListGroupItem>
         </ListGroup>
 
         <div className="payment-split">
             <div className="split-row highlight">
                 <span>Pay Now (25%)</span>
-                <span className="amount">₹{advanceAmount}</span>
+                <span className="amount">{formatPrice(advanceAmountINR)}</span>
             </div>
             <div className="split-row text-muted">
                 <span>Pay Later</span>
-                <span>₹{dueAmount}</span>
+                <span>{formatPrice(dueAmountINR)}</span>
             </div>
             <small>(50% on Day 1, 50% on Last Day)</small>
         </div>
         
         <Button className='btn primary__btn w-100 mt-4 book-btn' onClick={handlePayment}>
-          Book for ₹{advanceAmount}
+          Book for {formatPrice(advanceAmountINR)}
         </Button>
       </div>
     </div>

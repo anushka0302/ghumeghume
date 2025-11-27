@@ -1,9 +1,7 @@
 const Razorpay = require('razorpay');
 const crypto = require('crypto');
-const Booking = require('../models/Booking'); // Import your Booking model
+const Booking = require('../models/Booking'); 
 
-// Initialize Razorpay
-// These come from your backend .env file
 const instance = new Razorpay({
   key_id: process.env.RAZORPAY_API_KEY,
   key_secret: process.env.RAZORPAY_API_SECRET,
@@ -12,10 +10,12 @@ const instance = new Razorpay({
 // 1. Create Order
 const checkout = async (req, res) => {
   try {
-    // req.body.amount should be the 35% advance amount calculated on the frontend
+    // ✅ UPDATED: Extract currency from request body
+    const { amount, currency } = req.body;
+
     const options = {
-      amount: Number(req.body.amount * 100), // Amount in smallest currency unit (paise)
-      currency: "INR",
+      amount: Number(amount * 100), // Convert to smallest unit (Paise for INR, Cents for USD)
+      currency: currency || "INR",  // ✅ UPDATED: Use dynamic currency or default to INR
     };
     
     const order = await instance.orders.create(options);
@@ -25,6 +25,7 @@ const checkout = async (req, res) => {
       order,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ 
       success: false, 
       message: "Payment initiation failed",
@@ -35,12 +36,10 @@ const checkout = async (req, res) => {
 
 // 2. Verify Payment
 const paymentVerification = async (req, res) => {
-  // Extract bookingDetails along with payment info
   const { razorpay_order_id, razorpay_payment_id, razorpay_signature, bookingDetails } = req.body;
 
   const body = razorpay_order_id + "|" + razorpay_payment_id;
 
-  // 1. Verify the signature
   const expectedSignature = crypto
     .createHmac("sha256", process.env.RAZORPAY_API_SECRET)
     .update(body.toString())
@@ -49,8 +48,6 @@ const paymentVerification = async (req, res) => {
   const isAuthentic = expectedSignature === razorpay_signature;
 
   if (isAuthentic) {
-    // 2. Signature is valid. Now save the booking to DB.
-    
     try {
        if (bookingDetails) {
           const newBooking = new Booking({
@@ -62,20 +59,19 @@ const paymentVerification = async (req, res) => {
             guestSize: bookingDetails.guestSize,
             bookAt: bookingDetails.bookAt,
             
-            // PAYMENT DETAILS
+            // ✅ UPDATED: Save the financial details sent from frontend
             totalAmount: bookingDetails.totalAmount,
-            paidAmount: bookingDetails.paidAmount, // The 35% Advance
-            dueAmount: bookingDetails.dueAmount,   // The remaining 65%
-            paymentStatus: "Partial", // Explicitly marked as Partial
+            paidAmount: bookingDetails.paidAmount,
+            dueAmount: bookingDetails.dueAmount,
+            currency: bookingDetails.currency || 'INR', // Save the currency
+            paymentStatus: bookingDetails.paymentStatus || "Partial",
             
-            // Razorpay identifiers
             transactionId: razorpay_payment_id
           });
 
           await newBooking.save();
        }
 
-      // 3. Send success response
       res.status(200).json({
         success: true,
         message: "Payment successful",
