@@ -7,6 +7,7 @@ import "../styles/tour-details.css";
 import Booking from "../components/Booking/Booking";
 // ✅ Correct import path based on your folder structure
 import ComparisonFeature from "../components/ComparisonFeature/ComparisonFeature";
+import { Helmet } from 'react-helmet-async'; // ✅ SEO Import
 
 // ✅ Import centralized data
 import trek from "../assets/data/trek";
@@ -61,6 +62,15 @@ const TourDayaraBugyal = () => {
 
   return (
     <>
+      {/* ✅ SEO Metadata */}
+      <Helmet>
+        <title>{tourData.title} | Winter Trekking Uttarakhand</title>
+        <meta name="description" content={tourData.desc} />
+        <meta property="og:title" content={`${tourData.title} - Book Now`} />
+        <meta property="og:description" content="Join the best winter trek in India. Perfect for beginners and families." />
+        <meta property="og:image" content={dayara_g1} />
+      </Helmet>
+
       {/* ✅ HERO */}
       <section className="tour-hero parallax-bg">
         <div className="tour-hero-overlay"></div>
@@ -156,20 +166,11 @@ const TourDayaraBugyal = () => {
             </button>
           </div>
 
-          <div className="stats-pill">
-                <div className="stat-item">
-                  <span className="stat-label">Altitude</span>
-                  <span className="stat-value">13,450 ft</span>
-                </div>
-                <div className="stat-item">
-                  <span className="stat-label">Best Season</span>
-                  <span className="stat-value">Nov – Mar & Apr – Jun</span>
-                </div>
-                <div className="stat-item">
-                  <span className="stat-label">Difficulty</span>
-                  <span className="stat-value">Easy–Moderate</span>
-                </div>
-              </div>
+          <div className="stats-row">
+            <div><strong>Altitude</strong><br />11,155 ft</div>
+            <div><strong>Best Season</strong><br />Dec – May</div>
+            <div><strong>Difficulty</strong><br />Easy–Moderate</div>
+          </div>
         </div>
       </section>
 
@@ -213,7 +214,8 @@ const TourDayaraBugyal = () => {
                       className="gallery-item"
                       key={i}
                     >
-                      <img src={img} alt="Dayara Bugyal" />
+                      {/* ✅ Lazy Loading Added */}
+                      <img src={img} alt="Dayara Bugyal" loading="lazy" />
                     </a>
                   ))}
                 </div>

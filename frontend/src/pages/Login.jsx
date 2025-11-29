@@ -4,6 +4,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import "../styles/login.css"; // We will replace this CSS
 import { AuthContext } from "../context/AuthContext";
 import { BASE_URL } from "../utils/config";
+import { Helmet } from 'react-helmet-async'; // ✅ SEO Import
 
 // NEW: Import icons for the form
 import { BsEnvelope, BsLock } from "react-icons/bs";
@@ -59,55 +60,63 @@ useEffect(() => {
   }, []);
   return (
     // The section now covers the whole page
-    <section className="auth-section">
-      <Container>
-        <Row>
-          <Col lg="6" className="m-auto">
-            {/* This is the new "glass" card */}
-            <div className="login-container">
-              <h1>Welcome Back</h1>
-              <p className="login-subtitle">
-                Login to explore the world with us
-              </p>
+    <>
+      {/* ✅ SEO Metadata */}
+      <Helmet>
+        <title>Login | Ghume Ghume</title>
+        <meta name="description" content="Login to your Ghume Ghume account to access your bookings and personalized trekking experiences." />
+      </Helmet>
 
-              <Form onSubmit={handleClick}>
-                {/* New input group with icon */}
-                <FormGroup className="input-group">
-                  <BsEnvelope className="input-icon" />
-                  <input
-                    type="email"
-                    placeholder="Email Address"
-                    required
-                    id="email"
-                    onChange={handleChange}
-                  />
-                </FormGroup>
+      <section className="auth-section">
+        <Container>
+          <Row>
+            <Col lg="6" className="m-auto">
+              {/* This is the new "glass" card */}
+              <div className="login-container">
+                <h1>Welcome Back</h1>
+                <p className="login-subtitle">
+                  Login to explore the world with us
+                </p>
 
-                {/* New input group with icon */}
-                <FormGroup className="input-group">
-                  <BsLock className="input-icon" />
-                  <input
-                    type="password"
-                    placeholder="Password"
-                    required
-                    id="password"
-                    onChange={handleChange}
-                  />
-                </FormGroup>
+                <Form onSubmit={handleClick}>
+                  {/* New input group with icon */}
+                  <FormGroup className="input-group">
+                    <BsEnvelope className="input-icon" />
+                    <input
+                      type="email"
+                      placeholder="Email Address"
+                      required
+                      id="email"
+                      onChange={handleChange}
+                    />
+                  </FormGroup>
 
-                <Button className="auth-btn" type="submit" disabled={loading}>
-                  {loading ? <Spinner size="sm" /> : "Login"}
-                </Button>
-              </Form>
+                  {/* New input group with icon */}
+                  <FormGroup className="input-group">
+                    <BsLock className="input-icon" />
+                    <input
+                      type="password"
+                      placeholder="Password"
+                      required
+                      id="password"
+                      onChange={handleChange}
+                    />
+                  </FormGroup>
 
-              <p className="auth-switch">
-                Don't have an account? <Link to="/register">Create one</Link>
-              </p>
-            </div>
-          </Col>
-        </Row>
-      </Container>
-    </section>
+                  <Button className="auth-btn" type="submit" disabled={loading}>
+                    {loading ? <Spinner size="sm" /> : "Login"}
+                  </Button>
+                </Form>
+
+                <p className="auth-switch">
+                  Don't have an account? <Link to="/register">Create one</Link>
+                </p>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+    </>
   );
 };
 

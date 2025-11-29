@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState, useContext } from 'react';
 import '../styles/tour-details.css';
 import { Container, Row, Col, Form, ListGroup } from 'reactstrap';
 import { useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async'; // ✅ SEO Import
 
 import calculateAvgRating from '../utils/AvgRating';
 import avatar from '../assets/images/avatar.jpg';
@@ -11,12 +12,7 @@ import useFetch from '../hooks/useFetch';
 import { BASE_URL } from '../utils/config';
 import { AuthContext } from '../context/AuthContext';
 
-import SeoData from '../components/SEO/SeoData';
-import StructuredData from '../components/SEO/StructuredData';
-
-// ✅ NEW LINE 1: Import the sales data for the "Hybrid" strategy
-// (Ensure you created src/data/tours.js as discussed)
-// ✅ Correct Import Path
+// ✅ Import the sales data for the "Hybrid" strategy
 import { spiritualTreks } from '../assets/data/tourData';
 
 const TourDetails = () => {
@@ -51,7 +47,7 @@ const TourDetails = () => {
   const { totalRating, avgRating } = calculateAvgRating(reviews);
 
   // =========================================================================
-  // ✅ NEW LINE 2: SEO & SALES LOGIC
+  // ✅ SEO & SALES LOGIC
   // Check if this tour ID matches one of our "Special Sales" items
   // =========================================================================
   const specialSeo = spiritualTreks?.find(t => t.id === id); // Safe check
@@ -102,17 +98,14 @@ const TourDetails = () => {
 
   return (
     <>
-      {/* ✅ NEW LINE 3: Inject SEO Data at the very top (Best Practice) */}
-      {!loading && !error && (
-        <>
-            <SeoData 
-                title={displayTitle} 
-                description={displayDesc} 
-            />
-            {/* We pass the Optimized Title to Schema so Google sees the "Sales" version */}
-            <StructuredData tour={{...tour, title: displayTitle, desc: displayDesc, avgRating, reviews}} />
-        </>
-      )}
+      {/* ✅ SEO Metadata via Helmet */}
+      <Helmet>
+        <title>{displayTitle} | Ghume Ghume</title>
+        <meta name="description" content={displayDesc} />
+        <meta property="og:title" content={displayTitle} />
+        <meta property="og:description" content={displayDesc} />
+        <meta property="og:image" content={photo} />
+      </Helmet>
 
       <section>
         <Container>
@@ -123,9 +116,11 @@ const TourDetails = () => {
             <Row>
               <Col lg='8'>
                 <div className='tour__content'>
-                  <img src={photo} alt="" />
+                  {/* ✅ Lazy Load Image */}
+                  <img src={photo} alt={title} loading="lazy" />
+                  
                   <div className='tour__info'>
-                    {/* ✅ UPDATED LINE: Use displayTitle instead of title */}
+                    {/* ✅ Use displayTitle instead of title */}
                     <h2>{displayTitle}</h2>
 
                     <div className='d-flex align-items-center gap-5'>
@@ -160,7 +155,7 @@ const TourDetails = () => {
                     <h5>Description</h5>
                     <p>{desc}</p>
 
-                    {/* ✅ NEW LINE 4: The "Special Sales Highlight" Box */}
+                    {/* ✅ The "Special Sales Highlight" Box */}
                     {/* Only shows up if this is a special tour (like Kasar Devi or Babaji Cave) */}
                     {specialSeo && (
                         <div style={{ 
@@ -242,17 +237,13 @@ const TourDetails = () => {
                         </div>
                       ))}
                     </ListGroup>
-
-                    {/* I removed the SeoData from here because I moved it to the top */}
-                    {/* But functionally it is still active! */}
-                    
                   </div>
                   {/*================= Tour Reviews Section End =============================== */}
                 </div>
               </Col>
               
               <Col lg='4'>
-                 {/* ✅ Added tourId={id} which is required */}
+                 {/* ✅ Added tourId={id} which is required for booking logic */}
                 <Booking tour={tour} avgRating={avgRating} tourId={id} />
               </Col>
             </Row>

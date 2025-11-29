@@ -1,13 +1,13 @@
 import React,{useEffect} from 'react';
 import { Container, Row, Col, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import '../styles/experience-page.css'; // We will create this new CSS file
+import '../styles/experience-page.css';
+import { Helmet } from 'react-helmet-async'; // ✅ SEO Import
 
 // === IMPORT YOUR "WOW" ASSETS ===
-// You will need to find these and add them to your assets folder
-import heroVideo from '../assets/videos/meditation-hero.mp4'; // Find a stunning, slow-motion drone video
-import whyImage from '../assets/images/meditation-why.jpg'; // e.g., A serene temple or lake
-import ctaImage from '../assets/images/cta-bg.jpg'; // e.g., A beautiful Himalayan sunset
+import heroVideo from '../assets/videos/meditation-hero.mp4';
+import whyImage from '../assets/images/meditation-why.jpg';
+import ctaImage from '../assets/images/cta-bg.jpg';
 
 // Import gallery images
 import galleryImg1 from '../assets/images/gallery-01.jpg';
@@ -19,8 +19,17 @@ const Meditation = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
   return (
     <div className="experience-page">
+      {/* ✅ SEO Metadata */}
+      <Helmet>
+        <title>Meditation Retreats in Uttarakhand | Ghume Ghume</title>
+        <meta name="description" content="Escape the noise and discover your center. Join Ghume Ghume for specialized meditation retreats in the heart of the Himalayas, Uttarakhand." />
+        <meta property="og:title" content="Meditation Retreats in Uttarakhand | Find Your Stillness" />
+        <meta property="og:description" content="Discover the profound peace of meditation in Uttarakhand, where ancient wisdom meets the majestic silence of the mountains." />
+        <meta property="og:image" content={whyImage} />
+      </Helmet>
 
       {/* ================= 1. VIDEO HERO SECTION ================= */}
       <section className="exp-hero">
@@ -60,7 +69,8 @@ const Meditation = () => {
           <Row className="align-items-center">
             <Col lg="6" md="12">
               <div className="exp-why-image">
-                <img src={whyImage} alt="Spiritual Uttarakhand" />
+                {/* ✅ Added loading="lazy" */}
+                <img src={whyImage} alt="Spiritual Uttarakhand" loading="lazy" />
               </div>
             </Col>
             <Col lg="6" md="12">
@@ -95,10 +105,11 @@ const Meditation = () => {
             </Col>
           </Row>
           <Row className="gallery-row">
-            <Col lg="3" md="6" sm="6"><img src={galleryImg1} alt="Meditation spot 1" /></Col>
-            <Col lg="3" md="6" sm="6"><img src={galleryImg2} alt="Meditation spot 2" /></Col>
-            <Col lg="3" md="6" sm="6"><img src={galleryImg3} alt="Meditation spot 3" /></Col>
-            <Col lg="3" md="6" sm="6"><img src={galleryImg4} alt="Meditation spot 4" /></Col>
+            {/* ✅ Added loading="lazy" to all gallery images */}
+            <Col lg="3" md="6" sm="6"><img src={galleryImg1} alt="Meditation spot 1" loading="lazy" /></Col>
+            <Col lg="3" md="6" sm="6"><img src={galleryImg2} alt="Meditation spot 2" loading="lazy" /></Col>
+            <Col lg="3" md="6" sm="6"><img src={galleryImg3} alt="Meditation spot 3" loading="lazy" /></Col>
+            <Col lg="3" md="6" sm="6"><img src={galleryImg4} alt="Meditation spot 4" loading="lazy" /></Col>
           </Row>
         </Container>
       </section>

@@ -4,6 +4,7 @@ import { Link, useNavigate,useLocation } from "react-router-dom";
 import "../styles/login.css"; // Uses the same CSS as the login page
 import { AuthContext } from "../context/AuthContext";
 import { BASE_URL } from "../utils/config";
+import { Helmet } from 'react-helmet-async'; // ✅ SEO Import
 
 // NEW: Import icons for the form
 import { BsPerson, BsEnvelope, BsLock } from "react-icons/bs";
@@ -58,68 +59,76 @@ useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   return (
-    <section className="auth-section">
-      <Container>
-        <Row>
-          <Col lg="6" className="m-auto">
-            <div className="login-container">
-              {/* MODIFIED: Content for registration */}
-              <h1>Create Account</h1>
-              <p className="login-subtitle">
-                Sign up to start your next adventure
-              </p>
+    <>
+      {/* ✅ SEO Metadata */}
+      <Helmet>
+        <title>Create Account | Ghume Ghume</title>
+        <meta name="description" content="Sign up to start your next adventure with Ghume Ghume. Join our trekking community today." />
+      </Helmet>
 
-              <Form onSubmit={handleClick}>
-                {/* NEW: Username input group */}
-                <FormGroup className="input-group">
-                  <BsPerson className="input-icon" />
-                  <input
-                    type="text"
-                    placeholder="Username"
-                    required
-                    id="userName"
-                    onChange={handleChange}
-                  />
-                </FormGroup>
+      <section className="auth-section">
+        <Container>
+          <Row>
+            <Col lg="6" className="m-auto">
+              <div className="login-container">
+                {/* MODIFIED: Content for registration */}
+                <h1>Create Account</h1>
+                <p className="login-subtitle">
+                  Sign up to start your next adventure
+                </p>
 
-                {/* NEW: Email input group */}
-                <FormGroup className="input-group">
-                  <BsEnvelope className="input-icon" />
-                  <input
-                    type="email"
-                    placeholder="Email Address"
-                    required
-                    id="email"
-                    onChange={handleChange}
-                  />
-                </FormGroup>
+                <Form onSubmit={handleClick}>
+                  {/* NEW: Username input group */}
+                  <FormGroup className="input-group">
+                    <BsPerson className="input-icon" />
+                    <input
+                      type="text"
+                      placeholder="Username"
+                      required
+                      id="userName"
+                      onChange={handleChange}
+                    />
+                  </FormGroup>
 
-                {/* NEW: Password input group */}
-                <FormGroup className="input-group">
-                  <BsLock className="input-icon" />
-                  <input
-                    type="password"
-                    placeholder="Password"
-                    required
-                    id="password"
-                    onChange={handleChange}
-                  />
-                </FormGroup>
+                  {/* NEW: Email input group */}
+                  <FormGroup className="input-group">
+                    <BsEnvelope className="input-icon" />
+                    <input
+                      type="email"
+                      placeholder="Email Address"
+                      required
+                      id="email"
+                      onChange={handleChange}
+                    />
+                  </FormGroup>
 
-                <Button className="auth-btn" type="submit" disabled={loading}>
-                  {loading ? <Spinner size="sm" /> : "Create Account"}
-                </Button>
-              </Form>
+                  {/* NEW: Password input group */}
+                  <FormGroup className="input-group">
+                    <BsLock className="input-icon" />
+                    <input
+                      type="password"
+                      placeholder="Password"
+                      required
+                      id="password"
+                      onChange={handleChange}
+                    />
+                  </FormGroup>
 
-              {/* MODIFIED: Link to login page */}
-              <p className="auth-switch">
-                Already have an account? <Link to="/login">Login</Link>
-              </p>
-            </div>
-          </Col>
-        </Row>
-      </Container>
-    </section>
+                  <Button className="auth-btn" type="submit" disabled={loading}>
+                    {loading ? <Spinner size="sm" /> : "Create Account"}
+                  </Button>
+                </Form>
+
+                {/* MODIFIED: Link to login page */}
+                <p className="auth-switch">
+                  Already have an account? <Link to="/login">Login</Link>
+                </p>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+    </>
   );
 };
 

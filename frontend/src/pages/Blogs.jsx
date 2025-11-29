@@ -3,6 +3,7 @@ import { Container, Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import blogs from '../assets/data/blogs';
 import '../styles/blog.css';
+import { Helmet } from 'react-helmet-async'; // ✅ SEO Import
 
 const Blogs = () => {
   
@@ -12,6 +13,14 @@ const Blogs = () => {
 
   return (
     <>
+      {/* ✅ SEO Metadata */}
+      <Helmet>
+        <title>Travel & Trekking Blogs | Ghume Ghume</title>
+        <meta name="description" content="Explore expert trekking guides, travel tips, and inspiring stories from the Himalayas. Read our latest blogs on winter treks, gear, and more." />
+        <meta property="og:title" content="Travel & Trekking Blogs | Ghume Ghume" />
+        <meta property="og:description" content="Tips, guides, and stories from the mountains to help you plan your next adventure." />
+      </Helmet>
+
       {/* ✅ FIX: Added marginTop: '80px' to push it below the fixed header */}
       {/* ✅ Removed className="common__section" to prevent style conflicts */}
       <section 
@@ -40,7 +49,8 @@ const Blogs = () => {
               <Col lg="4" md="6" sm="12" className="mb-4" key={item.id}>
                 <div className="blog__item">
                   <div className="blog__img">
-                    <img src={item.imgUrl} alt={item.title} />
+                    {/* ✅ Lazy Load Images */}
+                    <img src={item.imgUrl} alt={item.title} loading="lazy" />
                   </div>
                   <div className="blog__content">
                     <span className="blog__date"><i className="ri-calendar-line"></i> {item.date}</span>

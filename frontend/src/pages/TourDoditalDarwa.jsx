@@ -7,6 +7,7 @@ import "../styles/tour-details.css";
 import Booking from "../components/Booking/Booking";
 // ✅ Import ComparisonFeature
 import ComparisonFeature from "../components/ComparisonFeature/ComparisonFeature";
+import { Helmet } from 'react-helmet-async'; // ✅ SEO Import
 
 // ✅ Import centralized data
 import trek from "../assets/data/trek";
@@ -61,6 +62,15 @@ const TourDoditalDarwa = () => {
 
   return (
     <>
+      {/* ✅ SEO Metadata */}
+      <Helmet>
+        <title>{tourData.title} | Lake Trek Uttarakhand</title>
+        <meta name="description" content={tourData.desc} />
+        <meta property="og:title" content={`${tourData.title} - Book Now`} />
+        <meta property="og:description" content="Trek to the emerald Dodital Lake, believed to be Lord Ganesha's birthplace. A divine and scenic journey." />
+        <meta property="og:image" content={dodital_1} />
+      </Helmet>
+
       {/* ✅ HERO */}
       <section
         className="tour-hero parallax-bg"
@@ -209,20 +219,20 @@ const TourDoditalDarwa = () => {
             </button>
           </div>
 
-          <div className="stats-pill">
-                <div className="stat-item">
-                  <span className="stat-label">Altitude</span>
-                  <span className="stat-value">13,450 ft</span>
-                </div>
-                <div className="stat-item">
-                  <span className="stat-label">Best Season</span>
-                  <span className="stat-value">Nov – Mar & Apr – Jun</span>
-                </div>
-                <div className="stat-item">
-                  <span className="stat-label">Difficulty</span>
-                  <span className="stat-value">Easy–Moderate</span>
-                </div>
-              </div>
+          <div className="stats-row">
+            <div>
+              <strong>Altitude</strong>
+              <br />13,615 ft
+            </div>
+            <div>
+              <strong>Best Season</strong>
+              <br />Nov – Mar & Apr – Jun
+            </div>
+            <div>
+              <strong>Difficulty</strong>
+              <br />Easy–Moderate
+            </div>
+          </div>
         </div>
       </section>
 
@@ -266,7 +276,8 @@ const TourDoditalDarwa = () => {
                       className="gallery-item"
                       key={i}
                     >
-                      <img src={img} alt="Dodital Darwa Pass" />
+                      {/* ✅ Lazy Loading Added */}
+                      <img src={img} alt="Dodital Darwa Pass" loading="lazy" />
                     </a>
                   ))}
                 </div>

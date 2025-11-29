@@ -2,12 +2,12 @@ import React,{useEffect} from 'react';
 import { Container, Row, Col, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import '../styles/experience-page.css'; // Uses the same CSS as the Meditation page
+import { Helmet } from 'react-helmet-async'; // ✅ SEO Import
 
 // === IMPORT YOUR "WOW" ASSETS ===
-// Find new assets for this page
-import heroVideo from '../assets/videos/enlightenment-hero.mp4'; // Find a video of temples, Ganges, or mountain peaks
-import whyImage from '../assets/images/enlightenment-why.png'; // e.g., A sadhu, a monastery, or Badrinath
-import ctaImage from '../assets/images/cta-bg-2.png'; // e.g., A beautiful Himalayan sunset
+import heroVideo from '../assets/videos/enlightenment-hero.mp4';
+import whyImage from '../assets/images/enlightenment-why.png';
+import ctaImage from '../assets/images/cta-bg-2.png';
 
 // Import gallery images
 import galleryImg1 from '../assets/images/gallery-01.jpg';
@@ -19,8 +19,17 @@ const Enlightenment = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
   return (
     <div className="experience-page">
+      {/* ✅ SEO Metadata */}
+      <Helmet>
+        <title>Spiritual Journey & Enlightenment in Uttarakhand | Ghume Ghume</title>
+        <meta name="description" content="Embark on a profound spiritual journey in Uttarakhand. Visit ancient temples, Shakti Peethas, and Jyotirlingas with Ghume Ghume's custom pilgrimage tours." />
+        <meta property="og:title" content="Spiritual Journey & Enlightenment in Uttarakhand" />
+        <meta property="og:description" content="Enlightenment is not a destination, but a path. Discover profound spiritual journeys in the 'Land of the Gods'." />
+        <meta property="og:image" content={whyImage} />
+      </Helmet>
 
       {/* ================= 1. VIDEO HERO SECTION ================= */}
       <section className="exp-hero">
@@ -60,7 +69,8 @@ const Enlightenment = () => {
           <Row className="align-items-center">
             <Col lg="6" md="12">
               <div className="exp-why-image">
-                <img src={whyImage} alt="Spiritual Uttarakhand" />
+                {/* ✅ Added loading="lazy" */}
+                <img src={whyImage} alt="Spiritual Uttarakhand" loading="lazy" />
               </div>
             </Col>
             <Col lg="6" md="12">
@@ -95,10 +105,11 @@ const Enlightenment = () => {
             </Col>
           </Row>
           <Row className="gallery-row">
-            <Col lg="3" md="6" sm="6"><img src={galleryImg1} alt="Pilgrimage 1" /></Col>
-            <Col lg="3" md="6" sm="6"><img src={galleryImg2} alt="Pilgrimage 2" /></Col>
-            <Col lg="3" md="6" sm="6"><img src={galleryImg3} alt="Pilgrimage 3" /></Col>
-            <Col lg="3" md="6" sm="6"><img src={galleryImg4} alt="Pilgrimage 4" /></Col>
+            {/* ✅ Added loading="lazy" to gallery images */}
+            <Col lg="3" md="6" sm="6"><img src={galleryImg1} alt="Pilgrimage 1" loading="lazy" /></Col>
+            <Col lg="3" md="6" sm="6"><img src={galleryImg2} alt="Pilgrimage 2" loading="lazy" /></Col>
+            <Col lg="3" md="6" sm="6"><img src={galleryImg3} alt="Pilgrimage 3" loading="lazy" /></Col>
+            <Col lg="3" md="6" sm="6"><img src={galleryImg4} alt="Pilgrimage 4" loading="lazy" /></Col>
           </Row>
         </Container>
       </section>

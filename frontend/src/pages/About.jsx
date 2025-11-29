@@ -1,6 +1,7 @@
 import React,{useEffect} from 'react';
 import { Container, Row, Col, ListGroup, ListGroupItem } from 'reactstrap';
 import '../styles/about.css';
+import { Helmet } from 'react-helmet-async'; // ✅ SEO Import
 
 // We'll use a common hero image, or you can import a specific one
 import aboutHeroImg from '../assets/images/tour-img01.jpg'; 
@@ -35,7 +36,15 @@ const About = () => {
   }, []);
   return (
     <div className="about-page">
-      
+      {/* ✅ SEO Metadata */}
+      <Helmet>
+        <title>About Ghume Ghume | Our Story & Values</title>
+        <meta name="description" content="Discover the story behind Ghume Ghume. We are passionate travelers curating authentic trekking experiences in the Himalayas with a focus on safety and responsible tourism." />
+        <meta property="og:title" content="About Ghume Ghume | Our Story & Values" />
+        <meta property="og:description" content="Our story is one of passion, exploration, and the joy of wandering. Learn about our values and commitment to authentic travel." />
+        <meta property="og:image" content={aboutHeroImg} />
+      </Helmet>
+
       {/* ================= HERO SECTION ================= */}
       <section className="about-hero" style={{ backgroundImage: `url(${aboutHeroImg})` }}>
         <div className="hero-overlay">
@@ -68,7 +77,8 @@ const About = () => {
             </Col>
             <Col lg="6" md="12">
               <div className="about-story-image">
-                <img src={storyImg} alt="Our Team" />
+                {/* ✅ Added loading="lazy" */}
+                <img src={storyImg} alt="Our Team" loading="lazy" />
               </div>
             </Col>
           </Row>

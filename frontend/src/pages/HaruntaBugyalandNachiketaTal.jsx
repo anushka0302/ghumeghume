@@ -7,6 +7,7 @@ import "../styles/tour-details.css";
 import Booking from "../components/Booking/Booking";
 // ✅ Import ComparisonFeature only once
 import ComparisonFeature from "../components/ComparisonFeature/ComparisonFeature";
+import { Helmet } from 'react-helmet-async'; // ✅ SEO Import
 
 // ✅ Import centralized data
 import trek from "../assets/data/trek";
@@ -57,6 +58,15 @@ const HaruntaBugyalandNachiketaTal = () => {
 
   return (
     <>
+      {/* ✅ SEO Metadata */}
+      <Helmet>
+        <title>{tourData.title} | Offbeat Trek Uttarakhand</title>
+        <meta name="description" content={tourData.desc} />
+        <meta property="og:title" content={`${tourData.title} - Book Now`} />
+        <meta property="og:description" content="Explore the hidden gem of Harunta Bugyal and the serene Nachiketa Tal. Perfect for peace seekers." />
+        <meta property="og:image" content={h1} />
+      </Helmet>
+
       {/* ✅ HERO */}
       <section
         className="tour-hero parallax-bg"
@@ -209,11 +219,11 @@ const HaruntaBugyalandNachiketaTal = () => {
               <div className="stats-pill">
                 <div className="stat-item">
                   <span className="stat-label">Altitude</span>
-                  <span className="stat-value">13,450 ft</span>
+                  <span className="stat-value">10,200 ft</span>
                 </div>
                 <div className="stat-item">
                   <span className="stat-label">Best Season</span>
-                  <span className="stat-value">Nov – Mar & Apr – Jun</span>
+                  <span className="stat-value">Oct – Jun</span>
                 </div>
                 <div className="stat-item">
                   <span className="stat-label">Difficulty</span>
@@ -233,7 +243,7 @@ const HaruntaBugyalandNachiketaTal = () => {
               <div className="tour-content">
                 <h2 className="section-title">Why Harunta Bugyal & Nachiketa Tal?</h2>
 
-                {/* ✅ COMPARISON FEATURE - Used exactly once here */}
+                {/* ✅ COMPARISON FEATURE */}
                 <div style={{ marginBottom: "25px" }}>
                   <ComparisonFeature imageSrc={h1} />
                 </div>
@@ -263,7 +273,8 @@ const HaruntaBugyalandNachiketaTal = () => {
                       className="gallery-item"
                       key={i}
                     >
-                      <img src={img} alt="Harunta Bugyal Nachiketa Tal" />
+                      {/* ✅ Lazy Loading added */}
+                      <img src={img} alt="Harunta Bugyal Nachiketa Tal" loading="lazy" />
                     </a>
                   ))}
                 </div>

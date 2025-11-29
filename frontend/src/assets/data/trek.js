@@ -8,6 +8,7 @@ const trek = [
     id: 1,
     title: "DAYARA BUGYAL",
     city: "Uttarkashi, Uttarakhand",
+    altitude: "11,155 ft", // Bakaria Top
     priceSolo: 10500,
     priceGroup: 6499,
     days: "4 days / 3 nights",
@@ -27,6 +28,7 @@ const trek = [
     id: 2,
     title: "HARUNTA BUGYAL AND NACHIKETA TAL",
     city: "Uttarkashi, Uttarakhand",
+    altitude: "10,200 ft",
     priceSolo: 10500,
     priceGroup: 6499,
     days: "4 days / 3 nights",
@@ -46,6 +48,7 @@ const trek = [
     id: 3,
     title: "DODITAL AND DARWA TOP",
     city: "Uttarkashi, Uttarakhand",
+    altitude: "13,615 ft",
     priceSolo: 12500,
     priceGroup: 8499,
     days: "5 days / 4 nights",

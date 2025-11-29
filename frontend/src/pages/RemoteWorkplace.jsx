@@ -1,13 +1,14 @@
 import React,{useEffect} from 'react';
 import { Container, Row, Col, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import '../styles/experience-page.css'; // Uses the same CSS as the Meditation page
+import '../styles/experience-page.css'; 
+import { Helmet } from 'react-helmet-async'; // ✅ SEO Import
 
 // === IMPORT YOUR "WOW" ASSETS ===
 // Find new assets for this page
-import heroVideo from '../assets/videos/remote-work-hero.mp4'; // Find a video of someone on a laptop with a mountain view
-import whyImage from '../assets/images/remote-work-why.jpg'; // e.g., A cozy cafe or homestay with good Wi-Fi
-import ctaImage from '../assets/images/cta-bg-3.jpg'; // e.g., A beautiful Himalayan sunset
+import heroVideo from '../assets/videos/remote-work-hero.mp4'; 
+import whyImage from '../assets/images/remote-work-why.jpg'; 
+import ctaImage from '../assets/images/cta-bg-3.jpg'; 
 
 // Import gallery images
 import galleryImg1 from '../assets/images/gallery-01.jpg';
@@ -19,8 +20,17 @@ const RemoteWorkplace = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  
   return (
     <div className="experience-page">
+      {/* ✅ SEO Metadata */}
+      <Helmet>
+        <title>Work From Trek (WFT) | Remote Work in Himalayas</title>
+        <meta name="description" content="Upgrade your home office. Work remotely from the serene Himalayas with high-speed internet and breathtaking views. Join Ghume Ghume's Work From Trek." />
+        <meta property="og:title" content="Work From Trek (WFT) | Remote Work in Himalayas" />
+        <meta property="og:description" content="Upgrade your home office. Work remotely from the serene Himalayas with high-speed internet and breathtaking views." />
+        <meta property="og:image" content={whyImage} />
+      </Helmet>
 
       {/* ================= 1. VIDEO HERO SECTION ================= */}
       <section className="exp-hero">
@@ -60,7 +70,8 @@ const RemoteWorkplace = () => {
           <Row className="align-items-center">
             <Col lg="6" md="12">
               <div className="exp-why-image">
-                <img src={whyImage} alt="Workcation in Uttarakhand" />
+                {/* ✅ Added loading="lazy" */}
+                <img src={whyImage} alt="Workcation in Uttarakhand" loading="lazy" />
               </div>
             </Col>
             <Col lg="6" md="12">
@@ -95,10 +106,11 @@ const RemoteWorkplace = () => {
             </Col>
           </Row>
           <Row className="gallery-row">
-            <Col lg="3" md="6" sm="6"><img src={galleryImg1} alt="Remote work spot 1" /></Col>
-            <Col lg="3" md="6" sm="6"><img src={galleryImg2} alt="Remote work spot 2" /></Col>
-            <Col lg="3" md="6" sm="6"><img src={galleryImg3} alt="Remote work spot 3" /></Col>
-            <Col lg="3" md="6" sm="6"><img src={galleryImg4} alt="Remote work spot 4" /></Col>
+            {/* ✅ Added loading="lazy" to all gallery images */}
+            <Col lg="3" md="6" sm="6"><img src={galleryImg1} alt="Remote work spot 1" loading="lazy" /></Col>
+            <Col lg="3" md="6" sm="6"><img src={galleryImg2} alt="Remote work spot 2" loading="lazy" /></Col>
+            <Col lg="3" md="6" sm="6"><img src={galleryImg3} alt="Remote work spot 3" loading="lazy" /></Col>
+            <Col lg="3" md="6" sm="6"><img src={galleryImg4} alt="Remote work spot 4" loading="lazy" /></Col>
           </Row>
         </Container>
       </section>

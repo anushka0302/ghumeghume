@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import "../styles/home.css";
 import { Container, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
+import { Helmet } from 'react-helmet-async'; // ✅ SEO Import
+
 import ServiceList from "../services/ServiceList";
 import experinceImg from "../assets/images/experience.png";
 import MasonryImagesGallery from "../components/Image-gallery/MasonryImagesGallery";
@@ -14,48 +16,38 @@ import TrekComparison from '../components/Weather/TrekComparison';
 // ✅ Import Centralized Data
 import trek from "../assets/data/trek";
 
-// ✅ Import Local Images for Tours
-// import dayaraImg from "../assets/images/dayara_g1.jpg";
-// import haruntaImg from "../assets/images/harunta_1.jpg";
-// import doditalImg from "../assets/images/dodital_1.jpg";
-
 const Home = () => {
   // ✅ STATE: Toggle between 'group' and 'solo' pricing
-  const [pricingMode, setPricingMode] = useState('group'); // Default is group (discounted)
+  const [pricingMode, setPricingMode] = useState('group'); 
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  // ✅ CONFIGURATION: Map IDs to specific Home Page Images & Links
+  // ✅ CONFIGURATION: Map IDs to specific Home Page Links
   const featuredToursConfig = [
-    {
-      id: 1, // Dayara Bugyal
-      link: "/tour/dayara-bugyal",
-      included: ["Boating", "Water sport", "Stay", "Campsite", "Meals"],
-    },
-    {
-      id: 2, // Harunta Bugyal
-      link: "/tour/harunta-bugyal-nachiketa-tal",
-      included: ["Boating", "Water sport", "Stay", "Campsite", "Meals"],
-    },
-    {
-      id: 3, // Dodital
-      link: "/tour/dodital-darwa-pass",
-      included: ["Boating", "Water sport", "Stay", "Campsite", "Meals"],
-    },
+    { id: 1, link: "/tour/dayara-bugyal" },
+    { id: 2, link: "/tour/harunta-bugyal-nachiketa-tal" },
+    { id: 3, link: "/tour/dodital-darwa-pass" },
   ];
 
   // ✅ MERGE: Combine config with centralized data
   const featuredTours = featuredToursConfig.map((config) => {
     const data = trek.find((t) => t.id === config.id) || {};
-    // 'data' contains the 'img' from trek.js. 
-    // We spread 'data' first, then 'config' to allow config to override if needed.
+    // 'data' contains img, title, altitude, included, etc. from trek.js
     return { ...data, ...config }; 
   });
 
   return (
     <>
+      {/* ✅ SEO Metadata */}
+      <Helmet>
+        <title>Ghume Ghume | Best Trekking & Expeditions in India</title>
+        <meta name="description" content="Book the best trekking packages in Uttarakhand. Join Ghume Ghume for Dayara Bugyal, Harunta Bugyal, Dodital, and more. Safe, affordable, and unforgettable." />
+        <meta property="og:title" content="Ghume Ghume | Trekking Adventures" />
+        <meta property="og:image" content={featuredTours[0]?.img} />
+      </Helmet>
+
       {/* HERO SECTION */}
       <section className="home-hero">
         <div className="home-hero-content">
@@ -83,7 +75,7 @@ const Home = () => {
                           Popular Packages
                         </h2>
 
-                        {/* ✅ UPDATED RESPONSIVE TOGGLE BUTTONS */}
+                        {/* ✅ RESPONSIVE TOGGLE BUTTONS */}
                         <div className="pricing-toggle-container">
                           
                           {/* Group Option */}
@@ -95,7 +87,7 @@ const Home = () => {
                               name="pricing"
                               checked={pricingMode === "group"}
                               onChange={() => setPricingMode("group")}
-                              style={{ display: 'none' }} // Hide the default radio circle
+                              style={{ display: 'none' }} 
                             />
                             Group (6+ Pax)
                             <span className="sale-badge">SALE</span>
@@ -110,7 +102,7 @@ const Home = () => {
                               name="pricing"
                               checked={pricingMode === "solo"}
                               onChange={() => setPricingMode("solo")}
-                              style={{ display: 'none' }} // Hide the default radio circle
+                              style={{ display: 'none' }} 
                             />
                             Solo / Duo
                           </label>
@@ -124,7 +116,8 @@ const Home = () => {
                         <Col lg="4" md="6" sm="12" key={tour.id}>
                           <div className="tour-card">
                             <div className="tour-card-image-wrapper">
-                              <img src={tour.img} alt={tour.title} />
+                              {/* ✅ Lazy Load Image */}
+                              <img src={tour.img} alt={tour.title} loading="lazy" />
                               <h5 className="tour-title">{tour.title}</h5>
                               <span className="tour-trek-badge">TREK</span>
                             </div>
@@ -202,7 +195,26 @@ const Home = () => {
                                 )}
                               </div>
 
-                              <p className="tour-duration">{tour.days}</p>
+                              {/* ✅ ADDED ALTITUDE & DAYS ROW (New Attractive Layout) */}
+                              <div 
+                                className="d-flex justify-content-between align-items-center mt-3 mb-2 py-2 px-2" 
+                                style={{ 
+                                  background: "#f8f9fa", 
+                                  borderRadius: "8px", 
+                                  fontSize: '0.85rem', 
+                                  color: '#555', 
+                                  fontWeight: '600' 
+                                }}
+                              >
+                                <span className="d-flex align-items-center gap-1">
+                                  <i className="ri-calendar-line" style={{color:'#faa935', fontSize: '1rem'}}></i> 
+                                  {tour.days}
+                                </span>
+                                <span className="d-flex align-items-center gap-1">
+                                  <i className="ri-mountain-line" style={{color:'#faa935', fontSize: '1rem'}}></i> 
+                                  {tour.altitude}
+                                </span>
+                              </div>
 
                               <div className="tour-includes-wrapper">
                                 <h6>Included:</h6>
@@ -273,7 +285,7 @@ const Home = () => {
 
             <Col lg="6">
               <div className="experience__img">
-                <img src={experinceImg} alt="experience" />
+                <img src={experinceImg} alt="experience" loading="lazy" />
               </div>
             </Col>
           </Row>
@@ -321,5 +333,3 @@ const Home = () => {
 };
 
 export default Home;
-
-
