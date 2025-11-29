@@ -286,6 +286,7 @@ html, body {
   padding: 3.5rem 0;
 }
 
+
 .experience__content h2 {
   font-size: clamp(1.8rem, 3vw, 2.5rem);
   font-weight: 700;
@@ -296,6 +297,75 @@ html, body {
   color: #555;
   max-width: 450px;
 }
+
+
+/* =========================
+   EXISTING CODE ABOVE...
+========================= */
+
+/* ... (after .counter__box styles) ... */
+
+/* ----------------------------------------------
+   ✅ NEW: EXPERIENCE IMAGE STYLING
+----------------------------------------------- */
+
+/* Wrapper: Aligns image to the right on desktop */
+.experience__img {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end; /* Pushes image to the right side */
+  align-items: center;
+}
+
+/* Image: Responsive sizing */
+.experience__img img {
+  width: 90%;          /* Takes up 90% of the column width */
+  max-width: 550px;    /* Prevents it from getting too huge on large screens */
+  height: auto;        /* Maintains aspect ratio */
+  object-fit: cover;
+  border-radius: 20px; /* Matches your theme's soft corners */
+  transition: 0.3s;
+}
+
+.experience__img img:hover {
+  transform: scale(1.02); /* Subtle zoom effect */
+}
+
+/* ----------------------------------------------
+   ✅ NEW: MOBILE RESPONSIVENESS FOR EXPERIENCE
+----------------------------------------------- */
+@media (max-width: 992px) {
+  /* On tablets/mobile, center the content */
+  .experience .row {
+    text-align: center;
+    justify-content: center;
+  }
+
+  .experience__content p {
+    margin: 0 auto; /* Centers the paragraph text */
+  }
+
+  /* Adjust counters to be centered */
+  .counter__wrapper {
+    justify-content: center;
+    margin-bottom: 3rem; /* Add space between counters and image */
+  }
+
+  /* Image centers on mobile */
+  .experience__img {
+    justify-content: center; /* Center image horizontally */
+    margin-top: 20px;
+  }
+
+  .experience__img img {
+    width: 100%; /* Use full width on mobile */
+    max-width: 450px;
+  }
+}
+
+
+
+
 
 /* COUNTERS */
 .counter__wrapper {
