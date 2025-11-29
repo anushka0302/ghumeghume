@@ -1,0 +1,234 @@
+/* Blog Listing Page */
+.blog__item {
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+  transition: 0.3s;
+  background: #fff;
+  height: 100%;
+  border: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+}
+
+.blog__item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.blog__img {
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+}
+
+.blog__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: 0.3s;
+}
+
+.blog__item:hover .blog__img img {
+  transform: scale(1.05);
+}
+
+.blog__content {
+  padding: 25px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.blog__date {
+  font-size: 0.85rem;
+  color: #faa935;
+  font-weight: 600;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.blog__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.blog__title a {
+  color: #0b2727;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.blog__title a:hover {
+  color: #faa935;
+}
+
+.blog__desc {
+  color: #666;
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.read__more-btn {
+  color: #faa935;
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: auto; /* Pushes button to bottom if content varies */
+}
+
+.read__more-btn:hover {
+  color: #e09220;
+  gap: 8px;
+}
+
+/* ✅ Blog Details Page Fix */
+.blog-details-section {
+  padding-top: 140px; /* Increased padding to clear header */
+  padding-bottom: 60px;
+}
+
+.blog__details-img {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  border-radius: 20px;
+  margin-bottom: 40px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.blog__details-title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+  color: #0b2727;
+  line-height: 1.2;
+}
+
+.blog__meta {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 35px;
+  color: #777;
+  font-size: 1rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 25px;
+}
+
+.blog__meta span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.blog__meta span i {
+  color: #faa935;
+  font-size: 1.2rem;
+}
+
+.blog__details-body {
+  font-size: 1.15rem;
+  line-height: 1.9;
+  color: #444;
+}
+
+.blog__details-body p {
+  margin-bottom: 20px;
+}
+
+.blog__details-body h5 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  color: #0b2727;
+}
+
+.blog__details-body ul {
+  margin-bottom: 30px;
+  padding-left: 20px;
+}
+
+.blog__details-body li {
+  margin-bottom: 10px;
+  list-style-type: disc;
+}
+
+/* ✅ Share Buttons */
+.blog__share-area h5 {
+  font-weight: 700;
+  color: #0b2727;
+  margin-bottom: 15px;
+}
+
+.share-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 25px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: 0.3s;
+  color: white !important;
+  border: none;
+}
+
+.share-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.share-btn.whatsapp { background-color: #25D366; }
+.share-btn.facebook { background-color: #1877F2; }
+.share-btn.twitter { background-color: #000; }
+
+/* ✅ CTA Box */
+.blog__cta-box {
+  background: linear-gradient(135deg, #f8fbff 0%, #eef6ff 100%);
+  border: 1px solid #dcebf7;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+}
+
+.blog__cta-box h3 {
+  font-weight: 800;
+  color: #0b2727;
+  margin-bottom: 10px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  /* Ensure header clears on mobile too */
+  .blog-header-section {
+    margin-top: 90px !important;
+    padding: 40px 0 !important;
+  }
+  
+  .blog-details-section {
+    padding-top: 100px;
+  }
+
+  .blog__details-title {
+    font-size: 2rem;
+  }
+  
+  .blog__details-img {
+    height: 300px;
+  }
+  
+  .blog__cta-box {
+    padding: 25px !important;
+  }
+}

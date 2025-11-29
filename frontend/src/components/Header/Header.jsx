@@ -46,6 +46,11 @@ const navLinks = [
       { path: '/contact', display: 'Contact' },
     ],
   },
+  // ✅ NEW: Added Blogs Link Here
+  {
+    path: '/blogs',
+    display: 'Blogs',
+  },
   {
     path: '/contact',
     display: 'Contact Us',

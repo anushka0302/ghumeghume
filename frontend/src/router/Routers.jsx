@@ -16,6 +16,10 @@ const Contact = React.lazy(() => import('../pages/Contact'));
 const FAQ = React.lazy(() => import('../pages/FAQ'));
 const GearList = React.lazy(() => import('../pages/GearList'));
 
+// ✅ NEW: Lazy Load Blog Pages
+const Blogs = React.lazy(() => import('../pages/Blogs'));
+const BlogDetails = React.lazy(() => import('../pages/BlogDetails'));
+
 // Auth & System
 const Login = React.lazy(() => import('../pages/Login'));
 const Register = React.lazy(() => import('../pages/Register'));
@@ -67,6 +71,10 @@ const Routers = () => {
           
           {/* WhyUs Route */}
           <Route path="/why-us" element={<WhyUs />} />
+
+          {/* ✅ Blog Routes */}
+          <Route path="/blogs" element={<Blogs />} />
+          <Route path="/blogs/:id" element={<BlogDetails />} />
 
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
