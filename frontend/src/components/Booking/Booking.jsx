@@ -12,7 +12,7 @@ import { allTourDates } from '../../assets/data/tourDates';
 
 const RAZORPAY_KEY = process.env.REACT_APP_RAZORPAY_API_KEY;
 
-// ✅ NEW: Define Exchange Rate (You can fetch this from an API ideally, but static works too)
+// Exchange Rate (Ideally fetch this from an API)
 const EXCHANGE_RATE = 86; // 1 USD = 86 INR
 
 const Booking = ({ tour, avgRating, tourId }) => {
@@ -25,8 +25,6 @@ const Booking = ({ tour, avgRating, tourId }) => {
   // --- State ---
   const [dateMode, setDateMode] = useState('fixed'); 
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  
-  // ✅ NEW: Currency State
   const [currency, setCurrency] = useState('INR'); 
 
   const dropdownRef = useRef(null);
@@ -54,11 +52,10 @@ const Booking = ({ tour, avgRating, tourId }) => {
   });
 
   // --- Helper: Currency Formatter ---
-  // ✅ NEW: Converts and formats price based on state
   const formatPrice = (amountInINR) => {
     if (currency === 'USD') {
       const val = amountInINR / EXCHANGE_RATE;
-      return `$${val.toFixed(2)}`; // e.g. $120.50
+      return `$${val.toFixed(2)}`; 
     }
     return `₹${amountInINR}`;
   };
@@ -115,17 +112,15 @@ const Booking = ({ tour, avgRating, tourId }) => {
 
   // --- Payment Calculations (INR Base) ---
   const guestCount = Number(booking.guestSize) || minGuestSize; 
-  const serviceFeeINR = 10; // Base INR
+  const serviceFeeINR = 10; 
   const baseAmountINR = Number(price) * guestCount;
   const subTotalINR = baseAmountINR + serviceFeeINR;
   const gstAmountINR = Math.round(subTotalINR * 0.05);
   const totalAmountINR = subTotalINR + gstAmountINR;
   
-  // Calculate Advance (25%) and Due
   const advanceAmountINR = Math.round(totalAmountINR * 0.25); 
   const dueAmountINR = totalAmountINR - advanceAmountINR;
 
-  // ✅ NEW: Dynamic Calculation Variables for Display/Payment
   const totalAmountDisplay = getConvertedValue(totalAmountINR);
   const advanceAmountDisplay = getConvertedValue(advanceAmountINR);
   const dueAmountDisplay = getConvertedValue(dueAmountINR);
@@ -174,63 +169,95 @@ const Booking = ({ tour, avgRating, tourId }) => {
       return alert(`For this package, the minimum group size is ${minGuestSize}.`);
     }
 
+    // ----------------------------------------------------
+    // FIX 1: Ensure Date is a String (Backend Crash Prevention)
+    // ----------------------------------------------------
     let finalDateString = booking.bookAt;
-    if (typeof booking.bookAt === 'object') {
+    if (booking.bookAt instanceof Date) {
+        // Converts Date object to "Wed Nov 29 2025" format
         finalDateString = booking.bookAt.toDateString(); 
+    } else if (typeof booking.bookAt === 'string') {
+        // Already a string (from Fixed Batches)
+        finalDateString = booking.bookAt;
     }
 
     try {
-      // ✅ UPDATED: Send Amount AND Currency to backend
+      // 1. Create Order on Backend
       const orderRes = await fetch(`${BASE_URL}/payment/checkout`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
-            amount: advanceAmountDisplay, // Send the converted amount
-            currency: currency // Send 'INR' or 'USD'
+            amount: advanceAmountDisplay, 
+            currency: currency 
         }), 
       });
       
       const orderData = await orderRes.json();
-      if (!orderData.success) return alert("Error creating order");
+      if (!orderData.success) {
+          console.error("Order Creation Failed:", orderData);
+          return alert("Error creating payment order. Please try again.");
+      }
 
+      // 2. Open Razorpay Window
       const options = {
         key: RAZORPAY_KEY,
-        amount: orderData.order.amount, // This comes from backend (ensure backend calculates correctly)
-        currency: currency, // ✅ UPDATED: 'INR' or 'USD'
+        amount: orderData.order.amount, 
+        currency: currency, 
         name: "Ghume Ghume",
         description: `Advance for ${title}`, 
         image: "https://www.ghumeghume.com/static/media/logo.2dd53824f641f46a2885.png", 
         order_id: orderData.order.id, 
+        
+        // ----------------------------------------------------
+        // FIX 2: Correct Handler to Send Data to Backend
+        // ----------------------------------------------------
         handler: async function (response) {
-          const verifyRes = await fetch(`${BASE_URL}/payment/paymentverification`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_signature: response.razorpay_signature,
-              bookingDetails: {
-                ...booking,
-                bookAt: finalDateString, 
-                totalAmount: totalAmountDisplay, // Save the converted total
-                paidAmount: advanceAmountDisplay, // Save the converted advance
-                dueAmount: dueAmountDisplay,
-                currency: currency, // Save which currency was used
-                paymentStatus: 'Partial', 
-              }
-            }),
-          });
+          console.log("RAZORPAY SUCCESS:", response); // Debug Log
 
-          const verifyData = await verifyRes.json();
-          if (verifyData.success) navigate("/thank-you");
-          else alert("Payment Verification Failed.");
+          try {
+            const verifyRes = await fetch(`${BASE_URL}/payment/paymentverification`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                // These 3 fields MUST match exactly for signature verification
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+                
+                // Booking Details (passed for DB saving)
+                bookingDetails: {
+                    ...booking,
+                    bookAt: finalDateString, // Sending the SAFE string version
+                    totalAmount: totalAmountDisplay, 
+                    paidAmount: advanceAmountDisplay, 
+                    dueAmount: dueAmountDisplay,
+                    currency: currency, 
+                    paymentStatus: 'Partial', 
+                }
+                }),
+            });
+
+            const verifyData = await verifyRes.json();
+            
+            if (verifyData.success) {
+                navigate("/thank-you");
+            } else {
+                console.error("Verification Failed:", verifyData);
+                alert("Payment Successful, but Verification Failed. Contact Support.");
+            }
+          } catch (verifyError) {
+              console.error("Verification Network Error:", verifyError);
+              alert("Network Error during verification.");
+          }
         },
         prefill: { name: booking.fullName, email: user.email, contact: booking.phone },
         theme: { color: "#faa935" },
       };
+      
       const razor = new window.Razorpay(options);
       razor.open();
     } catch (err) {
+      console.error(err);
       alert(err.message);
     }
   };
@@ -238,7 +265,6 @@ const Booking = ({ tour, avgRating, tourId }) => {
   return (
     <div className='booking'>
       <div className='booking__top d-flex align-items-center justify-content-between'>
-        {/* ✅ UPDATED: Display dynamic price */}
         <h3>{formatPrice(price)} <span>/per person</span></h3>
         <span className='tour__rating d-flex align-items-center gap-1'>
           <i className="ri-star-s-fill"></i> {avgRating === 0 ? null : avgRating}({reviews?.length})
@@ -246,8 +272,7 @@ const Booking = ({ tour, avgRating, tourId }) => {
       </div>
 
       <div className='booking__form'>
-        
-        {/* ✅ NEW: Currency Toggle Switch */}
+        {/* Currency Switch */}
         <div className="d-flex justify-content-between align-items-center mb-3">
             <h5>Book Your Adventure</h5>
             <div className="currency-switch" style={{ background: '#eee', padding: '4px', borderRadius: '20px', display:'flex' }}>
@@ -345,7 +370,6 @@ const Booking = ({ tour, avgRating, tourId }) => {
         </Form>      
       </div>
       
-      {/* Summary Section - Updated to use formatPrice helper */}
       <div className='booking__bottom'>
         <ListGroup>
           <ListGroupItem className='border-0 px-0 summary-item'>

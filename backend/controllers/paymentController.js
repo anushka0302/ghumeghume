@@ -35,58 +35,101 @@ const checkout = async (req, res) => {
 };
 
 // 2. Verify Payment
+// 2. Verify Payment (Full Debug + Save Version)
 const paymentVerification = async (req, res) => {
-  const { razorpay_order_id, razorpay_payment_id, razorpay_signature, bookingDetails } = req.body;
+  try {
+    // ---------------------------------------------------------
+    // STEP A: Log Incoming Data to Console (For Debugging)
+    // ---------------------------------------------------------
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, bookingDetails } = req.body;
 
-  const body = razorpay_order_id + "|" + razorpay_payment_id;
+    console.log("--- DEBUG PAYMENT VERIFICATION ---");
+    console.log("Received Order ID:", razorpay_order_id);
+    console.log("Received Payment ID:", razorpay_payment_id);
+    console.log("Received Signature:", razorpay_signature);
+    // console.log("Booking Details:", bookingDetails); // Uncomment if needed
 
-  const expectedSignature = crypto
-    .createHmac("sha256", process.env.RAZORPAY_API_SECRET)
-    .update(body.toString())
-    .digest("hex");
-
-  const isAuthentic = expectedSignature === razorpay_signature;
-
-  if (isAuthentic) {
-    try {
-       if (bookingDetails) {
-          const newBooking = new Booking({
-            userId: bookingDetails.userId,
-            userEmail: bookingDetails.userEmail,
-            tourName: bookingDetails.tourName,
-            fullName: bookingDetails.fullName,
-            phone: bookingDetails.phone,
-            guestSize: bookingDetails.guestSize,
-            bookAt: bookingDetails.bookAt,
-            
-            // ✅ UPDATED: Save the financial details sent from frontend
-            totalAmount: bookingDetails.totalAmount,
-            paidAmount: bookingDetails.paidAmount,
-            dueAmount: bookingDetails.dueAmount,
-            currency: bookingDetails.currency || 'INR', // Save the currency
-            paymentStatus: bookingDetails.paymentStatus || "Partial",
-            
-            transactionId: razorpay_payment_id
-          });
-
-          await newBooking.save();
-       }
-
-      res.status(200).json({
-        success: true,
-        message: "Payment successful",
-        orderId: razorpay_order_id,
-        paymentId: razorpay_payment_id
-      });
-    } catch (dbError) {
-      console.error("Failed to save booking:", dbError);
-      return res.status(500).json({ success: false, message: "Payment successful but Booking Save Failed" });
+    // Check if any required field is missing
+    if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
+       console.error("ERROR: Missing required Razorpay fields in req.body");
+       return res.status(400).json({ success: false, message: "Missing Razorpay fields in request" });
     }
 
-  } else {
-    res.status(400).json({
-      success: false,
-      message: "Invalid signature. Payment verification failed.",
+    // ---------------------------------------------------------
+    // STEP B: Verify Signature
+    // ---------------------------------------------------------
+    const body = razorpay_order_id + "|" + razorpay_payment_id;
+
+    const expectedSignature = crypto
+      .createHmac("sha256", process.env.RAZORPAY_API_SECRET)
+      .update(body.toString())
+      .digest("hex");
+
+    console.log("Expected Signature (Backend):", expectedSignature);
+    console.log("Received Signature (Frontend):", razorpay_signature);
+    
+    const isAuthentic = expectedSignature === razorpay_signature;
+
+    if (isAuthentic) {
+      // ---------------------------------------------------------
+      // STEP C: Save to Database (Your Original Logic)
+      // ---------------------------------------------------------
+      try {
+        if (bookingDetails) {
+           const newBooking = new Booking({
+             userId: bookingDetails.userId,
+             userEmail: bookingDetails.userEmail,
+             tourName: bookingDetails.tourName,
+             fullName: bookingDetails.fullName,
+             phone: bookingDetails.phone,
+             guestSize: bookingDetails.guestSize,
+             bookAt: bookingDetails.bookAt,
+             
+             // Financial details
+             totalAmount: bookingDetails.totalAmount,
+             paidAmount: bookingDetails.paidAmount,
+             dueAmount: bookingDetails.dueAmount,
+             currency: bookingDetails.currency || 'INR', 
+             paymentStatus: bookingDetails.paymentStatus || "Partial",
+             
+             transactionId: razorpay_payment_id
+           });
+
+           await newBooking.save();
+           console.log("✅ Booking saved successfully to Database");
+        }
+
+        return res.status(200).json({
+          success: true,
+          message: "Payment successful",
+          orderId: razorpay_order_id,
+          paymentId: razorpay_payment_id
+        });
+
+      } catch (dbError) {
+        console.error("❌ Payment Verified, but Booking Save Failed:", dbError);
+        return res.status(500).json({ 
+            success: false, 
+            message: "Payment successful but Booking Save Failed" 
+        });
+      }
+
+    } else {
+      // ---------------------------------------------------------
+      // Signature Mismatch
+      // ---------------------------------------------------------
+      console.warn("❌ Signature Mismatch! Verification Failed.");
+      return res.status(400).json({
+        success: false,
+        message: "Invalid signature. Payment verification failed.",
+      });
+    }
+
+  } catch (error) {
+    console.error("❌ Internal Server Error:", error);
+    return res.status(500).json({ 
+        success: false, 
+        message: "Internal Server Error during verification" 
     });
   }
 };
