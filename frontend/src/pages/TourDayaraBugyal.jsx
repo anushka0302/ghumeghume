@@ -27,9 +27,9 @@ const TourDayaraBugyal = () => {
   // ✅ STATE: Pricing Toggle (Default: Group)
   const [isGroupPricing, setIsGroupPricing] = useState(true);
 
-  // ✅ GET DATA: Find Dayara Bugyal (ID 1) from the centralized file
-  // If ID 1 isn't found, fallback to the first item to prevent crash
-  const tourData = trek.find(t => t.id === 1) || trek[0];
+  // ✅ GET DATA: Find Dayara Bugyal (ID 4) from the centralized file
+  // If ID 4 isn't found, fallback to the first item to prevent crash
+  const tourData = trek.find(t => t.id === 4) || trek[0];
 
   // ✅ CALCULATION: Determine active price based on toggle
   const currentPrice = isGroupPricing ? tourData.priceGroup : tourData.priceSolo;

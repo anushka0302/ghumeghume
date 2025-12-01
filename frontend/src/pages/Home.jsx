@@ -25,10 +25,12 @@ const Home = () => {
   }, []);
 
   // ✅ CONFIGURATION: Map IDs to specific Home Page Links
+  // Added ID 4 for Kedarkantha
   const featuredToursConfig = [
     { id: 1, link: "/tour/dayara-bugyal" },
     { id: 2, link: "/tour/harunta-bugyal-nachiketa-tal" },
     { id: 3, link: "/tour/dodital-darwa-pass" },
+    { id: 4, link: "/tour/kedarkantha-trek" }, 
   ];
 
   // ✅ MERGE: Combine config with centralized data
@@ -43,7 +45,7 @@ const Home = () => {
       {/* ✅ SEO Metadata */}
       <Helmet>
         <title>Ghume Ghume | Best Trekking & Expeditions in India</title>
-        <meta name="description" content="Book the best trekking packages in Uttarakhand. Join Ghume Ghume for Dayara Bugyal, Harunta Bugyal, Dodital, and more. Safe, affordable, and unforgettable." />
+        <meta name="description" content="Book the best trekking packages in Uttarakhand. Join Ghume Ghume for Dayara Bugyal, Harunta Bugyal, Dodital, Kedarkantha and more. Safe, affordable, and unforgettable." />
         <meta property="og:title" content="Ghume Ghume | Trekking Adventures" />
         <meta property="og:image" content={featuredTours[0]?.img} />
       </Helmet>
@@ -89,7 +91,7 @@ const Home = () => {
                               onChange={() => setPricingMode("group")}
                               style={{ display: 'none' }} 
                             />
-                            Group (6+ Pax)
+                            Group (3 or more)
                             <span className="sale-badge">SALE</span>
                           </label>
 
@@ -104,7 +106,7 @@ const Home = () => {
                               onChange={() => setPricingMode("solo")}
                               style={{ display: 'none' }} 
                             />
-                            Solo / Duo
+                            Solo / Duo 1–2 People
                           </label>
 
                         </div>
@@ -195,7 +197,7 @@ const Home = () => {
                                 )}
                               </div>
 
-                              {/* ✅ ADDED ALTITUDE & DAYS ROW (New Attractive Layout) */}
+                              {/* ✅ ADDED ALTITUDE & DAYS ROW */}
                               <div 
                                 className="d-flex justify-content-between align-items-center mt-3 mb-2 py-2 px-2" 
                                 style={{ 
@@ -219,7 +221,7 @@ const Home = () => {
                               <div className="tour-includes-wrapper">
                                 <h6>Included:</h6>
                                 <ul className="tour-includes-list">
-                                  {tour.included.map((item, index) => (
+                                  {tour.included && tour.included.slice(0, 5).map((item, index) => (
                                     <li key={index}>{item}</li>
                                   ))}
                                 </ul>

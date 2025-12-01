@@ -2,10 +2,32 @@
 import dayaraImg from "../images/dayara_g1.jpg";
 import haruntaImg from "../images/harunta_1.jpg";
 import doditalImg from "../images/dodital_1.jpg";
+import kedarkanthaImg from "../images/kedar_g1.JPG";
 
 const trek = [
+  // ✅ NEW TREK ADDED: KEDARKANTHA
   {
     id: 1,
+    title: "KEDARKANTHA TREK",
+    city: "Sankri, Uttarakhand",
+    altitude: "12,500 ft",
+    priceSolo: 11500,
+    priceGroup: 6299,
+    days: "5 Days / 4 Nights",
+    desc: "The Queen of Winter Treks. Experience 360° summit views, the frozen Juda Ka Talab, and a thrilling summit climb in snow.",
+    included: [
+      "Accommodation",
+      "Meals",
+      "Trek Leader & Guide",
+      "Forest Permits",
+      "Trek Equipment",
+    ],
+    img: kedarkanthaImg, // Using placeholder image
+    link: "/tour/kedarkantha-trek",
+    featured: true,
+  },
+  {
+    id: 4,
     title: "DAYARA BUGYAL",
     city: "Uttarkashi, Uttarakhand",
     altitude: "11,155 ft", // Bakaria Top
@@ -64,6 +86,7 @@ const trek = [
     link: "/tour/dodital-darwa-pass",
     featured: true,
   },
+  
 ];
 
 export default trek;

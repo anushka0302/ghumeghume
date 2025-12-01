@@ -114,5 +114,38 @@ export const allTourDates = {
         { id: "DD_MAR28", date: "Mar 28 (Sat) - Apr 02 (Thu)", tag: "Clear Views", status: "AVBL" },
       ]
     }
+  ],
+  "kedarkantha-trek": [
+    {
+      month: "December 2025",
+      slots: [
+        { id: "KK_DEC06", date: "Dec 06 - Dec 11", tag: "Winter Opening", status: "AVBL" },
+        { id: "KK_DEC13", date: "Dec 13 - Dec 18", tag: "Snow", status: "AVBL" },
+        { id: "KK_DEC20", date: "Dec 20 - Dec 25", tag: "Christmas", status: "Filling Fast" },
+        { id: "KK_DEC27", date: "Dec 27 - Jan 01", tag: "New Year Batch", status: "Filling Fast" },
+      ]
+    },
+    {
+      month: "January 2026",
+      slots: [
+        { id: "KK_JAN03", date: "Jan 03 - Jan 08", tag: "Heavy Snow", status: "AVBL" },
+        { id: "KK_JAN10", date: "Jan 10 - Jan 15", tag: "Peak Winter", status: "AVBL" },
+        { id: "KK_JAN24", date: "Jan 24 - Jan 29", tag: "Republic Day", status: "Filling Fast" },
+      ]
+    },
+    {
+      month: "February 2026",
+      slots: [
+        { id: "KK_FEB07", date: "Feb 07 - Feb 12", tag: "Snow Trek", status: "AVBL" },
+        { id: "KK_FEB14", date: "Feb 14 - Feb 19", tag: "Valentine's", status: "AVBL" },
+      ]
+    },
+    {
+      month: "March 2026",
+      slots: [
+        { id: "KK_MAR07", date: "Mar 07 - Mar 12", tag: "Spring Snow", status: "AVBL" },
+        { id: "KK_MAR21", date: "Mar 21 - Mar 26", tag: "Holi Special", status: "Filling Fast" },
+      ]
+    }
   ]
 };

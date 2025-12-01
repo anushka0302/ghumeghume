@@ -7,6 +7,7 @@ import womenTrekImg from "../images/womenkity.png";
 import fatherSonImg from "../images/fatherson.png";
 import detoxImg from "../images/detoxblog.png";
 import soloTrekImg from "../images/solotrek.png";
+import kedarblog from "../images/kedar_g1.JPG";
 
 const blogs = [
   {
@@ -207,6 +208,74 @@ const blogs = [
       </ul>
     `
   },
+  {
+    id: 9,
+    title: "Discover Uttarakhand Treks — Experience the Real India with ghumeghume.com",
+    author: "Ghume Ghume Team",
+    date: "18 Nov, 2025",
+    desc: "The Himalayas in India are more than mountains — they are India’s natural lifeline. Uttarakhand treks offer pure air, peaceful landscapes, and a deep connection with nature. At ghumeghume.com, we promote responsible trekking that protects the environment and supports local Himalayan communities.",
+    imgUrl: kedarblog, // Assuming 'doditalImg' is a defined variable for the image URL
+    trekLink: "/tour/dodital-darwa-pass",
+    content: `
+      <h2>The Himalayas: India’s Natural Lifeline</h2>
+      <p>The Himalayas in India are more than mountains — they are India’s natural lifeline. <strong>Uttarakhand treks</strong> offer pure air, peaceful landscapes, and a deep connection with nature. At ghumeghume.com, we promote **responsible trekking** that protects the environment and supports local Himalayan communities.</p>
+
+      <hr>
+
+      <h3>Why Uttarakhand?</h3>
+      <p>Every trek in Uttarakhand takes you through glaciers, forests, and meadows that are crucial for India’s climate.</p>
+      <blockquote>
+        Environmental voices like <strong>Sonam Wangchuk</strong>, <strong>Vandana Shiva</strong>, and institutions like the Wildlife Institute of India and NIM Uttarkashi constantly stress the importance of conserving the Himalayas.
+      </blockquote>
+
+      <hr>
+
+      <h3>Travel With Purpose</h3>
+      <p>Choosing a trek in India through <strong>ghumeghume.com</strong> means:</p>
+      <ul>
+        <li><strong>zero-plastic trekking</strong></li>
+        <li>clean trails</li>
+        <li>eco-friendly camping</li>
+        <li>support for local guides and villages</li>
+        <li>respect for wildlife and forests</li>
+      </ul>
+      <p>Your journey helps protect Uttarakhand’s fragile mountain ecosystem.</p>
+
+      <hr>
+
+      <h3>Top Treks in Uttarakhand</h3>
+      <p>These treks make Uttarakhand the trekking capital of India:</p>
+      <ul>
+        <li>Kedarkantha</li>
+        <li>Valley of Flowers</li>
+        <li>Har Ki Dun</li>
+        <li>Dayara Bugyal</li>
+        <li>Kuari Pass</li>
+      </ul>
+
+      <hr>
+
+      <h3>Why ghumeghume.com?</h3>
+      <ul>
+        <li>certified local guides</li>
+        <li>safe routes</li>
+        <li><strong>eco-friendly practices</strong></li>
+        <li>fair local employment</li>
+        <li>authentic mountain experiences</li>
+      </ul>
+      <p>We bring you the real India — simple, natural, and unforgettable.</p>
+
+      <hr>
+
+      <h3>Trek for India. Trek Uttarakhand.</h3>
+      <p>With ghumeghume.com, your travel becomes a movement:</p>
+      <ul>
+        <li>🌿 <strong>Protect nature</strong></li>
+        <li>🌍 <strong>Support communities</strong></li>
+        <li>🏔 <strong>Experience the real Himalayas</strong></li>
+      </ul>
+    `
+},
 ];
 
 export default blogs;

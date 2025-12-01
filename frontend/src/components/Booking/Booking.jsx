@@ -33,8 +33,8 @@ const Booking = ({ tour, avgRating, tourId }) => {
 
   // --- Pricing Logic ---
   const isGroupMode = Number(price) === Number(priceGroup);
-  const minGuestSize = isGroupMode ? 6 : 1;
-  const maxGuestSize = isGroupMode ? 50 : 5; 
+  const minGuestSize = isGroupMode ? 3 : 1;
+  const maxGuestSize = isGroupMode ? 50 : 2; 
 
   const guestOptions = Array.from(
     { length: maxGuestSize - minGuestSize + 1 }, 

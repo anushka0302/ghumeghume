@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'; // Added Suspense
+import React, { Suspense } from 'react'; 
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from '../auth/AuthContext';
 
@@ -16,7 +16,7 @@ const Contact = React.lazy(() => import('../pages/Contact'));
 const FAQ = React.lazy(() => import('../pages/FAQ'));
 const GearList = React.lazy(() => import('../pages/GearList'));
 
-// ✅ NEW: Lazy Load Blog Pages
+// Blog Pages
 const Blogs = React.lazy(() => import('../pages/Blogs'));
 const BlogDetails = React.lazy(() => import('../pages/BlogDetails'));
 
@@ -29,22 +29,23 @@ const ThankYou = React.lazy(() => import('../pages/ThankYou'));
 const TourDayaraBugyal = React.lazy(() => import('../pages/TourDayaraBugyal'));
 const TourDoditalDarwa = React.lazy(() => import('../pages/TourDoditalDarwa'));
 const HaruntaBugyalandNachiketaTal = React.lazy(() => import("../pages/HaruntaBugyalandNachiketaTal"));
+// ✅ Added Kedarkantha Page Import
+const TourKedarkantha = React.lazy(() => import('../pages/TourKedarkantha'));
 
 // Expedition Types
 const Meditation = React.lazy(() => import('../pages/Meditation'));
 const Enlightenment = React.lazy(() => import('../pages/Enlightenment'));
 const RemoteWorkplace = React.lazy(() => import('../pages/RemoteWorkplace'));
 
-// Policies (Perfect for lazy loading as they are rarely visited)
+// Policies
 const RefundPolicy = React.lazy(() => import('../pages/RefundPolicy'));
 const Terms = React.lazy(() => import('../pages/Terms'));
 const PrivacyPolicy = React.lazy(() => import('../pages/PrivacyPolicy'));
 const ShippingPolicy = React.lazy(() => import('../pages/ShippingPolicy'));
 
-// Simple Loading Component for the Suspense Fallback
+// Loading Spinner
 const LoadingSpinner = () => (
   <div className="d-flex justify-content-center align-items-center w-100" style={{ height: '50vh' }}>
-    {/* You can replace this text with a real <Spinner> component if using Reactstrap */}
     <div className="spinner-border text-secondary" role="status">
       <span className="visually-hidden">Loading...</span>
     </div>
@@ -54,22 +55,21 @@ const LoadingSpinner = () => (
 const Routers = () => {
   return (
     <AuthProvider>
-      {/* === 2. Wrap Routes in Suspense === */}
       <Suspense fallback={<LoadingSpinner />}>
         <Routes>
           <Route path="/" element={<Navigate to="/home" />} />
           <Route path="/home" element={<Home />} />
 
-          {/* ✅ Direct Static Page */}
+          {/* ✅ Trek Routes */}
           <Route path="/tour/dayara-bugyal" element={<TourDayaraBugyal />} />
           <Route path="/tour/harunta-bugyal-nachiketa-tal" element={<HaruntaBugyalandNachiketaTal />} />
           <Route path="/tour/dodital-darwa-pass" element={<TourDoditalDarwa />} />
+          <Route path="/tour/kedarkantha-trek" element={<TourKedarkantha />} /> 
+
           <Route path="/tour/:id" element={<TourDetails />} />
           <Route path='/himalayas-2026' element={<Trend2026 />} />
           <Route path="/tours" element={<Tours />} />
           <Route path="/about" element={<About />} />
-          
-          {/* WhyUs Route */}
           <Route path="/why-us" element={<WhyUs />} />
 
           {/* ✅ Blog Routes */}
@@ -86,7 +86,7 @@ const Routers = () => {
           <Route path="/thank-you" element={<ThankYou />} />
           <Route path="/tours/search" element={<SearchResultList />} />
           
-          {/* POLICY ROUTES */}
+          {/* Policy Routes */}
           <Route path="/refund-policy" element={<RefundPolicy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
