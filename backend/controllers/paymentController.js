@@ -35,28 +35,17 @@ const checkout = async (req, res) => {
 };
 
 // 2. Verify Payment (Full Debug + Save Version)
+// 2. Verify Payment
 const paymentVerification = async (req, res) => {
   try {
-    // ---------------------------------------------------------
-    // STEP A: Log Incoming Data to Console (For Debugging)
-    // ---------------------------------------------------------
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature, bookingDetails } = req.body;
 
     console.log("--- DEBUG PAYMENT VERIFICATION ---");
-    console.log("Received Order ID:", razorpay_order_id);
-    console.log("Received Payment ID:", razorpay_payment_id);
-    console.log("Received Signature:", razorpay_signature);
-    // console.log("Booking Details:", bookingDetails); // Uncomment if needed
-
     // Check if any required field is missing
     if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
-       console.error("ERROR: Missing required Razorpay fields in req.body");
-       return res.status(400).json({ success: false, message: "Missing Razorpay fields in request" });
+       return res.status(400).json({ success: false, message: "Missing Razorpay fields" });
     }
 
-    // ---------------------------------------------------------
-    // STEP B: Verify Signature
-    // ---------------------------------------------------------
     const body = razorpay_order_id + "|" + razorpay_payment_id;
 
     const expectedSignature = crypto
@@ -64,15 +53,9 @@ const paymentVerification = async (req, res) => {
       .update(body.toString())
       .digest("hex");
 
-    console.log("Expected Signature (Backend):", expectedSignature);
-    console.log("Received Signature (Frontend):", razorpay_signature);
-    
     const isAuthentic = expectedSignature === razorpay_signature;
 
     if (isAuthentic) {
-      // ---------------------------------------------------------
-      // STEP C: Save to Database (Your Original Logic)
-      // ---------------------------------------------------------
       try {
         if (bookingDetails) {
            const newBooking = new Booking({
@@ -80,28 +63,22 @@ const paymentVerification = async (req, res) => {
              userEmail: bookingDetails.userEmail,
              tourName: bookingDetails.tourName,
              fullName: bookingDetails.fullName,
-             
-             // ✅ SAFETY: Convert phone to String explicitly
              phone: String(bookingDetails.phone),
-             
-             // ✅ SAFETY: Force conversion to Number
              guestSize: Number(bookingDetails.guestSize),
              
-             // ✅ SAFETY: Ensure Date is a proper object
-             bookAt: new Date(bookingDetails.bookAt),
+             // ✅ FIXED: Save as String directly (No 'new Date()' conversion)
+             bookAt: bookingDetails.bookAt,
              
-             // ✅ SAFETY: Ensure Amounts are Numbers
              totalAmount: Number(bookingDetails.totalAmount),
              paidAmount: Number(bookingDetails.paidAmount),
              dueAmount: Number(bookingDetails.dueAmount),
-             
              currency: bookingDetails.currency || 'INR', 
              paymentStatus: bookingDetails.paymentStatus || "Partial",
              transactionId: razorpay_payment_id
            });
 
            await newBooking.save();
-           console.log("✅ Booking saved successfully to Database");
+           console.log("✅ Booking saved successfully");
         }
 
         return res.status(200).json({
@@ -112,18 +89,11 @@ const paymentVerification = async (req, res) => {
         });
 
       } catch (dbError) {
-        console.error("❌ Payment Verified, but Booking Save Failed:", dbError);
-        return res.status(500).json({ 
-            success: false, 
-            message: "Payment successful but Booking Save Failed" 
-        });
+        console.error("❌ DATABASE SAVE FAILED:", dbError);
+        return res.status(500).json({ success: false, message: "Payment successful but Booking Save Failed" });
       }
 
     } else {
-      // ---------------------------------------------------------
-      // Signature Mismatch
-      // ---------------------------------------------------------
-      console.warn("❌ Signature Mismatch! Verification Failed.");
       return res.status(400).json({
         success: false,
         message: "Invalid signature. Payment verification failed.",
@@ -132,10 +102,7 @@ const paymentVerification = async (req, res) => {
 
   } catch (error) {
     console.error("❌ Internal Server Error:", error);
-    return res.status(500).json({ 
-        success: false, 
-        message: "Internal Server Error during verification" 
-    });
+    return res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 };
 

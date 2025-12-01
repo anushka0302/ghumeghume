@@ -20,13 +20,13 @@ const bookingSchema = new mongoose.Schema(
       type: Number,
       required: true
     },
-    // ✅ FIXED: Changed Number to String to prevent crashes
     phone: {
       type: String, 
       required: true
     },
+    // ✅ FIXED: Changed to String to allow Date Ranges (e.g., "Dec 20 - Dec 25")
     bookAt: {
-      type: Date,
+      type: String,
       required: true
     },
     
