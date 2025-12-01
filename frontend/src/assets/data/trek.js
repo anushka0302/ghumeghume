@@ -11,7 +11,7 @@ const trek = [
     title: "KEDARKANTHA TREK",
     city: "Sankri, Uttarakhand",
     altitude: "12,500 ft",
-    priceSolo: 11,
+    priceSolo: 11500,
     priceGroup: 6299,
     days: "5 Days / 4 Nights",
     desc: "The Queen of Winter Treks. Experience 360° summit views, the frozen Juda Ka Talab, and a thrilling summit climb in snow.",
