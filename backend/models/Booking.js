@@ -20,8 +20,9 @@ const bookingSchema = new mongoose.Schema(
       type: Number,
       required: true
     },
+    // ✅ FIXED: Changed Number to String to prevent crashes
     phone: {
-      type: Number, // Recommendation: Change to String in future to handle '+' codes
+      type: String, 
       required: true
     },
     bookAt: {
@@ -29,7 +30,7 @@ const bookingSchema = new mongoose.Schema(
       required: true
     },
     
-    // ✅ NEW: Payment Fields added
+    // Financial Details
     totalAmount: {
         type: Number,
         required: true
@@ -43,7 +44,7 @@ const bookingSchema = new mongoose.Schema(
         required: true
     },
     currency: {
-        type: String, // 'INR' or 'USD'
+        type: String,
         default: 'INR'
     },
     paymentStatus: {

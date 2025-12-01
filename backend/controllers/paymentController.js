@@ -34,7 +34,6 @@ const checkout = async (req, res) => {
   }
 };
 
-// 2. Verify Payment
 // 2. Verify Payment (Full Debug + Save Version)
 const paymentVerification = async (req, res) => {
   try {
@@ -81,17 +80,23 @@ const paymentVerification = async (req, res) => {
              userEmail: bookingDetails.userEmail,
              tourName: bookingDetails.tourName,
              fullName: bookingDetails.fullName,
-             phone: bookingDetails.phone,
-             guestSize: bookingDetails.guestSize,
-             bookAt: bookingDetails.bookAt,
              
-             // Financial details
-             totalAmount: bookingDetails.totalAmount,
-             paidAmount: bookingDetails.paidAmount,
-             dueAmount: bookingDetails.dueAmount,
+             // ✅ SAFETY: Convert phone to String explicitly
+             phone: String(bookingDetails.phone),
+             
+             // ✅ SAFETY: Force conversion to Number
+             guestSize: Number(bookingDetails.guestSize),
+             
+             // ✅ SAFETY: Ensure Date is a proper object
+             bookAt: new Date(bookingDetails.bookAt),
+             
+             // ✅ SAFETY: Ensure Amounts are Numbers
+             totalAmount: Number(bookingDetails.totalAmount),
+             paidAmount: Number(bookingDetails.paidAmount),
+             dueAmount: Number(bookingDetails.dueAmount),
+             
              currency: bookingDetails.currency || 'INR', 
              paymentStatus: bookingDetails.paymentStatus || "Partial",
-             
              transactionId: razorpay_payment_id
            });
 
