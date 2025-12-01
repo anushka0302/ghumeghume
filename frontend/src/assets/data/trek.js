@@ -11,7 +11,7 @@ const trek = [
     title: "KEDARKANTHA TREK",
     city: "Sankri, Uttarakhand",
     altitude: "12,500 ft",
-    priceSolo: 11500,
+    priceSolo: 11,
     priceGroup: 6299,
     days: "5 Days / 4 Nights",
     desc: "The Queen of Winter Treks. Experience 360° summit views, the frozen Juda Ka Talab, and a thrilling summit climb in snow.",
@@ -27,7 +27,7 @@ const trek = [
     featured: true,
   },
   {
-    id: 4,
+    id: 2,
     title: "DAYARA BUGYAL",
     city: "Uttarkashi, Uttarakhand",
     altitude: "11,155 ft", // Bakaria Top
@@ -47,7 +47,7 @@ const trek = [
     featured: true,
   },
   {
-    id: 2,
+    id: 3,
     title: "HARUNTA BUGYAL AND NACHIKETA TAL",
     city: "Uttarkashi, Uttarakhand",
     altitude: "10,200 ft",
@@ -67,7 +67,7 @@ const trek = [
     featured: true,
   },
   {
-    id: 3,
+    id: 4,
     title: "DODITAL AND DARWA TOP",
     city: "Uttarkashi, Uttarakhand",
     altitude: "13,615 ft",

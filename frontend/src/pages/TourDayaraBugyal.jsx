@@ -29,7 +29,7 @@ const TourDayaraBugyal = () => {
 
   // ✅ GET DATA: Find Dayara Bugyal (ID 4) from the centralized file
   // If ID 4 isn't found, fallback to the first item to prevent crash
-  const tourData = trek.find(t => t.id === 4) || trek[0];
+  const tourData = trek.find(t => t.id === 2) || trek[1];
 
   // ✅ CALCULATION: Determine active price based on toggle
   const currentPrice = isGroupPricing ? tourData.priceGroup : tourData.priceSolo;

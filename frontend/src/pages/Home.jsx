@@ -27,10 +27,10 @@ const Home = () => {
   // ✅ CONFIGURATION: Map IDs to specific Home Page Links
   // Added ID 4 for Kedarkantha
   const featuredToursConfig = [
-    { id: 1, link: "/tour/dayara-bugyal" },
-    { id: 2, link: "/tour/harunta-bugyal-nachiketa-tal" },
-    { id: 3, link: "/tour/dodital-darwa-pass" },
-    { id: 4, link: "/tour/kedarkantha-trek" }, 
+    { id: 1, link: "/tour/kedarkantha-trek" },
+    { id: 2, link: "/tour/dayara-bugyal" },
+    { id: 3, link: "/tour/harunta-bugyal-nachiketa-tal" },
+    { id: 4, link: "/tour/dodital-darwa-pass" }, 
   ];
 
   // ✅ MERGE: Combine config with centralized data

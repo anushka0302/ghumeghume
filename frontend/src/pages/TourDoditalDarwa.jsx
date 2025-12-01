@@ -26,7 +26,7 @@ const TourDoditalDarwa = () => {
   const [isGroupPricing, setIsGroupPricing] = useState(true);
 
   // ✅ GET DATA: Find Dodital (Assuming ID 3 - Update if different in your trek.js)
-  const tourData = trek.find((t) => t.id === 3) || trek[2] || trek[0];
+  const tourData = trek.find((t) => t.id === 4) || trek[3] || trek[0];
 
   // ✅ CALCULATION: Determine active price based on toggle
   const currentPrice = isGroupPricing ? tourData.priceGroup : tourData.priceSolo;

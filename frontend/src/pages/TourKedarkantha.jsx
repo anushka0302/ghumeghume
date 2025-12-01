@@ -93,6 +93,68 @@ const TourKedarkantha = () => {
           <p>{tourData.days} • Easy–Moderate • {tourData.city}</p>
 
           <div className="hero-action-wrap">
+            
+            {/* ✅ PRICING TOGGLE BUTTONS */}
+            <div style={{ 
+              marginBottom: "20px", 
+              display: "flex", 
+              justifyContent: "center", 
+              gap: "15px",
+              alignItems: "center"
+            }}>
+              {/* Group Option */}
+              <label style={{ 
+                cursor: "pointer", 
+                display: "flex", 
+                alignItems: "center", 
+                gap: "8px",
+                background: isGroupPricing ? "#faa935" : "rgba(255,255,255,0.2)",
+                color: "white",
+                padding: "10px 20px",
+                borderRadius: "50px",
+                border: "2px solid #faa935",
+                fontWeight: "bold",
+                transition: "all 0.3s",
+                fontSize: "0.95rem",
+                boxShadow: isGroupPricing ? "0 0 15px rgba(250, 169, 53, 0.5)" : "none"
+              }}>
+                <input 
+                  type="radio" 
+                  name="pricing_hero" 
+                  checked={isGroupPricing} 
+                  onChange={() => setIsGroupPricing(true)}
+                  style={{ accentColor: "#fff", width: "16px", height: "16px" }}
+                />
+                Group (6+)
+                <span style={{ fontSize: "0.7em", background: "#ef4444", color: "white", padding: "2px 6px", borderRadius: "4px", marginLeft: "6px", textTransform: "uppercase", letterSpacing: "0.5px"}}>Sale</span>
+              </label>
+
+              {/* Solo Option */}
+              <label style={{ 
+                cursor: "pointer", 
+                display: "flex", 
+                alignItems: "center", 
+                gap: "8px",
+                background: !isGroupPricing ? "#faa935" : "rgba(255,255,255,0.2)",
+                color: "white",
+                padding: "10px 20px",
+                borderRadius: "50px",
+                border: "2px solid #faa935",
+                fontWeight: "bold",
+                transition: "all 0.3s",
+                fontSize: "0.95rem"
+              }}>
+                <input 
+                  type="radio" 
+                  name="pricing_hero" 
+                  checked={!isGroupPricing} 
+                  onChange={() => setIsGroupPricing(false)}
+                  style={{ accentColor: "#fff", width: "16px", height: "16px" }}
+                />
+                Solo / Duo
+              </label>
+            </div>
+            
             <div className="price-box" style={{ marginBottom: "20px" }}>
               {isGroupPricing ? (
                 <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
