@@ -7,13 +7,19 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { BrowserRouter } from "react-router-dom";
 import { AuthContextProvider } from "./context/AuthContext";
-import { HelmetProvider } from 'react-helmet-async'; // ✅ For SEO & Speed
-import * as serviceWorkerRegistration from './serviceWorkerRegistration'; // ✅ For Offline/PWA
+import { HelmetProvider } from 'react-helmet-async'; 
+import * as serviceWorkerRegistration from './serviceWorkerRegistration'; 
+
+// ✅ 1. Import Google Analytics Library
+import ReactGA from "react-ga4";
+
+// ✅ 2. Initialize Google Analytics with your Measurement ID
+ReactGA.initialize("G-Z0CHQ22GEK");
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <HelmetProvider> {/* ✅ Wrap everything for Head management */}
+    <HelmetProvider> 
       <AuthContextProvider>
         <BrowserRouter>
           <App />
@@ -23,5 +29,8 @@ root.render(
   </React.StrictMode>
 );
 
-// ✅ Register Service Worker to cache assets (faster load times)
+// ✅ Register Service Worker
 serviceWorkerRegistration.register();
+
+// ✅ 3. Optional: Send initial page view (to catch the first load)
+ReactGA.send({ hitType: "pageview", page: window.location.pathname });
