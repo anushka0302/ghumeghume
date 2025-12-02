@@ -1,129 +1,158 @@
-/* --- BASE HEADER STYLES --- */
+/* ==================================================
+   1. FONTS & GLOBAL RESETS
+================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* --- Base Header --- */
 .header {
   width: 100%;
-  height: 100px;
-  line-height: 100px;
-  position: absolute;
+  height: 80px;
+  line-height: 80px;
+  position: fixed;
   top: 0;
   left: 0;
-  z-index: 10000;
-  /* Dark transparent background */
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.7) 0%,
-    rgba(0, 0, 0, 0) 100%
-  );
+  z-index: 1000;
+  background: transparent; 
   transition: 0.3s;
+  font-family: 'Montserrat', sans-serif;
 }
 
-/* Fixed logo size */
+
+
+/* Logo Sizing */
 .logo img {
-  height: 100px; 
+  height: 50px; 
   width: auto;
+  margin-top: -5px; 
 }
 
+/* --- Desktop Menu Items --- */
 .menu {
   margin-bottom: 0;
+  padding-left: 0;
+  list-style: none;
 }
 
 .nav__item {
-  position: relative; /* Needed for dropdown positioning */
+  position: relative;
 }
 
+/* ==================================================
+   ✅ FIXED: NO OUTLINE (CLEAN TEXT)
+================================================== */
 .nav__item a {
   text-decoration: none;
-  color: #fff; /* White text */
-  font-weight: 500;
-  font-size: 1rem;
+  color: #030303; /* Text Color */
+  font-weight: 750; 
+  font-size: 0.95rem;
   text-transform: uppercase;
-  padding: 8px 12px;
-  border-radius: 4px;
+  padding: 0 15px;
   transition: 0.3s;
-}
-
-.nav__item a i {
-  font-size: 0.9rem;
-  margin-left: 2px;
+  letter-spacing: 0.5px;
+  
+  /* ✅ REMOVED STROKE & PAINT ORDER */
+  -webkit-text-stroke: 0; 
+  text-shadow: none !important; 
 }
 
 .nav__item a:hover {
-  color: #faa935; /* Gold/yellow color */
+  color: #faa935; /* Orange Fill on Hover */
+  -webkit-text-stroke: 0; /* ✅ Removed Black Border */
 }
 
+/* Active Link Style */
 .nav__item a.active__link {
-  color: #fff;
-  background: #faa935; /* Gold background for active link */
+  color: #faa935; 
+  -webkit-text-stroke: 0; /* ✅ Removed Black Border */
 }
 
-/* --- SEARCH & AUTH BUTTONS --- */
-.nav__search-icon i {
-  font-size: 1.2rem;
-  color: #fff;
-  cursor: pointer;
+/* ==================================================
+   ✅ FIXED: GLASS EFFECT STICKY HEADER
+================================================== */
+
+/* 1. The Container (Glass Style) */
+.sticky__header {
+  /* Dark Glass Background */
+  background: rgba(0, 0, 0, 0.6); /* Slightly darker for better readability */
+  
+  /* The Blur Magic */
+  backdrop-filter: blur(15px); 
+  -webkit-backdrop-filter: blur(15px);
+  
+  /* Subtle bottom border */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+  
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
 }
 
-.username {
-  color: #fff;
-  font-size: 1rem;
+/* 2. Text Colors in Sticky Header */
+.sticky__header .nav__item a { 
+  color: #fff;  /* White text is best on dark glass */
+  
+  /* ✅ REMOVED BLACK OUTLINE as requested */
+  -webkit-text-stroke: 0; 
+  text-shadow: none;
 }
 
-.nav_btns .btn {
-  font-size: 0.9rem;
-  padding: 0.4rem 1rem;
-  border-radius: 4px;
+.sticky__header .nav__item a:hover { 
+  color: #faa935; 
 }
 
-.nav_btns .secondary__btn {
-  background: transparent;
-  border: 1px solid #fff;
-}
-.nav_btns .secondary__btn a {
-  color: #fff;
-  text-decoration: none;
-}
-.nav_btns .secondary__btn:hover {
-  background: #fff;
-}
-.nav_btns .secondary__btn:hover a {
-  color: #faa935;
+/* Ensure Logo stays normal */
+.sticky__header .logo img { filter: none; }
+
+/* Icons & Hamburger stay White */
+.sticky__header .nav__search-icon i,
+.sticky__header .mobile__menu { 
+  color: #fff !important; 
 }
 
-.nav_btns .primary__btn {
+/* 3. Buttons in Sticky Header */
+
+/* ✅ LOGIN BUTTON: Updated to Orange Theme */
+.sticky__header .secondary__btn { 
+  border: 1px solid #faa935 !important; 
+}
+
+.sticky__header .secondary__btn a { 
+  color: #faa935 !important; /* Orange Text */
+}
+
+/* Hover Effect */
+.sticky__header .secondary__btn:hover {
   background: #faa935;
-  border: 1px solid #faa935;
-}
-.nav_btns .primary__btn a {
-  color: #222;
-  text-decoration: none;
-}
-.nav_btns .primary__btn:hover {
-  background: #f7b048;
-  border-color: #f7b048;
+  border-color: #faa935 !important;
 }
 
-/* --- DROPDOWN MENU STYLES --- */
+.sticky__header .secondary__btn:hover a {
+  color: #fff !important; /* White text on hover */
+}
+
+/* --- Desktop Dropdown --- */
 .dropdown__menu {
   position: absolute;
-  top: 90%; /* Position below the parent link */
+  top: 100%;
   left: 0;
   background: #fff;
   min-width: 220px;
-  padding: 0.8rem;
-  border-radius: 5px;
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-  list-style: none;
-  margin: 0;
-  line-height: 1.5rem; /* Reset line-height for items */
-
-  /* Hide by default */
+  padding: 10px 0;
+  border-radius: 8px;
+  box-shadow: 0px 10px 30px rgba(0,0,0,0.1);
   opacity: 0;
   visibility: hidden;
   transform: translateY(10px);
   transition: 0.3s ease;
   z-index: 100;
+  border: 1px solid #f0f0f0;
 }
 
-/* This is for DESKTOP hover */
 .nav__item:hover .dropdown__menu {
   opacity: 1;
   visibility: visible;
@@ -131,183 +160,232 @@
 }
 
 .dropdown__item a {
-  color: var(--heading-color); /* Dark text on white dropdown */
+  color: #444 !important;
   font-size: 0.9rem;
-  font-weight: 500;
-  text-transform: none; /* Dropdown items are usually not uppercase */
-  padding: 5px 10px;
-  display: block; /* Make links fill the li */
+  font-weight: 600;
+  text-transform: none;
+  padding: 10px 20px;
+  display: block;
+  -webkit-text-stroke: 0; /* No border in dropdown */
 }
 
 .dropdown__item a:hover {
-  color: #faa935;
-  background: #f7f7f7;
+  color: #faa935 !important;
+  background: #f9f9f9;
 }
 
-/* --- STICKY HEADER (GLASSMORPHISM) --- */
-.sticky__header {
-  width: 100%;
-  height: 80px;
-  line-height: 80px;
-  position: sticky;
-  top: 0;
-  left: 0;
-  z-index: 999;
-  background: rgba(30, 30, 30, 0.75); 
-  backdrop-filter: blur(15px); 
-  -webkit-backdrop-filter: blur(15px); 
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
-  box-shadow: 0px 3px 10px -3px rgba(0, 0, 0, 0.4);
+/* --- Buttons --- */
+.nav_btns .btn {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  border-radius: 50px;
+  padding: 8px 25px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
 }
 
-/* --- MOBILE MENU --- */
-.mobile__menu {
-  font-size: 1.3rem;
-  color: #fff; /* White hamburger icon */
-  display: none; /* HIDDEN BY DEFAULT on desktop */
-  cursor: pointer;
-  /* Add z-index to make sure it's above the overlay */
-  position: relative;
-  z-index: 10000; 
+/* Register Button (Orange) */
+.primary__btn { 
+  background: #faa935; 
+  border: 1px solid #faa935; 
 }
+.primary__btn a {
+  color: #fff !important;
+}
+.primary__btn:hover { 
+  background: #e0962d; 
+  border-color: #e0962d;
+}
+
+/* --- Login Button (Secondary) --- */
+.secondary__btn { 
+  background: transparent; 
+  /* ✅ Default Border: Orange */
+  border: 1px solid #faa935 !important; 
+  transition: 0.3s;
+}
+
+/* 1. Default Text: Orange */
+.secondary__btn a {
+  color: #6f6f6f !important; 
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* 2. Hover State: Orange Background, White Text */
+.secondary__btn:hover {
+  background: #faa935; 
+  border-color: #faa935 !important;
+}
+
+.secondary__btn:hover a {
+  color: #faa935 !important; 
+}
+
 
 /* ==================================================
-  MEDIA QUERIES (NEW FULL-SCREEN GLASS MENU)
-================================================== 
-*/
+   ✅ STICKY HEADER BUTTONS (SCROLL STATE)
+================================================== */
+
+/* Keep the Orange look when scrolling too (Consistent Design) */
+.sticky__header .secondary__btn { 
+  border: 1px solid #faa935 !important; 
+}
+
+.sticky__header .secondary__btn a { 
+  color: #faa935 !important; 
+}
+
+/* Hover on Sticky Header */
+.sticky__header .secondary__btn:hover {
+  background: #faa935;
+  border-color: #faa935 !important;
+}
+
+.sticky__header .secondary__btn:hover a {
+  color: #fff !important;
+}
+
+.mobile__menu {
+  font-size: 1.8rem;
+  color: #fff;
+  display: none;
+  cursor: pointer;
+}
+.mobile__menu_close { display: none; }
+
+
+/* ==================================================
+   MOBILE SIDE DRAWER & STICKY HEADER FIXES
+================================================== */
 @media only screen and (max-width: 992px) {
-  /* Logo size for tablet */
-  .logo img {
-    height: 60px;
-    width: auto;
+  
+  .header .nav_btns, 
+  .header .nav__search-icon { display: none !important; }
+  
+  /* HAMBURGER ICON */
+  .header .mobile__menu { 
+    display: block !important;
+    color: #faa935 !important; /* Theme Color */
+    font-size: 1.8rem; 
+    cursor: pointer;
   }
 
-  /* --- UPDATED: This is the full-screen overlay ---
-  */
+  /* ✅ FIXED: GLASS EFFECT FOR MOBILE STICKY HEADER */
+  .sticky__header {
+    /* Dark Glass Background */
+    background: rgba(0, 0, 0, 0.5) !important; 
+    
+    /* The Blur Effect */
+    backdrop-filter: blur(15px) !important;
+    -webkit-backdrop-filter: blur(15px) !important;
+    
+    /* Border & Shadow for depth */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  /* Ensure Hamburger stays Orange when scrolling on glass */
+  .sticky__header .mobile__menu {
+    color: #faa935 !important;
+  }
+
+  /* Overlay */
   .header .navigation {
-    width: 100%;
-    height: 100%;
     position: fixed;
     top: 0;
     left: 0;
-    
-    /* New glass background */
- 
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); 
     z-index: 9999;
-    display: none !important; /* FORCE HIDE */
-
-    /* New: Center the menu links */
-   align-items: flex-start;       /* move menu downward */
-  justify-content: flex-start;   /* stop centering */
-  padding-top: 60px; 
+    display: none; 
+    justify-content: flex-end; 
   }
 
-  /* --- UPDATED: This is the menu link container ---
-  */
+  .header .navigation.show__menu { display: flex !important; }
+
+  /* Drawer Panel */
   .menu {
-    /* Remove old panel styles */
-    position: static;
-    width: 100%;
+    position: relative;
+    width: 80%; 
+    max-width: 300px; 
     height: 100vh;
- /* No white panel */
- 
-    background: rgba(10, 10, 10, 0.7);
-   backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    /* Keep these styles */
+    background: #ffffff; 
     flex-direction: column;
-    line-height: 0.5rem;
-    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 80px 0 20px 0; 
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+  }
+
+  /* Close Button */
+  .mobile__menu_close {
+    display: flex;
     align-items: center;
-    z-index: 9999;
-    padding: 5;
-    margin-top: 20px;
+    justify-content: center;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #f0f0f0; 
+    color: #333;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 10001;
   }
 
-  .nav__item {
-    width: 100%;
-    text-align: center;
-  }
-
-  /* --- UPDATED: Mobile menu links ---
-  */
+  /* REMOVE ORANGE BLOCKS & OUTLINES ON MOBILE */
+  .menu .nav__item { width: 100%; }
 
   .menu .nav__item a {
-    color: #fff !important; /* White text on dark glass */
-    font-size: 1.5rem; /* Make links bigger */
-    font-weight: 500;
-    line-height: 3.5rem; /* Add more space */
-   padding: 8px 0; 
-    display: block;
-    width: 100%;
-    
-  }
-  .menu .nav__item a.active__link {
-    color: #faa935; /* Gold for active link */
-    background: none;
-  }
-  .menu .nav__item a:hover {
-    color: #faa935; /* Gold on hover */
+    color: #333 !important; 
+    font-size: 1rem;
+    padding: 18px 25px; 
+    border-bottom: 1px solid #f0f0f0; 
+    background: transparent !important; 
+    -webkit-text-stroke: 0 !important; 
+    text-shadow: none !important;
+    font-weight: 600 !important;
   }
 
-  /* --- UPDATED: Mobile dropdown menu ---
-  */
+  /* Active Link Styles */
+  .menu .nav__item a.active__link {
+    background: transparent !important;
+    color: #faa935 !important; 
+    border-left: 4px solid #faa935; 
+  }
+
+  .menu .nav__item a:hover {
+    color: #faa935 !important;
+    background: #fafafa !important;
+  }
+
+  /* Dropdown Styles */
   .menu .dropdown__menu {
     position: static;
     display: none; 
     box-shadow: none;
-    background: transparent; /* No background */
+    background: #f8f8f8; 
     width: 100%;
     padding: 0;
-    transform: none;
     opacity: 1;
     visibility: visible;
-
+    transform: none;
+    border: none;
   }
   
   .menu .nav__item.mobile-dropdown-open .dropdown__menu {
-    display: block;
+    display: block; 
   }
   
-  /* --- UPDATED: Mobile dropdown links --- */
   .menu .dropdown__item a {
-    line-height: 2.5rem;
-    padding: 6px 0;
-    font-size: 1.2rem;
-    font-weight: 400;
-    color: #faa935; /* Gold for dropdown links */
-  }
-  .menu .dropdown__item a:hover {
-    color: #fff; /* White on hover */
-    background: none;
-  }
-
-  /* --- NO CHANGE: These rules are all correct ---
-  */
-  .header .navigation.show__menu {
-    display: flex !important; /* Use flex to center */
-  }
-
-  .header .mobile__menu {
-    display: block !important; /* FORCE SHOW */
-  }
-
-  .header .nav_btns,
-  .header .nav__search-icon {
-    display: none !important; /* FORCE HIDE */
-  }
-}
-
-@media only screen and (max-width: 768px) {
-  /* Logo size for mobile */
-  .logo img {
-    height: 50px;
-    width: auto;
-  }
-  .menu {
-    width: 90%; /* Keep it wide */
+    font-size: 0.9rem;
+    padding: 12px 30px 12px 40px; 
+    color: #666 !important;
+    border-bottom: 1px solid #eee;
   }
 }

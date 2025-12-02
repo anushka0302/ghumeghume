@@ -6,16 +6,12 @@ import './header.css';
 import { AuthContext } from './../../context/AuthContext';
 
 const navLinks = [
+  { path: '/home', display: 'Home' },
   {
-    path: '/home',
-    display: 'Home',
-  },
-  {
-    path: '#', // Use '#' for parent links that only open dropdowns
+    path: '#',
     display: 'Company',
     children: [
-      { path: '/about', display: 'About Us' }, // Kept your 'about' link
-      //{ path: '/our-team', display: 'Our Team' },
+      { path: '/about', display: 'About Us' },
       { path: '/why-us', display: 'Why Us' },
     ],
   },
@@ -28,15 +24,6 @@ const navLinks = [
       { path: '/expeditions/remote-workplace', display: 'Remote Workplace' },
     ],
   },
-  // {
-  //   path: '#',
-  //   display: 'Trekking',
-  //   children: [
-  //     { path: '/tours', display: 'All Treks' }, // Kept your 'tours' link
-  //     //{ path: '/trekking/ebc', display: 'Everest Base Camp' },
-  //     //{ path: '/trekking/annapurna', display: 'Annapurna Circuit' },
-  //   ],
-  // },
   {
     path: '#',
     display: 'Useful Info',
@@ -46,15 +33,8 @@ const navLinks = [
       { path: '/contact', display: 'Contact' },
     ],
   },
-  // ✅ NEW: Added Blogs Link Here
-  {
-    path: '/blogs',
-    display: 'Blogs',
-  },
-  {
-    path: '/contact',
-    display: 'Contact Us',
-  },
+  { path: '/blogs', display: 'Blogs' },
+  { path: '/contact', display: 'Contact Us' },
 ];
 
 const Header = () => {
@@ -68,58 +48,42 @@ const Header = () => {
     navigate('/');
   };
 
-  // useEffect(() => {
-  //   const stickyHeaderFunc = () => {
-  //     if (
-  //       document.body.scrollTop > 80 ||
-  //       document.documentElement.scrollTop > 80
-  //     ) {
-  //       headerRef.current.classList.add('sticky__header');
-  //     } else {
-  //       headerRef.current.classList.remove('sticky__header');
-  //     }
-  //   };
+  useEffect(() => {
+    const stickyHeaderFunc = () => {
+      if (
+        document.body.scrollTop > 80 ||
+        document.documentElement.scrollTop > 80
+      ) {
+        headerRef.current.classList.add('sticky__header');
+      } else {
+        headerRef.current.classList.remove('sticky__header');
+      }
+    };
 
-  //   window.addEventListener('scroll', stickyHeaderFunc);
-  //   return () => window.removeEventListener('scroll', stickyHeaderFunc);
-  // }, []);
-useEffect(() => {
-  const stickyHeaderFunc = () => {
-    if (
-      document.body.scrollTop > 80 ||
-      document.documentElement.scrollTop > 80
-    ) {
-      headerRef.current.classList.add('sticky__header');
-    } else {
-      headerRef.current.classList.remove('sticky__header');
-    }
-  };
+    // Close menu if user scrolls
+    const closeMobileMenuOnScroll = () => {
+      if (menuRef.current && menuRef.current.classList.contains('show__menu')) {
+        menuRef.current.classList.remove('show__menu');
+      }
+    };
 
-  // NEW: Close mobile menu on scroll
-  const closeMobileMenuOnScroll = () => {
-    if (menuRef.current && menuRef.current.classList.contains('show__menu')) {
-      menuRef.current.classList.remove('show__menu');
-    }
-  };
+    window.addEventListener('scroll', stickyHeaderFunc);
+    window.addEventListener('scroll', closeMobileMenuOnScroll);
 
-  window.addEventListener('scroll', stickyHeaderFunc);
-  window.addEventListener('scroll', closeMobileMenuOnScroll);
-
-  return () => {
-    window.removeEventListener('scroll', stickyHeaderFunc);
-    window.removeEventListener('scroll', closeMobileMenuOnScroll);
-  };
-}, []);
+    return () => {
+      window.removeEventListener('scroll', stickyHeaderFunc);
+      window.removeEventListener('scroll', closeMobileMenuOnScroll);
+    };
+  }, []);
 
   const toggleMenu = () => menuRef.current.classList.toggle('show__menu');
 
-  // NEW: Handle mobile dropdown clicks
+  // Logic to handle mobile dropdown clicks
   const handleMobileDropdown = (e) => {
-    // Check if we are in mobile view (menu is active)
     if (menuRef.current.classList.contains('show__menu')) {
       const parentItem = e.target.closest('.nav__item');
-      if (parentItem.classList.contains('dropdown')) {
-        e.preventDefault(); // Prevent default link behavior
+      if (parentItem && parentItem.classList.contains('dropdown')) {
+        e.preventDefault(); // Stop navigation
         parentItem.classList.toggle('mobile-dropdown-open');
       }
     }
@@ -137,9 +101,15 @@ useEffect(() => {
               </Link>
             </div>
 
-            {/* Navigation Menu */}
+            {/* Navigation Menu (Overlay + Drawer) */}
             <div className='navigation' ref={menuRef} onClick={toggleMenu}>
               <ul className='menu d-flex align-items-center gap-4' onClick={(e) => e.stopPropagation()}>
+                
+                {/* ❌ Close Button (Inside the White Drawer) */}
+                <span className="mobile__menu_close" onClick={toggleMenu}>
+                  <i className="ri-close-line"></i>
+                </span>
+
                 {navLinks.map((item, index) => (
                   <li
                     className={`nav__item ${item.children ? 'dropdown' : ''}`}
@@ -150,22 +120,25 @@ useEffect(() => {
                       className={({ isActive }) =>
                         isActive ? 'active__link' : ''
                       }
-                      // NEW: Added click listener for mobile dropdowns
-                     onClick={(e) => {
-  handleMobileDropdown(e); // Keep existing dropdown logic
-  if (!item.children) toggleMenu(); // Close menu ONLY if it's a direct link (no dropdown)
-}}
+                      onClick={(e) => {
+                        handleMobileDropdown(e);
+                        // Only close menu if it's a direct link (no children)
+                        if (!item.children) toggleMenu();
+                      }}
                     >
                       {item.display}
+                      {/* Down arrow for dropdowns */}
                       {item.children && <i className='ri-arrow-down-s-line'></i>}
                     </NavLink>
 
-                    {/* Render dropdown menu if children exist */}
+                    {/* Sub Menu */}
                     {item.children && (
                       <ul className='dropdown__menu'>
                         {item.children.map((child, childIndex) => (
                           <li className='dropdown__item' key={childIndex}>
-                            <NavLink to={child.path} onClick={toggleMenu}>{child.display}</NavLink>
+                            <NavLink to={child.path} onClick={toggleMenu}>
+                              {child.display}
+                            </NavLink>
                           </li>
                         ))}
                       </ul>
@@ -175,13 +148,8 @@ useEffect(() => {
               </ul>
             </div>
 
-            {/* Navigation Right Section */}
+            {/* Right Side Icons (User, Search, Hamburger) */}
             <div className='nav_right d-flex align-items-center gap-4'>
-              {/* Search Icon */}
-              <span className='nav__search-icon'>
-                <i className='ri-search-line'></i>
-              </span>
-
               <div className='nav_btns d-flex align-items-center gap-4'>
                 {user ? (
                   <>
@@ -202,6 +170,7 @@ useEffect(() => {
                 )}
               </div>
 
+              {/* 🍔 Hamburger Icon (Visible on Mobile) */}
               <span className='mobile__menu' onClick={toggleMenu}>
                 <i className='ri-menu-line'></i>
               </span>
