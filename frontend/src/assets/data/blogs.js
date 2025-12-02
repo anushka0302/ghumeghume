@@ -114,7 +114,7 @@ const blogs = [
     id: 5,
     title: "Lost in the Woods to Find Yourself: A Solo Journey",
     author: "Ghume Ghume Team",
-    date: "15 Jan, 2026",
+    date: "01 Dec, 2025",
     desc: "When life feels like a checklist you didn't write, it's time to walk away. Discover how a solo trek can be the silent therapist you need.",
     imgUrl: soloTrekImg,
     trekLink: "/home", // Harunta is good for reflection
@@ -162,7 +162,7 @@ const blogs = [
     id: 7,
     title: "Silence Speaks: Finding Peace at Harunta Bugyal & Nachiketa Tal",
     author: "Ghume Ghume Team",
-    date: "05 Jan, 2026",
+    date: "02 Dec, 2025",
     desc: "In a noisy world, find your quiet corner. Leave the crowds behind and listen to the forests on this unexplored trail.",
     imgUrl: haruntaImg,
     trekLink: "/tour/harunta-bugyal-nachiketa-tal",
@@ -214,8 +214,8 @@ const blogs = [
     author: "Ghume Ghume Team",
     date: "18 Nov, 2025",
     desc: "The Himalayas in India are more than mountains — they are India’s natural lifeline. Uttarakhand treks offer pure air, peaceful landscapes, and a deep connection with nature. At ghumeghume.com, we promote responsible trekking that protects the environment and supports local Himalayan communities.",
-    imgUrl: kedarblog, // Assuming 'doditalImg' is a defined variable for the image URL
-    trekLink: "/tour/dodital-darwa-pass",
+    imgUrl: kedarblog, 
+    trekLink: "/home",
     content: `
       <h2>The Himalayas: India’s Natural Lifeline</h2>
       <p>The Himalayas in India are more than mountains — they are India’s natural lifeline. <strong>Uttarakhand treks</strong> offer pure air, peaceful landscapes, and a deep connection with nature. At ghumeghume.com, we promote **responsible trekking** that protects the environment and supports local Himalayan communities.</p>

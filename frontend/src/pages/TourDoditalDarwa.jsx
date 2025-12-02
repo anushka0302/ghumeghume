@@ -122,7 +122,7 @@ const TourDoditalDarwa = () => {
                   onChange={() => setIsGroupPricing(true)}
                   style={{ accentColor: "#fff", width: "16px", height: "16px" }}
                 />
-                Group (6+)
+                Group (3 or more)
                 <span
                   style={{
                     fontSize: "0.7em",
@@ -163,7 +163,7 @@ const TourDoditalDarwa = () => {
                   onChange={() => setIsGroupPricing(false)}
                   style={{ accentColor: "#fff", width: "16px", height: "16px" }}
                 />
-                Solo / Duo
+                Solo / Duo 1–2 People
               </label>
             </div>
 

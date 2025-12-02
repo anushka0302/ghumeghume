@@ -111,7 +111,7 @@ const TourDayaraBugyal = () => {
                   onChange={() => setIsGroupPricing(true)}
                   style={{ accentColor: "#fff", width: "16px", height: "16px" }}
                 />
-                Group (6+)
+                Group (3 or more)
                 <span style={{ fontSize: "0.7em", background: "#ef4444", color: "white", padding: "2px 6px", borderRadius: "4px", marginLeft: "6px", textTransform: "uppercase", letterSpacing: "0.5px"}}>Sale</span>
               </label>
 
@@ -137,7 +137,7 @@ const TourDayaraBugyal = () => {
                   onChange={() => setIsGroupPricing(false)}
                   style={{ accentColor: "#fff", width: "16px", height: "16px" }}
                 />
-                Solo / Duo
+                Solo / Duo 1–2 People
               </label>
             </div>
 

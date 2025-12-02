@@ -25,7 +25,7 @@ const HaruntaBugyalandNachiketaTal = () => {
 
   // ✅ GET DATA: Find Harunta Bugyal (ID 2) from the centralized file
   // Note: If your trek.js uses a different ID for this trek, update the '2' below
-  const tourData = trek.find((t) => t.id === 3) || trek[2] || trek[0];
+  const tourData = trek.find((t) => t.id === 3) || trek[2]; /*trek[0]*/ 
 
   // ✅ CALCULATION: Determine active price based on toggle
   const currentPrice = isGroupPricing ? tourData.priceGroup : tourData.priceSolo;
@@ -118,7 +118,7 @@ const HaruntaBugyalandNachiketaTal = () => {
                   onChange={() => setIsGroupPricing(true)}
                   style={{ accentColor: "#fff", width: "16px", height: "16px" }}
                 />
-                Group (6+)
+                Group (3 or more)
                 <span
                   style={{
                     fontSize: "0.7em",
@@ -159,7 +159,7 @@ const HaruntaBugyalandNachiketaTal = () => {
                   onChange={() => setIsGroupPricing(false)}
                   style={{ accentColor: "#fff", width: "16px", height: "16px" }}
                 />
-                Solo / Duo
+                Solo / Duo 1–2 People
               </label>
             </div>
 
