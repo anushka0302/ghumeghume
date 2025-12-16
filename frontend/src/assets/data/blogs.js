@@ -1,13 +1,13 @@
 // ✅ Import Images (Same as your trek.js to ensure consistency)
-import dayaraImg from "../images/dayara_g1.jpg";
-import haruntaImg from "../images/harunta_1.jpg";
-import doditalImg from "../images/dodital_1.jpg";
-import wftImg from "../images/WFT.jpg";
-import womenTrekImg from "../images/womenkity.png";
-import fatherSonImg from "../images/fatherson.png";
-import detoxImg from "../images/detoxblog.png";
-import soloTrekImg from "../images/solotrek.png";
-import kedarblog from "../images/kedar_g1.JPG";
+import dayaraImg from "../images/dayara_g1.webp";
+import haruntaImg from "../images/harunta_1.webp";
+import doditalImg from "../images/dodital_1.webp";
+import wftImg from "../images/WFT.webp";
+import womenTrekImg from "../images/womenkity.webp";
+import fatherSonImg from "../images/fatherson.webp";
+import detoxImg from "../images/detoxblog.webp";
+import soloTrekImg from "../images/solotrek.webp";
+import kedarblog from "../images/kedar_g1.webp";
 
 const blogs = [
   {

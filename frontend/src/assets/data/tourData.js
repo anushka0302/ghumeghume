@@ -69,7 +69,7 @@ export const spiritualTreks = [
     days: "4 Days",
     difficulty: "Easy",
     price: "₹11,500",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Dwarahat_Temple_Group.jpg/1024px-Dwarahat_Temple_Group.jpg", 
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Dwarahat_Temple_Group.webp/1024px-Dwarahat_Temple_Group.webp", 
     description: "A cultural deep-dive into the Katyuri dynasty. Visit the 55 ancient temples of Dwarahat (Himalayan Dwarka) and the sacred Vaishnavi Shakti Peeth at Dunagiri."
   },
   {

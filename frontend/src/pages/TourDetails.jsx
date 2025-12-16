@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async'; // ✅ SEO Import
 
 import calculateAvgRating from '../utils/AvgRating';
-import avatar from '../assets/images/avatar.jpg';
+import avatar from '../assets/images/avatar.webp';
 import Booking from '../components/Booking/Booking';
 import Newsletter from '../shared/Newsletter';
 import useFetch from '../hooks/useFetch';

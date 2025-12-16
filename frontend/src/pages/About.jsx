@@ -4,8 +4,8 @@ import '../styles/about.css';
 import { Helmet } from 'react-helmet-async'; // ✅ SEO Import
 
 // We'll use a common hero image, or you can import a specific one
-import aboutHeroImg from '../assets/images/tour-img01.jpg'; 
-import storyImg from '../assets/images/gallery-04.jpg';
+import aboutHeroImg from '../assets/images/tour-img01.webp'; 
+import storyImg from '../assets/images/gallery-04.webp';
 
 // Icons for our values
 import { BsFlag, BsShieldCheck, BsGlobe } from 'react-icons/bs';

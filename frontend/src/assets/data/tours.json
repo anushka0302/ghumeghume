@@ -9,7 +9,7 @@
     "desc": "this is the description",
     "reviews": [],
 
-    "photo": "/tour-images/tour-img01.jpg",
+    "photo": "/tour-images/tour-img01.webp",
     "featured": true
   },
   {
@@ -22,7 +22,7 @@
     "desc": "this is the description",
     "reviews": [],
 
-    "photo": "/tour-images/tour-img02.jpg",
+    "photo": "/tour-images/tour-img02.webp",
     "featured": true
   },
   {
@@ -35,7 +35,7 @@
     "desc": "this is the description",
     "reviews": [],
 
-    "photo": "/tour-images/tour-img03.jpg",
+    "photo": "/tour-images/tour-img03.webp",
     "featured": true
   },
   {
@@ -48,7 +48,7 @@
     "desc": "this is the description",
     "reviews": [],
 
-    "photo": "/tour-images/tour-img04.jpg",
+    "photo": "/tour-images/tour-img04.webp",
     "featured": true
   },
   {
@@ -61,7 +61,7 @@
     "desc": "this is the description",
     "reviews": [],
 
-    "photo": "/tour-images/tour-img05.jpg",
+    "photo": "/tour-images/tour-img05.webp",
     "featured": true
   },
   {
@@ -74,7 +74,7 @@
     "desc": "this is the description",
     "reviews": [],
 
-    "photo": "/tour-images/tour-img06.jpg",
+    "photo": "/tour-images/tour-img06.webp",
     "featured": true
   },
   {
@@ -87,7 +87,7 @@
     "desc": "this is the description",
     "reviews": [],
 
-    "photo": "/tour-images/tour-img07.jpg",
+    "photo": "/tour-images/tour-img07.webp",
     "featured": true
   },
   {
@@ -100,7 +100,7 @@
     "desc": "this is the description",
     "reviews": [],
 
-    "photo": "/tour-images/tour-img03.jpg",
+    "photo": "/tour-images/tour-img03.webp",
     "featured": true
   },
   {
@@ -113,7 +113,7 @@
     "desc": "this is the description",
     "reviews": [],
 
-    "photo": "/tour-images/tour-img08.jpg",
+    "photo": "/tour-images/tour-img08.webp",
     "featured": false
   },
   {
@@ -126,7 +126,7 @@
     "desc": "this is the description",
     "reviews": [],
 
-    "photo": "/tour-images/tour-img09.jpg",
+    "photo": "/tour-images/tour-img09.webp",
     "featured": false
   }
 ]

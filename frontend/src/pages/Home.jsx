@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { Helmet } from 'react-helmet-async'; // ✅ SEO Import
 
 import ServiceList from "../services/ServiceList";
-import experinceImg from "../assets/images/experience.png";
+import experinceImg from "../assets/images/experience.webp";
 import MasonryImagesGallery from "../components/Image-gallery/MasonryImagesGallery";
 import Testimonals from "../components/Testimonals/Testimonals";
 import Newsletter from "../shared/Newsletter";

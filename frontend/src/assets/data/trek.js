@@ -1,8 +1,8 @@
 // ✅ Import Local Images for Tours
-import dayaraImg from "../images/dayara_g1.jpg";
-import haruntaImg from "../images/harunta_1.jpg";
-import doditalImg from "../images/dodital_1.jpg";
-import kedarkanthaImg from "../images/kedar_g1.JPG";
+import dayaraImg from "../images/dayara_g1.webp";
+import haruntaImg from "../images/harunta_1.webp";
+import doditalImg from "../images/dodital_1.webp";
+import kedarkanthaImg from "../images/kedar_g1.webp";
 
 const trek = [
   // ✅ NEW TREK ADDED: KEDARKANTHA

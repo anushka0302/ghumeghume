@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Newsletter.css';
 import { Container, Row, Col } from 'reactstrap';
-import maleTourist from '../assets/images/male-tourist.png';
+import maleTourist from '../assets/images/male-tourist.webp';
 import emailjs from 'emailjs-com';
 
 const Newsletter = () => {

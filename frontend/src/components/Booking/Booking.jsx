@@ -205,7 +205,7 @@ const Booking = ({ tour, avgRating, tourId }) => {
         currency: currency, 
         name: "Ghume Ghume",
         description: `Advance for ${title}`, 
-        image: "https://www.ghumeghume.com/static/media/logo.2dd53824f641f46a2885.png", 
+        image: "https://www.ghumeghume.com/static/media/logo.2dd53824f641f46a2885.webp", 
         order_id: orderData.order.id, 
         
         // ----------------------------------------------------

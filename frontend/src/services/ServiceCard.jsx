@@ -145,7 +145,7 @@ const ServiceCard = ({ item }) => {
             <ModalBody className="weather-modal-body">
               
               <img 
-                src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`} 
+                src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.webp`} 
                 alt="weather icon"
                 className="weather-icon"
               />

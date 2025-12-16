@@ -2,7 +2,7 @@
    ✅ PARALLAX HERO SECTION
    ========================================= */
 .parallax-bg {
-  background: url("../assets/images/dayara-hero.jpg") center/cover no-repeat;
+  background: url("../assets/images/dayara-hero.webp") center/cover no-repeat;
   background-attachment: fixed; /* Parallax effect for desktop */
   
   /* Changed from fixed height to min-height for responsiveness */

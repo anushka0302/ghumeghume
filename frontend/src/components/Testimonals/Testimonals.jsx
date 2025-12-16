@@ -2,10 +2,10 @@ import React from 'react';
 import Slider from 'react-slick';
 import './testimonials.css'; // Import the new CSS file
 
-import ava01 from '../../assets/images/ava-1.jpg';
-import ava02 from '../../assets/images/ava-2.jpg';
-import ava03 from '../../assets/images/ava-3.jpg';
-import ava04 from '../../assets/images/ava-4.jpg';
+import ava01 from '../../assets/images/ava-1.webp';
+import ava02 from '../../assets/images/ava-2.webp';
+import ava03 from '../../assets/images/ava-3.webp';
+import ava04 from '../../assets/images/ava-4.webp';
 
 const Testimonals = () => {
   const settings = {

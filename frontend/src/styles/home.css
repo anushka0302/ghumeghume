@@ -22,7 +22,7 @@ html, body {
   position: absolute;
   inset: 0;
   background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
-    url("../assets/images/dayarahero.jpg") center/cover no-repeat;
+    url("../assets/images/dayarahero.webp") center/cover no-repeat;
   filter: blur(0px);
   transform: scale(1.08);
   z-index: 1;

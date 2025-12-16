@@ -16,13 +16,13 @@
   align-items: center;
   justify-content: center;
   padding: 4rem 0;
-  /* Uses gallery-02.jpg as a full-page background */
+  /* Uses gallery-02.webp as a full-page background */
   background: 
     /* Dark overlay for readability */ linear-gradient(
       rgba(0, 0, 0, 0.45),
       rgba(0, 0, 0, 0.45)
     ),
-    url("../assets/images/gallery-02.jpg") center center/cover no-repeat;
+    url("../assets/images/gallery-02.webp") center center/cover no-repeat;
 }
 
 /* 2. The main "Glassmorphism" login box */

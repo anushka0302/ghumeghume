@@ -12,16 +12,16 @@ import { Helmet } from 'react-helmet-async'; // ✅ SEO Import
 // ✅ Import centralized data
 import trek from "../assets/data/trek";
 
-import dayara_g1 from "../assets/images/dayara_g1.jpg";
-import dayara_g2 from "../assets/images/dayara_g2.jpg";
-import dayara_g3 from "../assets/images/dayara_g3.jpeg";
-import dayara_g4 from "../assets/images/dayara_g4.png";
-import dayara_g5 from "../assets/images/dayara_g5.jpg";
-import dayara_g6 from "../assets/images/dayara_g6.jpg";
-import dayara_g7 from "../assets/images/dayara_g7.jpg";
-import dayara_g8 from "../assets/images/dayara_g8.jpg";
-import dayara_g9 from "../assets/images/dayara_g9.jpg";
-import dayara_g10 from "../assets/images/dayara_g10.jpg";
+import dayara_g1 from "../assets/images/dayara_g1.webp";
+import dayara_g2 from "../assets/images/dayara_g2.webp";
+import dayara_g3 from "../assets/images/dayara_g3.webp";
+import dayara_g4 from "../assets/images/dayara_g4.webp";
+import dayara_g5 from "../assets/images/dayara_g5.webp";
+import dayara_g6 from "../assets/images/dayara_g6.webp";
+import dayara_g7 from "../assets/images/dayara_g7.webp";
+import dayara_g8 from "../assets/images/dayara_g8.webp";
+import dayara_g9 from "../assets/images/dayara_g9.webp";
+import dayara_g10 from "../assets/images/dayara_g10.webp";
 
 const TourDayaraBugyal = () => {
   // ✅ STATE: Pricing Toggle (Default: Group)

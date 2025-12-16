@@ -12,14 +12,14 @@ import { Helmet } from 'react-helmet-async'; // ✅ SEO Import
 // ✅ Import centralized data
 import trek from "../assets/data/trek";
 
-import dodital_1 from "../assets/images/dodital_1.jpg";
-import dodital_2 from "../assets/images/dodital_2.jpg";
-import dodital_3 from "../assets/images/dodital_3.jpg";
-import dodital_4 from "../assets/images/dodital_4.jpg";
-import dodital_5 from "../assets/images/dodital_5.jpg";
-import dodital_6 from "../assets/images/dodital_6.jpg";
-import dodital_7 from "../assets/images/dodital_7.jpg";
-import dodital_8 from "../assets/images/dodital_8.jpg";
+import dodital_1 from "../assets/images/dodital_1.webp";
+import dodital_2 from "../assets/images/dodital_2.webp";
+import dodital_3 from "../assets/images/dodital_3.webp";
+import dodital_4 from "../assets/images/dodital_4.webp";
+import dodital_5 from "../assets/images/dodital_5.webp";
+import dodital_6 from "../assets/images/dodital_6.webp";
+import dodital_7 from "../assets/images/dodital_7.webp";
+import dodital_8 from "../assets/images/dodital_8.webp";
 
 const TourDoditalDarwa = () => {
   // ✅ STATE: Pricing Toggle (Default: Group)

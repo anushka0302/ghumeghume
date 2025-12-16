@@ -7,14 +7,14 @@ import { Helmet } from 'react-helmet-async'; // ✅ SEO Import
 // === IMPORT YOUR "WOW" ASSETS ===
 // Find new assets for this page
 import heroVideo from '../assets/videos/remote-work-hero.mp4'; 
-import whyImage from '../assets/images/remote-work-why.jpg'; 
-import ctaImage from '../assets/images/cta-bg-3.jpg'; 
+import whyImage from '../assets/images/remote-work-why.webp'; 
+import ctaImage from '../assets/images/cta-bg-3.webp'; 
 
 // Import gallery images
-import galleryImg1 from '../assets/images/gallery-01.jpg';
-import galleryImg2 from '../assets/images/gallery-02.jpg';
-import galleryImg3 from '../assets/images/gallery-03.jpg';
-import galleryImg4 from '../assets/images/gallery-04.jpg';
+import galleryImg1 from '../assets/images/gallery-01.webp';
+import galleryImg2 from '../assets/images/gallery-02.webp';
+import galleryImg3 from '../assets/images/gallery-03.webp';
+import galleryImg4 from '../assets/images/gallery-04.webp';
 
 const RemoteWorkplace = () => {
   useEffect(() => {

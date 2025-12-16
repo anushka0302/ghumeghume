@@ -12,12 +12,12 @@ import { Helmet } from 'react-helmet-async'; // ✅ SEO Import
 // ✅ Import centralized data
 import trek from "../assets/data/trek";
 
-import h1 from "../assets/images/harunta_1.jpg";
-import h2 from "../assets/images/harunta_2.jpg";
-import h3 from "../assets/images/harunta_3.jpg";
-import h4 from "../assets/images/harunta_4.jpg";
-import h5 from "../assets/images/harunta_5.jpg";
-import h6 from "../assets/images/harunta_6.jpg";
+import h1 from "../assets/images/harunta_1.webp";
+import h2 from "../assets/images/harunta_2.webp";
+import h3 from "../assets/images/harunta_3.webp";
+import h4 from "../assets/images/harunta_4.webp";
+import h5 from "../assets/images/harunta_5.webp";
+import h6 from "../assets/images/harunta_6.webp";
 
 const HaruntaBugyalandNachiketaTal = () => {
   // ✅ STATE: Pricing Toggle (Default: Group)

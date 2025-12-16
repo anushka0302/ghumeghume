@@ -1,9 +1,9 @@
 // File: src/assets/data/teamData.js
 
 // Import placeholder images - update these with your real photos
-import ava01 from '../images/ava-1.jpg';
-import ava02 from '../images/ava-2.jpg';
-import ava03 from '../images/ava-3.jpg';
+import ava01 from '../images/ava-1.webp';
+import ava02 from '../images/ava-2.webp';
+import ava03 from '../images/ava-3.webp';
 
 // Import icons
 import { BsInstagram, BsTwitter, BsLinkedin } from 'react-icons/bs';
