@@ -27,7 +27,7 @@
 
 /* Logo Sizing */
 .logo img {
-  height: 50px; 
+  height: 90px; 
   width: auto;
   margin-top: -5px; 
 }
@@ -48,7 +48,7 @@
 ================================================== */
 .nav__item a {
   text-decoration: none;
-  color: #030303; /* Text Color */
+  color: #ffffff; /* Text Color */
   font-weight: 750; 
   font-size: 0.95rem;
   text-transform: uppercase;
@@ -86,7 +86,7 @@
   -webkit-backdrop-filter: blur(15px);
   
   /* Subtle bottom border */
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+  border-bottom: 1px solid rgba(73, 73, 73, 0.227); 
   
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   transition: 0.3s;
@@ -191,7 +191,7 @@
   border: 1px solid #faa935; 
 }
 .primary__btn a {
-  color: #fff !important;
+  color: #ffffff !important;
 }
 .primary__btn:hover { 
   background: #e0962d; 
@@ -208,7 +208,7 @@
 
 /* 1. Default Text: Orange */
 .secondary__btn a {
-  color: #6f6f6f !important; 
+  color: #ffffff !important; 
   text-decoration: none;
   font-weight: 600;
 }

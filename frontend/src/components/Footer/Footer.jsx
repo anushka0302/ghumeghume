@@ -135,7 +135,39 @@ const Footer = () => {
 
           <Col lg='12' className='text-center pt-4 mt-4 border-top'>
             <p className='copyright'>
-              Copyright © {year}, Design & Developed by <strong>Hoursdev</strong>. All rights reserved.
+              Copyright © {year}, Design & Developed by{' '}
+              <a 
+                href="https://www.hoursdev.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{
+                  // Modern: Gradient background feels premium and deep
+                  background: 'linear-gradient(135deg, #b71c1c 0%, #ef5350 100%)',
+                  
+                  // Classic: Clean white text with refined typography
+                  color: '#ffffff',
+                  textDecoration: 'none',
+                  
+                  // Structure
+                  padding: '8px 24px',
+                  borderRadius: '50px',       // Pill shape is timeless
+                  display: 'inline-block',
+                  
+                  // Typography: Spacing adds elegance
+                  fontSize: '12px',
+                  textTransform: 'uppercase',
+                  letterSpacing: '1.5px',
+                  fontWeight: '600',
+                  
+                  // The "Modern" Glow: Soft, colored shadow rather than harsh neon
+                  boxShadow: '0 4px 15px rgba(239, 83, 80, 0.4)',
+                  border: '1px solid rgba(255,255,255,0.1)', // Subtle glass border
+                  marginLeft: '8px' // Spacing from the text
+                }}
+              >
+                Hoursdev.com
+              </a>
+              . All rights reserved.
             </p>
           </Col>
         </Row>
