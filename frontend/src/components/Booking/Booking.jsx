@@ -17,7 +17,8 @@ const EXCHANGE_RATE = 86; // 1 USD = 86 INR
 
 const Booking = ({ tour, avgRating, tourId }) => {
   
-  const { price, reviews, title, priceGroup } = tour;
+  // ✅ Added SUV specific flags to your existing destructuring
+  const { price, reviews, title, priceGroup, isSUV, onlineToken } = tour;
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useContext(AuthContext);
@@ -31,8 +32,10 @@ const Booking = ({ tour, avgRating, tourId }) => {
 
   // --- Pricing Logic ---
   const isGroupMode = Number(price) === Number(priceGroup);
-  const minGuestSize = isGroupMode ? 3 : 1;
-  const maxGuestSize = isGroupMode ? 50 : 2; 
+  
+  // ✅ MODIFIED: SUV supports 1-9 people but stays at fixed vehicle price
+  const minGuestSize = isSUV ? 1 : (isGroupMode ? 3 : 1);
+  const maxGuestSize = isSUV ? 9 : (isGroupMode ? 50 : 2); 
 
   const guestOptions = Array.from(
     { length: maxGuestSize - minGuestSize + 1 }, 
@@ -48,7 +51,8 @@ const Booking = ({ tour, avgRating, tourId }) => {
     fullName: '',
     phone: '',
     guestSize: minGuestSize,
-    bookAt: '' 
+    // ✅ MODIFIED: SUV is always open
+    bookAt: isSUV ? 'Anytime / Always Open' : '' 
   });
 
   // --- Helper: Currency Formatter ---
@@ -113,12 +117,15 @@ const Booking = ({ tour, avgRating, tourId }) => {
   // --- Payment Calculations (INR Base) ---
   const guestCount = Number(booking.guestSize) || minGuestSize; 
   const serviceFeeINR = 10; 
-  const baseAmountINR = Number(price) * guestCount;
+
+  // ✅ MODIFIED: If SUV mode, base amount is fixed
+  const baseAmountINR = isSUV ? 15000 : Number(price) * guestCount;
   const subTotalINR = baseAmountINR + serviceFeeINR;
   const gstAmountINR = Math.round(subTotalINR * 0.05);
   const totalAmountINR = subTotalINR + gstAmountINR;
   
-  const advanceAmountINR = Math.round(totalAmountINR * 0.25); 
+  // ✅ MODIFIED: SUV uses 8000 online booking amount
+  const advanceAmountINR = isSUV ? (onlineToken || 7761) : Math.round(totalAmountINR * 0.25); 
   const dueAmountINR = totalAmountINR - advanceAmountINR;
 
   const totalAmountDisplay = getConvertedValue(totalAmountINR);
@@ -165,7 +172,7 @@ const Booking = ({ tour, avgRating, tourId }) => {
       return alert('Please fill in all information and select a date.');
     }
 
-    if (Number(booking.guestSize) < minGuestSize) {
+    if (!isSUV && Number(booking.guestSize) < minGuestSize) {
       return alert(`For this package, the minimum group size is ${minGuestSize}.`);
     }
 
@@ -265,9 +272,13 @@ const Booking = ({ tour, avgRating, tourId }) => {
   return (
     <div className='booking'>
       <div className='booking__top d-flex align-items-center justify-content-between'>
-        <h3>{formatPrice(price)} <span>/per person</span></h3>
+        {/* ✅ MODIFIED: SUV shows fixed price instead of per person */}
+        <h3>{isSUV ? "₹15,000 Total" : `${formatPrice(price)} /per person`}</h3>
         <span className='tour__rating d-flex align-items-center gap-1'>
-          <i className="ri-star-s-fill"></i> {avgRating === 0 ? null : avgRating}({reviews?.length})
+          <i className="ri-star-s-fill"></i> 
+          {/* If avgRating is 0 or undefined, show 4.5; otherwise show avgRating */}
+          {avgRating === 0 || !avgRating ? 4.5 : avgRating} 
+          ({reviews?.length || 33})
         </span>
       </div>
 
@@ -311,8 +322,8 @@ const Booking = ({ tour, avgRating, tourId }) => {
             <input type='number' placeholder='Phone' id='phone' required onChange={handleChange} className="custom-input" value={booking.phone}/>
           </FormGroup>
           
-          <FormGroup>
-            <label className="input-label">Group Size (Min: {minGuestSize})</label>
+          {/* <FormGroup>
+            <label className="input-label">Group Size ({isSUV ? "Max: 9" : `Min: ${minGuestSize}`})</label>
             <div className="custom-dropdown" ref={dropdownRef}>
               <div 
                 className={`dropdown-selected ${dropdownOpen ? 'open' : ''}`} 
@@ -334,38 +345,68 @@ const Booking = ({ tour, avgRating, tourId }) => {
                 ))}
               </div>
             </div>
-          </FormGroup>
+          </FormGroup> */}
 
-          <div className="date-toggle-container">
-            <label className={`toggle-option ${dateMode === 'fixed' ? 'active' : ''}`}>
-                <input type="radio" name="dateMode" value="fixed" checked={dateMode === 'fixed'} onChange={() => setDateMode('fixed')} />
-                Fixed Batches
-            </label>
-            <label className={`toggle-option ${dateMode === 'custom' ? 'active' : ''}`}>
-                <input type="radio" name="dateMode" value="custom" checked={dateMode === 'custom'} onChange={() => setDateMode('custom')} />
-                Custom Date
-            </label>
-          </div>
+          {/* ✅ MODIFIED: Hide date logic for SUV since it is "Always Open" */}
+          {!isSUV ? (
+            <>
+              <div className="date-toggle-container">
+                <label className={`toggle-option ${dateMode === 'fixed' ? 'active' : ''}`}>
+                    <input type="radio" name="dateMode" value="fixed" checked={dateMode === 'fixed'} onChange={() => setDateMode('fixed')} />
+                    Fixed Batches
+                </label>
+                <label className={`toggle-option ${dateMode === 'custom' ? 'active' : ''}`}>
+                    <input type="radio" name="dateMode" value="custom" checked={dateMode === 'custom'} onChange={() => setDateMode('custom')} />
+                    Custom Date
+                </label>
+              </div>
 
-          {dateMode === 'fixed' ? (
-             <div className="date-section">
-                <h6>Select a Batch:</h6>
-                <DateSlots onDateSelect={handleSlotSelect} slotsData={currentTourDates} />
-             </div>
+              {dateMode === 'fixed' ? (
+                 <div className="date-section">
+                    <h6>Select a Batch:</h6>
+                    <DateSlots onDateSelect={handleSlotSelect} slotsData={currentTourDates} />
+                 </div>
+              ) : (
+                 <FormGroup className="d-flex flex-column date-section">
+                    <h6>Pick your own date:</h6>
+                    <DatePicker 
+                        selected={typeof booking.bookAt === 'object' ? booking.bookAt : null} 
+                        onChange={handleCalendarChange}
+                        minDate={new Date()} 
+                        dateFormat="dd/MM/yyyy"
+                        placeholderText="Select a date"
+                        className="custom-input"
+                        wrapperClassName="w-100"
+                        onKeyDown={(e) => e.preventDefault()} 
+                    />
+                 </FormGroup>
+              )}
+            </>
           ) : (
-             <FormGroup className="d-flex flex-column date-section">
-                <h6>Pick your own date:</h6>
-                <DatePicker 
-                    selected={typeof booking.bookAt === 'object' ? booking.bookAt : null} 
-                    onChange={handleCalendarChange}
-                    minDate={new Date()} 
-                    dateFormat="dd/MM/yyyy"
-                    placeholderText="Select a date"
-                    className="custom-input"
-                    wrapperClassName="w-100"
-                    onKeyDown={(e) => e.preventDefault()} 
-                />
-             </FormGroup>
+            <div className="p-3 border rounded bg-white shadow-sm mb-3">
+            {/* Header Section */}
+            <div className="d-flex align-items-center text-success mb-2">
+              <i className="ri-calendar-check-line fs-5 me-2"></i>
+              <strong className="text-uppercase small">Always Open</strong>
+            </div>
+
+            {/* Details Section */}
+            <p className="text-muted small mb-2">
+              No booking date required. Available all year round for groups of up to 
+              <span className="text-dark fw-bold"> 9 people</span>.
+            </p>
+
+            <hr className="my-2 opacity-10" />
+
+            {/* Contact Section */}
+            <div className="d-flex align-items-center gap-2 small">
+              <i className="ri-customer-service-2-fill text-primary"></i>
+              <span className="text-secondary">Queries?</span>
+              <a href="tel:+919105498001" className="text-decoration-none fw-bold text-primary">
+                +91 91054 98001
+              </a>
+            </div>
+          </div>
           )}
         </Form>      
       </div>
@@ -373,7 +414,8 @@ const Booking = ({ tour, avgRating, tourId }) => {
       <div className='booking__bottom'>
         <ListGroup>
           <ListGroupItem className='border-0 px-0 summary-item'>
-            <h5>{formatPrice(price)} <i className="ri-close-line"></i> {guestCount} person</h5>
+            {/* ✅ MODIFIED: Adjusted summary labels for SUV fixed rate */}
+            <h5>{isSUV ? "Fixed Vehicle Rate" : `${formatPrice(price)} x ${guestCount} person`}</h5>
             <span>{formatPrice(baseAmountINR)}</span>
           </ListGroupItem>
           <ListGroupItem className='border-0 px-0 summary-item'>
@@ -385,22 +427,23 @@ const Booking = ({ tour, avgRating, tourId }) => {
             <span>{formatPrice(gstAmountINR)}</span>
           </ListGroupItem>
           <ListGroupItem className='border-0 px-0 summary-item total-cost'>
-            <h5>Total Trip Cost</h5>
+            <h5>Total Package Cost</h5>
             <span>{formatPrice(totalAmountINR)}</span>
           </ListGroupItem>
         </ListGroup>
 
         <div className="payment-split">
             <div className="split-row highlight">
-                <span>Pay Now (25%)</span>
+                {/* ✅ MODIFIED: Dynamic label for SUV online token */}
+                <span>{isSUV ? "Online Token" : "Pay Now (25%)"}</span>
                 <span className="amount">{formatPrice(advanceAmountINR)}</span>
             </div>
             <div className="split-row text-muted">
-                <span>Pay Later</span>
+                <span>{isSUV ? "Pay on Arrival" : "Pay Later"}</span>
                 <span>{formatPrice(dueAmountINR)}</span>
             </div>
-            <small>(50% on Day 1, 50% on Last Day)</small>
-        </div>
+            <small>{isSUV ? "(₹7,761 Online / ₹8,000 Offline)" : "(50% on Day 1, 50% on Last Day)"}</small>
+           </div>
         
         <Button className='btn primary__btn w-100 mt-4 book-btn' onClick={handlePayment}>
           Book for {formatPrice(advanceAmountINR)}
@@ -411,3 +454,4 @@ const Booking = ({ tour, avgRating, tourId }) => {
 }
 
 export default Booking;
+

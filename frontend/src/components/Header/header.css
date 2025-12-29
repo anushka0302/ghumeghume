@@ -48,7 +48,7 @@
 ================================================== */
 .nav__item a {
   text-decoration: none;
-  color: #ffffff; /* Text Color */
+  color: #b1b1b1; /* Text Color */
   font-weight: 750; 
   font-size: 0.95rem;
   text-transform: uppercase;
@@ -208,7 +208,7 @@
 
 /* 1. Default Text: Orange */
 .secondary__btn a {
-  color: #ffffff !important; 
+  color: #10bb2a !important; 
   text-decoration: none;
   font-weight: 600;
 }

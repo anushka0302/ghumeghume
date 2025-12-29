@@ -17,7 +17,7 @@ import TrekComparison from '../components/Weather/TrekComparison';
 import trek from "../assets/data/trek";
 
 const Home = () => {
-  // ✅ STATE: Toggle between 'group' and 'solo' pricing
+  // ✅ STATE: Toggle between 'group', 'solo', and 'corporate' pricing
   const [pricingMode, setPricingMode] = useState('group'); 
 
   useEffect(() => {
@@ -25,12 +25,13 @@ const Home = () => {
   }, []);
 
   // ✅ CONFIGURATION: Map IDs to specific Home Page Links
-  // Added ID 4 for Kedarkantha
+  // Added ID 5 for Kumaon Spiritual Circuit
   const featuredToursConfig = [
     { id: 1, link: "/tour/kedarkantha-trek" },
     { id: 2, link: "/tour/dayara-bugyal" },
     { id: 3, link: "/tour/harunta-bugyal-nachiketa-tal" },
     { id: 4, link: "/tour/dodital-darwa-pass" }, 
+    { id: 5, link: "/tour/kumaon-spiritual-circuit" },
   ];
 
   // ✅ MERGE: Combine config with centralized data
@@ -39,6 +40,9 @@ const Home = () => {
     // 'data' contains img, title, altitude, included, etc. from trek.js
     return { ...data, ...config }; 
   });
+
+  // Extract the specific Kumaon tour for the corporate view
+  const kumaonTrip = featuredTours.find(t => t.id === 5);
 
   return (
     <>
@@ -109,44 +113,136 @@ const Home = () => {
                             Solo / Duo 1–2 People
                           </label>
 
+                          {/* Corporate Weekend Option */}
+                          <label 
+                            className={`pricing-toggle-btn ${pricingMode === 'corporate' ? 'active' : 'inactive'}`}
+                          >
+                            <input
+                              type="radio"
+                              name="pricing"
+                              checked={pricingMode === "corporate"}
+                              onChange={() => setPricingMode("corporate")}
+                              style={{ display: 'none' }} 
+                            />
+                            Corporate Weekend
+                          </label>
+
                         </div>
                       </Col>
                     </Row>
 
-                    <Row className="tour-card-row">
-                      {featuredTours.map((tour) => (
-                        <Col lg="4" md="6" sm="12" key={tour.id}>
-                          <div className="tour-card">
-                            <div className="tour-card-image-wrapper">
-                              {/* ✅ Lazy Load Image */}
-                              <img src={tour.img} alt={tour.title} loading="lazy" />
-                              <h5 className="tour-title">{tour.title}</h5>
-                              <span className="tour-trek-badge">TREK</span>
-                            </div>
+                     {/* ✅ CONDITIONAL RENDERING: CORPORATE SECTION VS STANDARD CARDS */}
+                    {pricingMode === 'corporate' ? (
+                      <Row className="justify-content-center mt-4">
+                        <Col lg="10">
+                          <div className="corporate-hero-card" style={{
+                            background: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${kumaonTrip?.img})`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                            borderRadius: '15px',
+                            padding: '40px',
+                            color: '#fff',
+                            textAlign: 'left',
+                            boxShadow: '0 10px 30px rgba(0,0,0,0.3)'
+                          }}>
+                            <h2 style={{color: '#faa935', fontWeight: '800'}}>Recover from Burnouts</h2>
+                            <p style={{fontSize: '1.2rem', margin: '20px 0'}}>
+                              Leave the office <strong>Friday evening</strong>. Return <strong>Monday morning</strong> to your DSM meeting with a happy mood and fresh soul.
+                            </p>
+                            
+                            <Row className="mb-4">
+                              <Col md="6">
+                                <h5 className="text-warning">Day 1: Kumaon Intro</h5>
+                                <p className="small">Kathgodam → Kainchi Dham → Kakrighat → Almora → Jageshwar Dham</p>
+                                <ul className="small">
+                                  <li>Neem Karoli Baba Ashram</li>
+                                  <li>Kasar Devi & Chitai Golu Devta Temple</li>
+                                  <li>Night stay at Jageshwar</li>
+                                </ul>
+                              </Col>
+                              <Col md="6">
+                                <h5 className="text-warning">Day 2: The Return</h5>
+                                <p className="small">Jageshwar → Dol Ashram → Mukteshwar → Bhhalugad Waterfall → Kathgodam</p>
+                                <ul className="small">
+                                  <li>Morning Darshan & Himalayan Views</li>
+                                  <li><strong>Bhhalugad Waterfall:</strong> Scenic, peaceful, and better than Nainital!</li>
+                                  <li>Waterfall trek and return to base</li>
+                                </ul>
+                              </Col>
+                            </Row>
 
-                            <div className="tour-info">
-                              {/* ✅ DYNAMIC PRICE DISPLAY */}
-                              <div
-                                className="tour-price"
-                                style={{
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  alignItems: "flex-start",
-                                }}
-                              >
-                                {pricingMode === "group" ? (
-                                  <>
-                                    {/* Cut Price */}
-                                    <span
-                                      style={{
-                                        textDecoration: "line-through",
-                                        color: "#999",
-                                        fontSize: "0.9rem",
-                                      }}
-                                    >
-                                      ₹ {tour.priceSolo}
-                                    </span>
-                                    {/* Discounted Price */}
+                            <div className="d-flex align-items-center gap-4">
+                              {/* ✅ Updated to white color */}
+                               <h3 className="mb-0" style={{color: '#fff'}}>₹15,000 <span style={{fontSize: '0.8rem'}}>One SUV</span></h3>
+                               <Link to={kumaonTrip?.link}>
+                                  <button className="book-btn" style={{padding: '10px 30px'}}>Book Weekend Escape</button>
+                               </Link>
+                            </div>
+                          </div>
+                        </Col>
+                      </Row>
+
+                    ) : (
+                      <Row className="tour-card-row">
+                        {featuredTours.filter(t => t.id !== 5).map((tour) => (
+                          <Col lg="4" md="6" sm="12" key={tour.id}>
+                            <div className="tour-card">
+                              <div className="tour-card-image-wrapper">
+                                {/* ✅ Lazy Load Image */}
+                                <img src={tour.img} alt={tour.title} loading="lazy" />
+                                <h5 className="tour-title">{tour.title}</h5>
+                                <span className="tour-trek-badge">TREK</span>
+                              </div>
+  
+                              <div className="tour-info">
+                                {/* ✅ DYNAMIC PRICE DISPLAY */}
+                                <div
+                                  className="tour-price"
+                                  style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    alignItems: "flex-start",
+                                  }}
+                                >
+                                  {pricingMode === "group" ? (
+                                    <>
+                                      <span
+                                        style={{
+                                          textDecoration: "line-through",
+                                          color: "#999",
+                                          fontSize: "0.9rem",
+                                        }}
+                                      >
+                                        ₹ {tour.priceSolo}
+                                      </span>
+                                      <span
+                                        style={{
+                                          fontSize: "1.2rem",
+                                          fontWeight: "bold",
+                                          color: "#faa935",
+                                        }}
+                                      >
+                                        ₹ {tour.priceGroup}{" "}
+                                        <span
+                                          style={{
+                                            fontSize: "0.8rem",
+                                            color: "#555",
+                                            fontWeight: "normal",
+                                          }}
+                                        >
+                                          / Person
+                                        </span>
+                                      </span>
+                                      <span
+                                        style={{
+                                          fontSize: "0.8rem",
+                                          color: "green",
+                                        }}
+                                      >
+                                        (Save ₹{tour.priceSolo - tour.priceGroup})
+                                      </span>
+                                    </>
+                                  ) : (
                                     <span
                                       style={{
                                         fontSize: "1.2rem",
@@ -154,7 +250,7 @@ const Home = () => {
                                         color: "#faa935",
                                       }}
                                     >
-                                      ₹ {tour.priceGroup}{" "}
+                                      ₹ {tour.priceSolo}{" "}
                                       <span
                                         style={{
                                           fontSize: "0.8rem",
@@ -165,76 +261,47 @@ const Home = () => {
                                         / Person
                                       </span>
                                     </span>
-                                    <span
-                                      style={{
-                                        fontSize: "0.8rem",
-                                        color: "green",
-                                      }}
-                                    >
-                                      (Save ₹{tour.priceSolo - tour.priceGroup})
-                                    </span>
-                                  </>
-                                ) : (
-                                  // Standard Price
-                                  <span
-                                    style={{
-                                      fontSize: "1.2rem",
-                                      fontWeight: "bold",
-                                      color: "#faa935",
-                                    }}
-                                  >
-                                    ₹ {tour.priceSolo}{" "}
-                                    <span
-                                      style={{
-                                        fontSize: "0.8rem",
-                                        color: "#555",
-                                        fontWeight: "normal",
-                                      }}
-                                    >
-                                      / Person
-                                    </span>
+                                  )}
+                                </div>
+  
+                                <div 
+                                  className="d-flex justify-content-between align-items-center mt-3 mb-2 py-2 px-2" 
+                                  style={{ 
+                                    background: "#f8f9fa", 
+                                    borderRadius: "8px", 
+                                    fontSize: '0.85rem', 
+                                    color: '#555', 
+                                    fontWeight: '600' 
+                                  }}
+                                >
+                                  <span className="d-flex align-items-center gap-1">
+                                    <i className="ri-calendar-line" style={{color:'#faa935', fontSize: '1rem'}}></i> 
+                                    {tour.days}
                                   </span>
-                                )}
+                                  <span className="d-flex align-items-center gap-1">
+                                    <i className="ri-mountain-line" style={{color:'#faa935', fontSize: '1rem'}}></i> 
+                                    {tour.altitude}
+                                  </span>
+                                </div>
+  
+                                <div className="tour-includes-wrapper">
+                                  <h6>Included:</h6>
+                                  <ul className="tour-includes-list">
+                                    {tour.included && tour.included.slice(0, 5).map((item, index) => (
+                                      <li key={index}>{item}</li>
+                                    ))}
+                                  </ul>
+                                </div>
+  
+                                <Link to={tour.link}>
+                                  <button className="book-btn">Book Now</button>
+                                </Link>
                               </div>
-
-                              {/* ✅ ADDED ALTITUDE & DAYS ROW */}
-                              <div 
-                                className="d-flex justify-content-between align-items-center mt-3 mb-2 py-2 px-2" 
-                                style={{ 
-                                  background: "#f8f9fa", 
-                                  borderRadius: "8px", 
-                                  fontSize: '0.85rem', 
-                                  color: '#555', 
-                                  fontWeight: '600' 
-                                }}
-                              >
-                                <span className="d-flex align-items-center gap-1">
-                                  <i className="ri-calendar-line" style={{color:'#faa935', fontSize: '1rem'}}></i> 
-                                  {tour.days}
-                                </span>
-                                <span className="d-flex align-items-center gap-1">
-                                  <i className="ri-mountain-line" style={{color:'#faa935', fontSize: '1rem'}}></i> 
-                                  {tour.altitude}
-                                </span>
-                              </div>
-
-                              <div className="tour-includes-wrapper">
-                                <h6>Included:</h6>
-                                <ul className="tour-includes-list">
-                                  {tour.included && tour.included.slice(0, 5).map((item, index) => (
-                                    <li key={index}>{item}</li>
-                                  ))}
-                                </ul>
-                              </div>
-
-                              <Link to={tour.link}>
-                                <button className="book-btn">Book Now</button>
-                              </Link>
                             </div>
-                          </div>
-                        </Col>
-                      ))}
-                    </Row>
+                          </Col>
+                        ))}
+                      </Row>
+                    )}
                   </Container>
                 </section>
                 {/* <SearchBar /> */}
@@ -330,8 +397,10 @@ const Home = () => {
       </section>
 
       <Newsletter />
-    </>
+  </>
   );
 };
 
 export default Home;
+
+

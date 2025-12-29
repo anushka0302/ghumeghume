@@ -8,6 +8,7 @@ import fatherSonImg from "../images/fatherson.webp";
 import detoxImg from "../images/detoxblog.webp";
 import soloTrekImg from "../images/solotrek.webp";
 import kedarblog from "../images/kedar_g1.webp";
+import kainchiblog from "../images/Kainchidham.png";
 
 const blogs = [
   {
@@ -270,10 +271,66 @@ const blogs = [
       <h3>Trek for India. Trek Uttarakhand.</h3>
       <p>With ghumeghume.com, your travel becomes a movement:</p>
       <ul>
-        <li>🌿 <strong>Protect nature</strong></li>
-        <li>🌍 <strong>Support communities</strong></li>
-        <li>🏔 <strong>Experience the real Himalayas</strong></li>
+        <li><strong>Protect nature</strong></li>
+        <li><strong>Support communities</strong></li>
+        <li><strong>Experience the real Himalayas</strong></li>
       </ul>
+    `
+},
+{
+    id: 10,
+    title: "From Silicon Valley to Kainchi Dham: Why Tech Giants Apple and Facebook Started at a Himalayan Ashram",
+    author: "Ghume Ghume Team",
+    date: "29 Dec, 2025",
+    desc: "Long before Silicon Valley became the center of the world, a small ashram in Kumaon was already fueling the visions of Steve Jobs and Mark Zuckerberg. Discover why the Kumaon Spiritual Circuit is the ultimate recovery for corporate burnout and the best place for startup owners to find their next 'Big Idea' with ghumeghume.com.",
+    imgUrl: kainchiblog, // Ensure this import exists in your blog file
+    trekLink: "/tour/kumaon-spiritual-circuit",
+    content: `
+      <h2>The Visionary’s Secret: Silicon Valley’s Kumaon Connection</h2>
+      <p>Ever wonder why the world’s most powerful tech leaders — the minds behind <strong>Apple</strong> and <strong>Facebook</strong> — found themselves on a dusty road in Uttarakhand? They weren't there for a vacation; they were there for a reset. At <strong>ghumeghume.com</strong>, we believe that the same energy that guided Steve Jobs can help you recover from your current corporate burnout.</p>
+      
+      <p>In the early 70s, a young <strong>Steve Jobs</strong> traveled to India in search of spiritual enlightenment. He ended up at the <strong>Neem Karoli Baba Ashram (Kainchi Dham)</strong>. Decades later, when a young <strong>Mark Zuckerberg</strong> was going through a rough patch in the early days of Facebook, Jobs told him to visit that same ashram to 'reconnect with his vision.' Zuckerberg did, and the rest is history.</p>
+
+      <hr>
+
+      <h3>Why Corporate India is Turning to the Kumaon Spiritual Circuit</h3>
+      <p>Startup owners and corporate employees today face a unique kind of exhaustion. Between DSM meetings, OKRs, and the constant pressure to scale, the soul gets lost. The <strong>Kumaon Spiritual Circuit</strong> isn't just a trip; it’s an intervention.</p>
+      <blockquote>
+        "You cannot solve a problem with the same mind that created it." This is why <strong>ghumeghume.com</strong> curated the burnout recovery circuit — to move you from the noise of Gurugram or Bangalore to the silence of <strong>Jageshwar Dham</strong>.
+      </blockquote>
+
+      <hr>
+
+      <h3>The 48-Hour Reset: Friday Office to Monday Morning DSM</h3>
+      <p>We know you can't always take a month off to 'find yourself.' Our specialized <strong>Ghume Ghume Kumaon Circuit</strong> is designed for the high-performer:</p>
+      <ul>
+        <li><strong>Friday Night:</strong> Leave the office burnout behind. Head straight to the hills.</li>
+        <li><strong>Saturday:</strong> Wake up to Himalayan views. Visit <strong>Kainchi Dham</strong> and feel the energy that inspired the iPad and the social media revolution.</li>
+        <li><strong>Sunday:</strong> Meditate at <strong>Jageshwar Dham</strong> and trek to the <strong>Bhhalugad Waterfall</strong> — a spot far more peaceful and 'hidden' than anything you'll find in Nainital.</li>
+        <li><strong>Monday Morning:</strong> Join your DSM meeting with a happy mood, a fresh soul, and the clarity to lead.</li>
+      </ul>
+
+      <hr>
+
+      <h3>Why Choose ghumeghume.com for Your Journey?</h3>
+      <p>We aren't just a travel portal; we are your local Himalayan partners. When you book through <strong>ghumeghume.com</strong>, you get:</p>
+      <ul>
+        <li><strong>SUV Comfort:</strong> Fixed-price groups (up to 9 people) so you can travel with your core team.</li>
+        <li><strong>Zero-Plastic Commitment:</strong> We keep the spiritual circuits as pure as we found them.</li>
+        <li><strong>Authentic Stays:</strong> No crowded commercial hotels; we find the places where you can actually hear the wind in the deodar trees.</li>
+        <li><strong>Startup-Friendly Pricing:</strong> Our circuit costs less than your weekly office commute.</li>
+      </ul>
+
+      <hr>
+
+      <h3>Stop the Commute. Start the Connection.</h3>
+      <p>Steve Jobs found his intuition in these mountains. Mark Zuckerberg found his purpose. What will you find? With <strong>ghumeghume.com</strong>, your journey into the real India is simple, natural, and completely stress-free.</p>
+      <ul>
+        <li><strong>Recover from burnout</strong></li>
+        <li><strong>Fuel your startup vision</strong></li>
+        <li><strong>Experience the real Kumaon</strong></li>
+      </ul>
+      <p>Don't wait for the next burnout. The mountains are open all year round. Join the movement at <strong>ghumeghume.com</strong> today.</p>
     `
 },
 ];

@@ -43,6 +43,8 @@ const Terms = React.lazy(() => import('../pages/Terms'));
 const PrivacyPolicy = React.lazy(() => import('../pages/PrivacyPolicy'));
 const ShippingPolicy = React.lazy(() => import('../pages/ShippingPolicy'));
 
+const TourKumaon = React.lazy(() => import('../pages/TourKumaon')); // ✅ Add this
+
 // Loading Spinner
 const LoadingSpinner = () => (
   <div className="d-flex justify-content-center align-items-center w-100" style={{ height: '50vh' }}>
@@ -59,12 +61,15 @@ const Routers = () => {
         <Routes>
           <Route path="/" element={<Navigate to="/home" />} />
           <Route path="/home" element={<Home />} />
+          
 
           {/* ✅ Trek Routes */}
           <Route path="/tour/dayara-bugyal" element={<TourDayaraBugyal />} />
           <Route path="/tour/harunta-bugyal-nachiketa-tal" element={<HaruntaBugyalandNachiketaTal />} />
           <Route path="/tour/dodital-darwa-pass" element={<TourDoditalDarwa />} />
-          <Route path="/tour/kedarkantha-trek" element={<TourKedarkantha />} /> 
+          <Route path="/tour/kedarkantha-trek" element={<TourKedarkantha />} />
+
+          <Route path="/tour/kumaon-spiritual-circuit" element={<TourKumaon />} /> 
 
           <Route path="/tour/:id" element={<TourDetails />} />
           <Route path='/himalayas-2026' element={<Trend2026 />} />
