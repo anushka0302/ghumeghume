@@ -322,7 +322,7 @@ const Booking = ({ tour, avgRating, tourId }) => {
             <input type='number' placeholder='Phone' id='phone' required onChange={handleChange} className="custom-input" value={booking.phone}/>
           </FormGroup>
           
-          {/* <FormGroup>
+          <FormGroup>
             <label className="input-label">Group Size ({isSUV ? "Max: 9" : `Min: ${minGuestSize}`})</label>
             <div className="custom-dropdown" ref={dropdownRef}>
               <div 
@@ -345,7 +345,7 @@ const Booking = ({ tour, avgRating, tourId }) => {
                 ))}
               </div>
             </div>
-          </FormGroup> */}
+          </FormGroup>
 
           {/* ✅ MODIFIED: Hide date logic for SUV since it is "Always Open" */}
           {!isSUV ? (

@@ -621,6 +621,8 @@ html, body {
 }
 
 
+
+
 /* =========================================
    ✅ FIX FOR IPHONE SE / SMALL SCREENS
    ========================================= */
@@ -698,5 +700,98 @@ html, body {
     flex-direction: column;
     gap: 0.8rem;
     padding: 0.9rem;
+  }
+}
+
+
+/* ... (Existing 704 lines of CSS) ... */
+
+/* =========================
+   PILGRIMAGE PACKAGES SECTION
+========================= */
+
+
+/* Section background styling - Changed to transparent/white */
+.pilgrimage-tours {
+  padding: 80px 0;
+  background-color: transparent; 
+  position: relative;
+}
+
+/* 2. Keep Title White with Shadow for visibility on light bg */
+.pilgrimage-tours h2.featured__tour-title {
+  color: #ffffff !important; 
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); /* Added shadow so white text is visible on white bg */
+  font-weight: 700;
+}
+/* Card Specific overrides for Pilgrimage */
+.tour-card.pilgrimage-card {
+  border: 1px solid rgba(106, 27, 154, 0.1);
+  background: #fff;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.tour-card.pilgrimage-card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); /* Softer shadow for light mode */
+  border-color: #6a1b9a;
+}
+
+/* List Styling for Pilgrimage */
+.pilgrimage-list {
+  margin-top: 10px;
+}
+
+.pilgrimage-list li {
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #555 !important;
+}
+
+/* Custom Checkmark for Pilgrimage */
+.pilgrimage-list li::before {
+  content: "✨" !important; 
+  margin-right: 8px;
+}
+
+/* Book Button Styling */
+.email-button {
+  display: inline-block;
+  background: #faa935;
+  color: #fff !important;
+  padding: 12px 25px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: 0.3s ease;
+  border: none;
+  box-shadow: 0 4px 15px rgba(250, 169, 53, 0.3);
+}
+
+.email-button:hover {
+  background: #4a148c;
+  transform: scale(1.02);
+  box-shadow: 0 6px 20px rgba(74, 20, 140, 0.3);
+}
+
+/* Info section specific spacing */
+.pilgrimage-card .tour-info {
+  background: #ffffff;
+  border-radius: 0 0 18px 18px;
+}
+
+/* Icon styling for the amenity bar (Stay/Car) */
+.pilgrimage-card .ri-hotel-line, 
+.pilgrimage-card .ri-car-line {
+  font-size: 1.1rem;
+  color: #6a1b9a;
+}
+
+/* Mobile adjustments */
+@media (max-width: 576px) {
+  .pilgrimage-tours {
+    padding: 50px 0;
   }
 }

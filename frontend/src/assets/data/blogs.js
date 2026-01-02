@@ -9,6 +9,7 @@ import detoxImg from "../images/detoxblog.webp";
 import soloTrekImg from "../images/solotrek.webp";
 import kedarblog from "../images/kedar_g1.webp";
 import kainchiblog from "../images/Kainchidham.png";
+import kumaonHero from "../images/Adobe-Nainital.webp";
 
 const blogs = [
   {
@@ -333,6 +334,55 @@ const blogs = [
       <p>Don't wait for the next burnout. The mountains are open all year round. Join the movement at <strong>ghumeghume.com</strong> today.</p>
     `
 },
+{
+    id: 11,
+    title: "Kumaon Darshan: A Soul-Stirring Journey Through India’s Spiritual Heart",
+    author: "Ghume Ghume Team",
+    date: "02 Jan, 2026",
+    desc: "Beyond the high-altitude climbs lies a different kind of peak—the peak of inner peace. Our Kumaon Darshan circuit is designed for those seeking a premium spiritual recovery through the sacred lands of Neem Karoli Baba and the ancient temples of Jageshwar.",
+    imgUrl: kumaonHero, 
+    trekLink: "/tour/kumaon-luxury-experience",
+    content: `
+      <h2>The Call of the Kumaon Hills</h2>
+      <p>While many come to Uttarakhand to test their physical limits on snowy passes, there is a quieter, more profound journey waiting in the heart of Kumaon. The <strong>Kumaon Darshan</strong> isn't just a tour; it's a 48-hour reset for the soul, blending the raw spiritual energy of ancient shrines with the comfort of modern luxury.</p>
+
+      <hr>
+
+      <h3>Kainchi Dham: The Quiet Revolution</h3>
+      <p>Our journey begins at <strong>Kainchi Dham</strong>, the ashram of Neem Karoli Baba. There is a reason why global icons have traveled across oceans to sit in this valley. It’s not about the architecture—it’s about the vibration. Starting your day with a morning bath and the morning Aarti here isn't just a ritual; it's an awakening.</p>
+      <blockquote>
+        "The mind finds what the heart seeks. In the stillness of Kainchi and the cosmic meditation heights of Kasar Devi, the noise of the world simply fades away."
+      </blockquote>
+
+      <hr>
+
+      <h3>Living History at Jageshwar Dham</h3>
+      <p>Walking into the 8th-century <strong>Jageshwar Dham</strong> complex is like stepping into a time machine. Surrounded by towering Deodar trees, these 125 stone temples stand as a testament to India’s deep-rooted heritage. Experience the early morning Shiv Aarti, where the rhythmic chants echo against the stone walls, creating a meditative atmosphere that no 5-star spa could ever replicate.</p>
+
+      <hr>
+
+      <h3>The Perfect Blend: Spirituality & Luxury</h3>
+      <p>At <strong>ghumeghume.com</strong>, we believe that spiritual seeking shouldn't mean physical hardship. We’ve curated this experience to include:</p>
+      <ul>
+        <li><strong>Private Luxury SUVs</strong> to ensure the winding mountain roads are a pleasure, not a chore.</li>
+        <li><strong>5-Star Stays</strong> in Almora and Jageshwar, allowing you to reflect on your day in total comfort.</li>
+        <li><strong>Farm-to-Table Experiences</strong>, including picking fresh apples in the orchards of Mukteshwar.</li>
+        <li><strong>Expert Guides</strong> who don't just tell you dates and facts, but share the stories and legends that make these places holy.</li>
+      </ul>
+
+      <hr>
+
+      <h3>Responsible Pilgrimage</h3>
+      <p>Just like our treks, our spiritual circuits follow the <strong>ghumeghume.com</strong> ethos of responsible travel. We ensure our visits support the local temple committees, respect the silence of meditation zones, and leave no footprint behind in these sacred valleys.</p>
+
+      <hr>
+
+      <h3>Is This Journey For You?</h3>
+      <p>If you are looking to escape the city grind, if you are a devotee of <strong>Maharaj-ji</strong>, or if you simply want to see the "Real India" without compromising on comfort, this Kumaon circuit is your answer. It is short, impactful, and deeply divine.</p>
+      
+      <p><strong>Experience the Himalayas not just with your eyes, but with your soul. Book your Kumaon Darshan today.</strong></p>
+    `
+}
 ];
 
 export default blogs;

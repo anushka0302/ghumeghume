@@ -6,6 +6,7 @@ import { Helmet } from 'react-helmet-async'; // ✅ SEO Import
 
 import ServiceList from "../services/ServiceList";
 import experinceImg from "../assets/images/experience.webp";
+import kumaonHero from "../assets/images/Adobe-Nainital.webp";
 import MasonryImagesGallery from "../components/Image-gallery/MasonryImagesGallery";
 import Testimonals from "../components/Testimonals/Testimonals";
 import Newsletter from "../shared/Newsletter";
@@ -303,7 +304,72 @@ const Home = () => {
                       </Row>
                     )}
                   </Container>
+
+                  {/* ✅ PILGRIMAGE PACKAGES SECTION */}
+{/* ✅ PILGRIMAGE PACKAGES SECTION */}
+<section className="pilgrimage-tours mt-5">
+  <Container>
+    <Row className="text-center">
+      <Col lg="12">
+        <Subtitle subtitle="Spiritual Journeys" />
+        <h2 className="featured__tour-title text-white">Pilgrimage Packages</h2>
+      </Col>
+    </Row>
+
+    <Row className="justify-content-center mt-4">
+      <Col lg="4" md="6" sm="12">
+        <div className="tour-card pilgrimage-card">
+          <div className="tour-card-image-wrapper">
+            <img src={kumaonHero} alt="Kainchi Dham to Jageshwar" loading="lazy" />
+            <h5 className="tour-title">Kumaon Darshan</h5>
+            <span className="tour-trek-badge" style={{background: '#6a1b9a'}}>DIVINE</span>
+          </div>
+
+          <div className="tour-info">
+            <div className="tour-price">
+              <span style={{ fontSize: "1.2rem", fontWeight: "bold", color: "#faa935" }}>
+                Premium Spiritual Circuit
+              </span>
+            </div>
+
+            <div 
+              className="d-flex justify-content-between align-items-center mt-3 mb-2 py-2 px-2" 
+              style={{ background: "#f3e5f5", borderRadius: "8px", fontSize: '0.85rem', color: '#4a148c', fontWeight: '600' }}
+            >
+              <span className="d-flex align-items-center gap-1">
+                <i className="ri-hotel-line"></i> 5-Star Stay
+              </span>
+              <span className="d-flex align-items-center gap-1">
+                <i className="ri-car-line"></i> Private SUV
+              </span>
+            </div>
+
+            <div className="tour-includes-wrapper">
+              <h6 style={{color: '#4a148c'}}>Included:</h6>
+              <ul className="tour-includes-list pilgrimage-list">
+                <li>5-Star Stay & Daily Breakfast</li>
+                <li>Kainchi Dham & Jageshwar Tours</li>
+                <li>Waterfall Mini-Trek</li>
+                <li>Expert Spiritual Guide</li>
+              </ul>
+            </div>
+
+            <div className="button-wrapper">
+                <Link to="/tour/kumaon-luxury-experience" className="email-button" style={{width: '100%', textAlign: 'center'}}>
+                    Book Divine Journey
+                </Link>
+            </div>
+          </div>
+        </div>
+      </Col>
+    </Row>
+  </Container>
+</section>
+
+
+
                 </section>
+
                 {/* <SearchBar /> */}
               </Col>
             </Row>
