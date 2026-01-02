@@ -305,7 +305,7 @@ const Home = () => {
                     )}
                   </Container>
 
-                  {/* ✅ PILGRIMAGE PACKAGES SECTION */}
+                 
 {/* ✅ PILGRIMAGE PACKAGES SECTION */}
 <section className="pilgrimage-tours mt-5">
   <Container>

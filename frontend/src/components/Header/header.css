@@ -257,6 +257,114 @@
 
 
 /* ==================================================
+   ✅ NEW: USER PROFILE & LOGOUT STYLES
+================================================== */
+
+/* Container for Avatar + Name + Logout */
+.user__info_wrapper {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 5px 15px;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  transition: 0.3s;
+}
+
+.user__profile {
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  background: rgba(255, 255, 255, 0.05); /* Very subtle background */
+  border-radius: 50px;
+}
+/* Orange Circle with User Icon */
+.user__avatar {
+  width: 30px;
+  height: 30px;
+  background: #faa935; /* Your Theme Orange */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1rem;
+  margin-right: 10px;
+}
+
+/* Username Text - Fixed Visibility */
+.username__display {
+  color: #fff !important; 
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-transform: capitalize;
+  margin-right: 15px;
+  letter-spacing: 0.5px;
+  line-height: normal; /* Fix for vertical centering */
+}
+
+.user__avatar_circle {
+  width: 30px;
+  height: 30px;
+  background: #faa935; /* Brand orange */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+/* ✅ Grey Color Font Style for the Name */
+.username__text_grey {
+  color: #adb5bd !important; /* Medium-light grey for readability */
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-transform: capitalize;
+  letter-spacing: 0.3px;
+  margin-left: 8px;
+  margin-right: 12px;
+}
+
+/* Red Logout Button as seen in your screenshot */
+.logout__btn {
+  background: #ff0000 !important; /* Bright red per your image */
+  border: none !important;
+  color: white !important;
+  border-radius: 50px !important;
+  padding: 6px 20px !important;
+  font-size: 0.85rem !important;
+  font-weight: 700 !important;
+  transition: 0.3s ease;
+}
+
+.logout__btn:hover {
+  background: #cc0000 !important;
+  transform: scale(1.05);
+}
+
+/* Adjustment for Sticky Header if needed */
+.sticky__header .username__text_grey {
+  color: #424343 !important; /* Slightly darker grey when header background turns light */
+}
+
+/* ==================================================
+   ✅ STICKY HEADER ADJUSTMENTS (SCROLL STATE)
+================================================== */
+
+/* Ensure the username stays white and visible on the dark glass sticky header */
+.sticky__header .username__display {
+  color: #ffffff !important;
+}
+
+.sticky__header .user__info_wrapper {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+
+
+/* ==================================================
    MOBILE SIDE DRAWER & STICKY HEADER FIXES
 ================================================== */
 @media only screen and (max-width: 992px) {
@@ -387,5 +495,15 @@
     padding: 12px 30px 12px 40px; 
     color: #666 !important;
     border-bottom: 1px solid #eee;
+  }
+
+   /* Show User info on mobile next to hamburger if needed, 
+     or you can move this inside the .menu drawer */
+  .user__info_wrapper {
+    padding: 4px 10px;
+  }
+  
+  .username__display {
+    display: none; /* Hide name on small mobile to save space, keep avatar */
   }
 }

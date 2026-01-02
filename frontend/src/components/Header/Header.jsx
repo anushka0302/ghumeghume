@@ -5,6 +5,9 @@ import logo from '../../assets/images/logo.webp';
 import './header.css';
 import { AuthContext } from './../../context/AuthContext';
 
+// ✅ 1. Import Google Logout
+import { googleLogout } from '@react-oauth/google';
+
 const navLinks = [
   { path: '/home', display: 'Home' },
   {
@@ -43,7 +46,9 @@ const Header = () => {
   const navigate = useNavigate();
   const { user, dispatch } = useContext(AuthContext);
 
+  // ✅ 2. Integrated googleLogout into your existing logic
   const logout = () => {
+    googleLogout(); // Clears Google session to stop "Sign in as Umang"
     dispatch({ type: 'LOGOUT' });
     navigate('/');
   };
@@ -60,7 +65,6 @@ const Header = () => {
       }
     };
 
-    // Close menu if user scrolls
     const closeMobileMenuOnScroll = () => {
       if (menuRef.current && menuRef.current.classList.contains('show__menu')) {
         menuRef.current.classList.remove('show__menu');
@@ -78,12 +82,11 @@ const Header = () => {
 
   const toggleMenu = () => menuRef.current.classList.toggle('show__menu');
 
-  // Logic to handle mobile dropdown clicks
   const handleMobileDropdown = (e) => {
     if (menuRef.current.classList.contains('show__menu')) {
       const parentItem = e.target.closest('.nav__item');
       if (parentItem && parentItem.classList.contains('dropdown')) {
-        e.preventDefault(); // Stop navigation
+        e.preventDefault();
         parentItem.classList.toggle('mobile-dropdown-open');
       }
     }
@@ -94,6 +97,7 @@ const Header = () => {
       <Container>
         <Row>
           <div className='nav_wrapper d-flex align-items-center justify-content-between'>
+            
             {/* Logo */}
             <div className='logo'>
               <Link to='/home'>
@@ -105,7 +109,6 @@ const Header = () => {
             <div className='navigation' ref={menuRef} onClick={toggleMenu}>
               <ul className='menu d-flex align-items-center gap-4' onClick={(e) => e.stopPropagation()}>
                 
-                {/* ❌ Close Button (Inside the White Drawer) */}
                 <span className="mobile__menu_close" onClick={toggleMenu}>
                   <i className="ri-close-line"></i>
                 </span>
@@ -122,16 +125,13 @@ const Header = () => {
                       }
                       onClick={(e) => {
                         handleMobileDropdown(e);
-                        // Only close menu if it's a direct link (no children)
                         if (!item.children) toggleMenu();
                       }}
                     >
                       {item.display}
-                      {/* Down arrow for dropdowns */}
                       {item.children && <i className='ri-arrow-down-s-line'></i>}
                     </NavLink>
 
-                    {/* Sub Menu */}
                     {item.children && (
                       <ul className='dropdown__menu'>
                         {item.children.map((child, childIndex) => (
@@ -148,16 +148,20 @@ const Header = () => {
               </ul>
             </div>
 
-            {/* Right Side Icons (User, Search, Hamburger) */}
+            {/* Right Side Icons */}
             <div className='nav_right d-flex align-items-center gap-4'>
-              <div className='nav_btns d-flex align-items-center gap-4'>
+              <div className='nav_btns d-flex align-items-center gap-2'>
                 {user ? (
-                  <>
-                    <h5 className='mb-0 username'>{user.username}</h5>
-                    <Button className='btn btn-dark' onClick={logout}>
+                  <div className="user__profile d-flex align-items-center gap-2">
+                    <div className="user__avatar_circle">
+                      <i className="ri-user-fill"></i>
+                    </div>
+                    {/* ✅ Using the specific class for grey color */}
+                    <h5 className='mb-0 username__text_grey'>{user.username}</h5>
+                    <Button className='btn logout__btn' onClick={logout}>
                       Logout
                     </Button>
-                  </>
+                  </div>
                 ) : (
                   <>
                     <Button className='btn secondary__btn'>
@@ -170,7 +174,7 @@ const Header = () => {
                 )}
               </div>
 
-              {/* 🍔 Hamburger Icon (Visible on Mobile) */}
+              {/* Hamburger Icon */}
               <span className='mobile__menu' onClick={toggleMenu}>
                 <i className='ri-menu-line'></i>
               </span>
