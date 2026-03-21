@@ -10,6 +10,7 @@ import { googleLogout } from '@react-oauth/google';
 
 const navLinks = [
   { path: '/home', display: 'Home' },
+
   {
     path: '#',
     display: 'Company',

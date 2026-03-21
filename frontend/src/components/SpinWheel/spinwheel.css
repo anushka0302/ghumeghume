@@ -1,0 +1,50 @@
+.wheel-wrapper {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    margin: 20px auto;
+}
+
+.main-wheel {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 5px solid #333;
+    position: relative;
+    overflow: hidden;
+    transition: transform 4s cubic-bezier(0.1, 0, 0, 1);
+    background: #fff;
+}
+
+.wheel-seg {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    transform-origin: 100% 100%;
+    transform: rotate(calc(60deg * var(--i))); /* 360 / 6 segments = 60deg */
+    background: #faa935;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wheel-seg:nth-child(even) { background: #ffcc80; }
+
+.wheel-seg span {
+    position: absolute;
+    top: 50%;
+    left: 60%;
+    transform: translate(-50%, -50%) rotate(90deg); /* Flips text to face center */
+    font-size: 10px;
+    font-weight: 900;
+    color: #000;
+    white-space: nowrap;
+}
+
+.lead-form input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}

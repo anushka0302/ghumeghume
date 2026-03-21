@@ -57,12 +57,14 @@
     "react-router-dom": "^6.6.1",
     "react-scripts": "5.0.1",
     "react-slick": "^0.29.0",
+    "react-wheel-of-prizes": "^1.1.0",
     "reactstrap": "^9.1.5",
     "remixicon": "^2.5.0",
     "slick-carousel": "^1.8.1",
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
-    "concurrently": "^7.0.0"
+    "concurrently": "^7.0.0",
+    "nodemon": "^3.1.14"
   }
 }

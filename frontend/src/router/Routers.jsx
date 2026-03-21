@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react'; 
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from '../auth/AuthContext';
+const AdPopup = React.lazy(() => import('../components/AdPopup/AdPopup'));
 
 // === 1. Lazy Import All Pages ===
 
@@ -59,9 +60,11 @@ const Routers = () => {
   return (
     <AuthProvider>
       <Suspense fallback={<LoadingSpinner />}>
+      <AdPopup />
         <Routes>
           <Route path="/" element={<Navigate to="/home" />} />
           <Route path="/home" element={<Home />} />
+          
           
 
           {/* ✅ Trek Routes */}

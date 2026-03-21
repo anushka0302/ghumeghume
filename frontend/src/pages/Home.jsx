@@ -72,6 +72,8 @@ const Home = () => {
                   </p>
                 </div>
 
+                
+
                 {/* FEATURED TOURS */}
                 <section className="featured-tours">
                   <Container>

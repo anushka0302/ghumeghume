@@ -18,13 +18,13 @@ const EXCHANGE_RATE = 86; // 1 USD = 86 INR
 const Booking = ({ tour, avgRating, tourId }) => {
   
   // ✅ Added SUV specific flags to your existing destructuring
-  const { price, reviews, title, priceGroup, isSUV, onlineToken } = tour;
+  const { price, reviews, title, priceGroup, isSUV, onlineToken, maxGroupSize } = tour;
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useContext(AuthContext);
 
   // --- State ---
-  const [dateMode, setDateMode] = useState('fixed'); 
+  const [dateMode, setDateMode] = useState(allTourDates[tourId] && allTourDates[tourId].length > 0 ? 'fixed' : 'custom');
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [currency, setCurrency] = useState('INR'); 
 
@@ -35,7 +35,7 @@ const Booking = ({ tour, avgRating, tourId }) => {
   
   // ✅ MODIFIED: SUV supports 1-9 people but stays at fixed vehicle price
   const minGuestSize = isSUV ? 1 : (isGroupMode ? 3 : 1);
-  const maxGuestSize = isSUV ? 9 : (isGroupMode ? 50 : 2); 
+  const maxGuestSize = isSUV ? 9 : (maxGroupSize || 50);
 
   const guestOptions = Array.from(
     { length: maxGuestSize - minGuestSize + 1 }, 
@@ -350,36 +350,56 @@ const Booking = ({ tour, avgRating, tourId }) => {
           {/* ✅ MODIFIED: Hide date logic for SUV since it is "Always Open" */}
           {!isSUV ? (
             <>
-              <div className="date-toggle-container">
-                <label className={`toggle-option ${dateMode === 'fixed' ? 'active' : ''}`}>
-                    <input type="radio" name="dateMode" value="fixed" checked={dateMode === 'fixed'} onChange={() => setDateMode('fixed')} />
-                    Fixed Batches
-                </label>
-                <label className={`toggle-option ${dateMode === 'custom' ? 'active' : ''}`}>
-                    <input type="radio" name="dateMode" value="custom" checked={dateMode === 'custom'} onChange={() => setDateMode('custom')} />
-                    Custom Date
-                </label>
-              </div>
+              {/* Check if this tour actually has fixed dates in the array */}
+              {currentTourDates.length > 0 ? (
+                <>
+                  <div className="date-toggle-container">
+                    <label className={`toggle-option ${dateMode === 'fixed' ? 'active' : ''}`}>
+                        <input type="radio" name="dateMode" value="fixed" checked={dateMode === 'fixed'} onChange={() => setDateMode('fixed')} />
+                        Fixed Batches
+                    </label>
+                    <label className={`toggle-option ${dateMode === 'custom' ? 'active' : ''}`}>
+                        <input type="radio" name="dateMode" value="custom" checked={dateMode === 'custom'} onChange={() => setDateMode('custom')} />
+                        Custom Date
+                    </label>
+                  </div>
 
-              {dateMode === 'fixed' ? (
-                 <div className="date-section">
-                    <h6>Select a Batch:</h6>
-                    <DateSlots onDateSelect={handleSlotSelect} slotsData={currentTourDates} />
-                 </div>
+                  {dateMode === 'fixed' ? (
+                     <div className="date-section">
+                        <h6>Select a Batch:</h6>
+                        <DateSlots onDateSelect={handleSlotSelect} slotsData={currentTourDates} />
+                     </div>
+                  ) : (
+                     <FormGroup className="d-flex flex-column date-section">
+                        <h6>Pick your own date:</h6>
+                        <DatePicker 
+                            selected={typeof booking.bookAt === 'object' ? booking.bookAt : null} 
+                            onChange={handleCalendarChange}
+                            minDate={new Date()} 
+                            dateFormat="dd/MM/yyyy"
+                            placeholderText="Select a date"
+                            className="custom-input"
+                            wrapperClassName="w-100"
+                            onKeyDown={(e) => e.preventDefault()} 
+                        />
+                     </FormGroup>
+                  )}
+                </>
               ) : (
-                 <FormGroup className="d-flex flex-column date-section">
-                    <h6>Pick your own date:</h6>
-                    <DatePicker 
-                        selected={typeof booking.bookAt === 'object' ? booking.bookAt : null} 
-                        onChange={handleCalendarChange}
-                        minDate={new Date()} 
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText="Select a date"
-                        className="custom-input"
-                        wrapperClassName="w-100"
-                        onKeyDown={(e) => e.preventDefault()} 
-                    />
-                 </FormGroup>
+                /* NO FIXED DATES AVAILABLE: Just show the standard DatePicker */
+                <FormGroup className="d-flex flex-column date-section">
+                  <h6>Pick your own date:</h6>
+                  <DatePicker 
+                      selected={typeof booking.bookAt === 'object' ? booking.bookAt : null} 
+                      onChange={handleCalendarChange}
+                      minDate={new Date()} 
+                      dateFormat="dd/MM/yyyy"
+                      placeholderText="Select a date"
+                      className="custom-input"
+                      wrapperClassName="w-100"
+                      onKeyDown={(e) => e.preventDefault()} 
+                  />
+                </FormGroup>
               )}
             </>
           ) : (
